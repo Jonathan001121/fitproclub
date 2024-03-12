@@ -5,8 +5,8 @@ import hero_back from "../../assets/hero_image_back.png"
 import heart from "../../assets/heart.png"
 import calories from "../../assets/calories.png"
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom";
 
-import { Link } from "react-scroll";
 
 const Hero = () => {
   const transition = { duration: 1, type: "tween"};
@@ -59,25 +59,7 @@ const Hero = () => {
 
       {/* Right Side */}
       <div className="right-h">
-      {/* <Link className="btn"
-              to="contact"
-              spy={true}
-              smooth={true}
-            >
-              Sign In
-     
-            </Link> */}
-
-          <button className="signin-btn"
-              to="contact"
-              spy={true}
-              smooth={true}
-            >
-              Sign In
-     
-            </button>
-         
-        
+      <Link className="signin-btn" to="/login"> Sign In </Link>
 
         {/* heart rate */}
         {/* <motion.div
