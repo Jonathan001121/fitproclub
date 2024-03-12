@@ -1,9 +1,17 @@
-import React from 'react';
+import  { React, useRef }from 'react';
 import './Login.css';
 
+
 const Login = () => {
+  const cursor = useRef(null);
+  const changePosition = (e) => {
+    cursor.current.style.top = `${e.clientY}px`;
+    cursor.current.style.left = `${e.clientX}px`;
+  }
   return (
-    <div className="login-container">
+
+    <div className="login-container" onMouseMove={changePosition}>
+      <div className="cursor-style" ref={cursor} ></div>
       <div className="login-form">
         <h2 className="login-heading">Welcome to SILFIS</h2>
         <form>
@@ -25,6 +33,7 @@ const Login = () => {
         Don't have an account? <a href="#" className="signup-link">Sign up</a>
       </div>
     </div>
+ 
   );
 };
 

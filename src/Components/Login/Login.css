@@ -1,10 +1,21 @@
-
+.cursor-style {
+    background-color: rgba(0, 255, 255, 0.7);
+    height: 2rem;
+    width: 2rem;
+    border-radius: 100%;
+    transform-origin: 100% 100%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    pointer-events: none;
+  }
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
+    min-Height: 100vh;
+    min-Width: 100vw;
     background: linear-gradient(45deg, rgba(7, 186, 144, 0.752) 85%, transparent 25%) 0 0,
                 linear-gradient(-45deg,rgba(7, 186, 144, 0.752) 50%, transparent 25%) 0 0,
                 linear-gradient(45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0,
@@ -58,6 +69,7 @@
     margin-top: 20px;
     background-color: #0dce8dbf;
     color: #fff;
+    font-weight: bold;
     border: none;
     border-radius: 9px;
     font-size: 16px;
