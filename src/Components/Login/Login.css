@@ -1,13 +1,28 @@
 
 .login-container {
-
-      
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
-  }
+    background: linear-gradient(45deg, rgba(43, 253, 204, 0.69) 85%, transparent 25%) 0 0,
+                linear-gradient(-45deg, rgba(43, 253, 204, 0.69) 50%, transparent 25%) 0 0,
+                linear-gradient(45deg, transparent 85%,  rgba(43, 253, 204, 0.69) 75%) 0 0,
+                linear-gradient(-45deg, transparent 85%,  rgba(43, 253, 204, 0.69) 75%) 0 0;
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    animation: wave 2s linear infinite;
+}
+
+@keyframes wave {
+    0% {
+        background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    }
+    100% {
+        background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
+    }
+}
+
   
   .login-form {
     width: 400px;
@@ -58,7 +73,7 @@
   .login-or-text {
     margin: 0 10px;
     font-weight: bold;
-    color: #8e8e8e;
+    color: #0c0c0c;
   }
   
   .login-options {
@@ -81,10 +96,10 @@
     margin-top: 20px;
     text-align: center;
     font-size: 14px;
-    color: #8e8e8e;
+    color: #2f2f2f;
   }
   
   .signup-link {
-    color: #0095f6;
+    color: #0041e6;
     text-decoration: none;
   }
