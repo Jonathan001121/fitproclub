@@ -5,10 +5,10 @@
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    background: linear-gradient(45deg, rgba(43, 253, 204, 0.69) 85%, transparent 25%) 0 0,
-                linear-gradient(-45deg, rgba(43, 253, 204, 0.69) 50%, transparent 25%) 0 0,
-                linear-gradient(45deg, transparent 85%,  rgba(43, 253, 204, 0.69) 75%) 0 0,
-                linear-gradient(-45deg, transparent 85%,  rgba(43, 253, 204, 0.69) 75%) 0 0;
+    background: linear-gradient(45deg, rgba(7, 186, 144, 0.752) 85%, transparent 25%) 0 0,
+                linear-gradient(-45deg,rgba(7, 186, 144, 0.752) 50%, transparent 25%) 0 0,
+                linear-gradient(45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0,
+                linear-gradient(-45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0;
     background-size: 50px 50px;
     background-position: 0 0, 25px 25px, 0 0, 25px 25px;
     animation: wave 2s linear infinite;
@@ -50,7 +50,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 20px;
-    background-color: #0ce0d6e4;
+    background-color: #0dce8dbf;
     color: #fff;
     border: none;
     border-radius: 9px;
