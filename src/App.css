@@ -45,22 +45,18 @@
   
 }
 .signin-btn{
-  background-color: #3c3f45;
   color: white;
-  padding: 0.5rem;
   font-weight: bold;
-  border: 4px solid transparent;
   transition: 300ms all;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
+  justify-content: flex-end;
+  border-radius: 15px ;
   margin: 10px;
-
   
 }
 .signin-btn:hover{
   cursor: pointer;
+  color: orange;
 }
 .btn:hover{
   cursor: pointer;

@@ -2,9 +2,16 @@
     display: flex;
     justify-content: space-between;
     position: fixed; 
-    top: 0
+    top: 0;
+    background-color: var(--appColor);
+    width:100%
 }
-
+.signin{
+    position: absolute;
+    right: 2em;
+    top: 6px;
+    border-radius: 1px solid white;
+}
 .logo{
     width: 10rem;
     height: 3rem;

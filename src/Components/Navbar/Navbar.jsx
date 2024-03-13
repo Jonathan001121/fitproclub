@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-scroll";
+import { Link as Link } from "react-scroll";
 import Bars from "../../assets/bars.png";
+import { Link as Route} from "react-router-dom";
 
 const Navbar = () => {
   const mobile = window.innerWidth <= 768 ? true : false;
@@ -26,7 +27,7 @@ const Navbar = () => {
             <Link
               onClick={() => setMenuOpened(false)}
               activeClass="active"
-              to="header"
+              to="home"
               spy={true}
               smooth={true}
             >
@@ -64,7 +65,16 @@ const Navbar = () => {
               Contact us
             </Link>
           </li>
-
+          <li className="signin">
+            <Route
+            className="signin-btn" 
+              onClick={() => setMenuOpened(false)}
+              to="/login"
+              style={{ textDecoration: 'none' }}
+            >
+              Sign In
+            </Route>
+          </li>
         </ul>
       )}
     </div>

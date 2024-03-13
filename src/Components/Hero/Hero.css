@@ -173,6 +173,7 @@
   position: absolute;
   top: 32rem;
   right: 28rem;
+  z-index: -1;
 }
 .calories > img {
   width: 3rem;

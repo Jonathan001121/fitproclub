@@ -59,7 +59,6 @@ const Hero = () => {
 
       {/* Right Side */}
       <div className="right-h">
-      <Link className="signin-btn" to="/login" style={{ textDecoration: 'none' }}> Sign In </Link>
 
         {/* heart rate */}
         {/* <motion.div
