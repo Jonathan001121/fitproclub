@@ -1,13 +1,6 @@
-
-
-
-
 import './App.css'
-
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Hero from './Components/Hero/Hero';
 import Login from './Components/Login/Login';
 import InfoPage from './InfoPage';
 import './App.css';
