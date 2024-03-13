@@ -1,0 +1,24 @@
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 20px;
+  }
+
+.container {
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.5);
+    margin-right: 20px;
+}
+
+.large {
+    flex: 2;
+}
+
+.medium {
+    flex: 1;
+}
+
+.small {
+    flex: 0.5;
+}
