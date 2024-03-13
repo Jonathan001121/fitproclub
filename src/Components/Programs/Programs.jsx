@@ -7,9 +7,9 @@ const Programs= () => {
   return (
     <div className="Programs" id="programs">
         <div className="programs-header">
-            <span className='stroke-text'>Explore Our</span>
+    
             <span>Programs</span>
-            <span className='stroke-text'>to shape you</span>
+            <span className='stroke-text'>Description</span>
         </div>
         <div className="programs-categories">
             {programsData.map((program)=>(
@@ -17,9 +17,13 @@ const Programs= () => {
                     {program.image}
                     <span>{program.heading}</span>
                     <span>{program.details}</span>
+                    <ul>
+                {program.exersise.map((exercise, index) => (
+                <li key={index}>{exercise}</li>
+                ))}
+                </ul>
                     <div className="join-now">
                         <span>Join Now</span>
-                        <img src={RightArrow} alt="Right Arrow"/>
                     </div>
                 </div>
             ))}
