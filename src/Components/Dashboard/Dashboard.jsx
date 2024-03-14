@@ -4,10 +4,12 @@ import Xavier from "../../assets/Xavier.jpeg"
 import bmi from  "../../assets/icons/bmi.png"
 import increase from  "../../assets/icons/increase.png"
 import 'charts.css'
+import Navnode from '../Navnode/Navnode'; 
 const Dashboard = () => {
   return (
-    
+
     <div className="dashboard">
+        <Navnode /> 
       <div className="left">
         <div className="container large">
 
