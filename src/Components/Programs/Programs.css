@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 2rem;
     padding: 0 2rem;
-    padding-top: 3em;
+    padding-top: 10em;
   }
   .programs-header {
     display: flex;
@@ -21,7 +21,7 @@
     gap: 2rem;
   }
   
-  .category {
+  .programs {
     display: flex;
     flex-direction: column;
     background-color: gray;
@@ -31,34 +31,22 @@
     flex: 1;
     justify-content: space-between;
   }
-  .category > :nth-child(1) {
+  .programs > :nth-child(1) {
     width: 2rem;
     height: 2rem;
     fill:white
   }
-  .category > :nth-child(2) {
+  .programs > :nth-child(2) {
     font-size: 1rem;
     font-weight: bold;
   }
-  .category > :nth-child(3) {
+  .programs > :nth-child(3) {
     font-size: 0.9rem;
     line-height: 25px;
   }
 
-  .category:hover{
-        cursor: pointer;
-        background: var(--planCard);
-  }
 
-  .join-now{
-      display: flex;
-      align-items: center;
-      /* justify-content: center; */
-      gap: 2rem;
-  }
-  .join-now>img{
-      width: 1rem
-  }
+
   
   @media screen and (max-width: 768px) {
     .programs-header{
