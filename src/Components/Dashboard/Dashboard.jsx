@@ -9,7 +9,7 @@ const Dashboard = () => {
   return (
 
     <div className="dashboard">
-        <Navnode /> 
+      <Navnode /> 
       <div className="left">
         <div className="container large">
 
