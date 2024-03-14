@@ -2,7 +2,8 @@ import React from 'react';
 import './Dashboard.css';
 import Xavier from "../../assets/Xavier.jpeg"
 import bmi from  "../../assets/icons/bmi.png"
-
+import increase from  "../../assets/icons/increase.png"
+import 'charts.css'
 const Dashboard = () => {
   return (
     
@@ -66,19 +67,98 @@ const Dashboard = () => {
       </div>
       <div className="right">
         <div className="row-1">
-           <div className="container small">
-               <p>Weight</p>
+        <div className="container small">
+              <img src={bmi}></img>
+              <div className="metric-text">
+                <p className="bmi-label">BMI</p>
+                <div className="bmi-value">
+                  <p>20</p>
+                  <img src={increase}></img>
+                </div>
+              </div>
             </div>
-           <div className="container small">
-            <img src={bmi}></img>
-            <p>BMI</p>
+            <div className="container small">
+              <img src={bmi}></img>
+              <div className="metric-text">
+                <p className="bmi-label">BMI</p>
+                <div className="bmi-value">
+                  <p>20</p>
+                  <img src={increase}></img>
+                </div>
+              </div>
             </div>
-           <div className="container small">   <p>Blood Pressure</p></div>
-           <div className="container small"> <p>Calories</p> </div> 
-        </div>
+            
+            <div className="container small">
+              <img src={bmi}></img>
+              <div className="metric-text">
+                <p className="bmi-label">BMI</p>
+                <div className="bmi-value">
+                  <p>20</p>
+                  <img src={increase}></img>
+                </div>
+              </div>
+            </div>
+      
+            <div className="container small">
+              <img src={bmi}></img>
+              <div className="metric-text">
+                <p className="bmi-label">BMI</p>
+                <div className="bmi-value">
+                  <p>20</p>
+                  <img src={increase}></img>
+                </div>
+              </div>
+            </div>
+          </div>
  
         <div className="row-2">
-          <div className="container medium">A brief Pie chart</div>
+          <div className="container medium">A brief Pie chart
+          <div id="animations-example-3">
+            <table className="charts-css column show-labels hide-data data-spacing-5 show-primary-axis">
+              <caption> Animation Example #3 </caption>
+               <thead>
+                <tr>
+                  <th > Year </th>
+                   <th scope="col"> Progress </th>
+                   </tr>
+                   </thead>
+                    <tbody>
+                       <tr>
+                        <th scope="row"> 2020 </th> 
+                         <td> 
+                          <span className="data"> 30 </span>
+                           </td> 
+                        </tr>
+                        <tr>
+                        <th scope="row"> 2021 </th> 
+                         <td> 
+                          <span className="data"> 100 </span>
+                           </td> 
+                        </tr>
+                        <tr>
+                        <th scope="row"> 2022 </th> 
+                         <td> 
+                          <span className="data"> 100 </span>
+                           </td> 
+                        </tr>
+                        <tr>
+                        <th scope="row"> 2023 </th> 
+                         <td> 
+                          <span className="data"> 100 </span>
+                           </td> 
+                        </tr>
+                        <tr>
+                        <th scope="row"> 2016 </th> 
+                         <td> 
+                          <span className="data"> 100 </span>
+                           </td> 
+                        </tr>
+                         
+                        </tbody>
+                        </table>
+                    </div>
+          
+          </div>
           <div className="container medium">A brief Bar chart</div>
         </div>
         <div className="row-3">

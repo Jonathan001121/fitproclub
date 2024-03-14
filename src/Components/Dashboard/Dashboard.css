@@ -29,7 +29,7 @@
 .left {
   flex: 1;
   margin: 10px;
-  height: 85%;
+  height: 90%;
 }
 
 .right {
@@ -47,20 +47,52 @@
     color: white ;
     font-weight: lighter;  
 }
-.container small{
+.small{
   display: flex;
   flex-direction: row; 
- justify-content: space-between;
+  align-items: center;
+
+ 
 }
 .small img{
-  width: 10px;
-  height: 10px;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+.metric-text{
+  display: flex;
+  flex-direction: column; 
+  justify-content: flex-start;
+  margin:0px;
+}
+
+
+.metric-text {
+  display: flex;
+  flex-direction: column;
+  margin-top:10px;
+}
+.bmi-label {
+  margin:0px;
+}
+
+.bmi-value {
+  display: flex;
+  align-items: center;
  
 }
 
+.bmi-value p {
+  /* margin-right: 5px; */
+}
+.bmi-value img{
+  width: 20px;
+  height:20px;
+}
 .right .container {
   margin-right: 15px;
   font-size: 13px;
+
 }
 
 .large {
@@ -70,17 +102,18 @@
 
 .medium {
   width: 100%;
-  height: 150px;
+  height: 250px;
 }
 
 .small {
   width: 100%;
   height: 80px;
+  font-size: 14px;
 }
 
 .long {
   width: 100%;
-  height: 300px;
+  height: 200px;
 }
 
 .row-1{
@@ -143,3 +176,35 @@
 .info p {
   margin-left: 10px;
 }
+
+
+/* Bar chart */
+#animations-example-3 {
+  width: 75%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+#animations-example-3 table{
+  margin-top: 20px;
+}
+#animations-example-3 .column {
+  --aspect-ratio: 4 / 3;
+}
+#animations-example-3 .column tbody {
+  overflow-y: hidden; 
+  /* remove this to see how it works */
+}
+
+#animations-example-3 .column tbody th {
+  background-color: #2b2626;
+  z-index: 1;
+}
+#animations-example-3 .column tbody td {
+  animation: moving-bars 4s linear infinite;
+  border-radius: 10px;
+}
+@keyframes moving-bars {
+  0%  { transform: translateY( 100% ); }
+  30% { transform: translateY( 0 ); }
+}
+/* -------------------------------- */
