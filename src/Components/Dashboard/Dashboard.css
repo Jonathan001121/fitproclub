@@ -263,7 +263,13 @@ body {
 
 #stock-chart-example-2 .column td {
   width:10px;
+  transition-duration: 0.3s;
+  opacity: 0.5;
 }
+#stock-chart-example-2 .column td:hover{
+  opacity: 1;
+}
+
 
 
 
@@ -274,6 +280,7 @@ body {
 
 #stock-chart-example-2 .primary-axis {
   grid-area: primary-axis;
+ 
 }
 #stock-chart-example-2 .data-1-axis {
   grid-area: data-1-axis;

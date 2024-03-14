@@ -192,7 +192,7 @@ const Dashboard = () => {
                     
             </table>
                     
-                    
+     
             <table className="charts-css column data-spacing-2">
               <caption> Stock trade volume </caption> 
               <tbody>
