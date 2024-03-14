@@ -8,7 +8,7 @@ function InfoPage() {
         <div className="component">
             <Navbar/>
             <Hero />
-            <Programs />
+            <Programs details="Join now"/>
             <Contact />
         </div>
     )

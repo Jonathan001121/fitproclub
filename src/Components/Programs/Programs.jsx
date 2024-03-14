@@ -2,8 +2,9 @@ import React from 'react'
 import "./Programs.css"
 import {programsData} from "../../data/programsData"
 import RightArrow from "../../assets/rightArrow.png"
+import { Link as Route} from "react-router-dom";
 
-const Programs= () => {
+const Programs= (prop) => {
   return (
     <div className="Programs" id="programs">
         <div className="programs-header">
@@ -13,6 +14,11 @@ const Programs= () => {
         </div>
         <div className="programs-categories">
             {programsData.map((program)=>(
+            <Route
+                to="/exercise"
+                style={{textDecoration: 'none'}}
+            >
+                             
                 <div className="category">
                     {program.image}
                     <span>{program.heading}</span>
@@ -23,9 +29,10 @@ const Programs= () => {
                 ))}
                 </ul>
                     <div className="join-now">
-                        <span>Join Now</span>
+                        <span>{prop.details}</span>
                     </div>
                 </div>
+            </Route>
             ))}
         </div>
     </div>
