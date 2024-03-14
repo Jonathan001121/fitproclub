@@ -1,6 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
 import Xavier from "../../assets/Xavier.jpeg"
+import bmi from  "../../assets/icons/bmi.png"
 
 const Dashboard = () => {
   return (
@@ -17,8 +18,6 @@ const Dashboard = () => {
                 <br></br>
                  <div className="userId">topadmin001 </div>
               </div>
-            
-
             </div>
 
 
@@ -40,6 +39,8 @@ const Dashboard = () => {
                 </span>
                 <p>New York, US</p>
             </div> 
+
+
             <div className="info">
               <span width="1.5rem" class="sc-kFCroH keqUiL">
                 <svg width="25" height="25" viewBox="0 0 49 48"  xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +50,8 @@ const Dashboard = () => {
                 </span>
                 <p>New York, US</p>
             </div> 
+
+
             <div className="info">
               <span width="1.5rem" class="sc-kFCroH keqUiL">
                 <svg width="25" height="25"viewBox="0 0 49 48"  xmlns="http://www.w3.org/2000/svg">
@@ -58,19 +61,20 @@ const Dashboard = () => {
                 </span>
                 <p>New York, US</p>
             </div> 
-
-
-
-
             </div>
         </div>
       </div>
       <div className="right">
         <div className="row-1">
-           <div className="container small">Experience</div>
-           <div className="container small">Projects</div>
-           <div className="container small">Repositories</div>
-           <div className="container small">Reviews</div> 
+           <div className="container small">
+               <p>Weight</p>
+            </div>
+           <div className="container small">
+            <img src={bmi}></img>
+            <p>BMI</p>
+            </div>
+           <div className="container small">   <p>Blood Pressure</p></div>
+           <div className="container small"> <p>Calories</p> </div> 
         </div>
  
         <div className="row-2">

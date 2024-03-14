@@ -2,8 +2,8 @@ import React from 'react'
 import "./Hero.css"
 import hero_image from "../../assets/homepage_model.png"
 import hero_back from "../../assets/hero_image_back.png"
-import heart from "../../assets/heart.png"
-import calories from "../../assets/calories.png"
+import heart from "../../assets/icons/heart.png"
+import calories from "../../assets/icons/calories.png"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom";
 import Programs from '../Programs/Programs'
