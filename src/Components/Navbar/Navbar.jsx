@@ -38,7 +38,7 @@ const Navbar = () => {
             <Link
               onClick={() => setMenuOpened(false)}
               activeClass="active"
-              to="About us"
+              to="introduction"
               spy={true}
               smooth={true}
             >
