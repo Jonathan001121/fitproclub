@@ -1,5 +1,5 @@
 export const exercisesDetail = [
-{ 
+{   
     number: "1",
     category:"UpperBody-Back",
     exersise: "Row with Resistance Band",
