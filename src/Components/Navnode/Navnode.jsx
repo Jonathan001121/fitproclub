@@ -39,12 +39,15 @@ const Navnode = () => {
         <motion.div layout className="child">
           <nav className="floating-nav">
             <img src={left_arrow} alt="left arrow" />
-            <ScrollLink to="home" smooth={true} duration={500}>
+         
+    
+         
+            <RouteLink to="/home">
               <img src={home} alt="home" />
-            </ScrollLink>
-            <ScrollLink to="programs" smooth={true} duration={500}>
-              <img src={dumbell} alt="dumbell" />
-            </ScrollLink>
+            </RouteLink>
+            <RouteLink to="/MyCourse">
+            <img src={dumbell} alt="dumbell" />
+            </RouteLink>
             <RouteLink to="/dashboard">
               <img src={user} alt="user" />
             </RouteLink>
