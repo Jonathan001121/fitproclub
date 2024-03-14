@@ -12,6 +12,7 @@ const Dashboard = () => {
         <div className="container large">
 
           <div className="personal-info">
+
            <div className="icon-part">
               <div className="icon"><img src={Xavier}></img> </div>
               <div className="name&id">
@@ -162,7 +163,66 @@ const Dashboard = () => {
           <div className="container medium">A brief Bar chart</div>
         </div>
         <div className="row-3">
-          <div className="container long">A paragraph of random text</div>
+          <div className="container long">
+            A paragraph of random text
+           <div id="stock-chart-example-2">
+           
+            <table className="charts-css area">
+              <caption> Stock Price </caption> 
+              <tbody>
+                <tr><td></td></tr>
+                <tr><td style={{ "--start": 0.3, "--size": 0.4 }}></td></tr>
+                <tr><td style={{ "--start": 0.4, "--size": 0.8 }}></td></tr>
+                <tr><td style={{ "--start": 0.4, "--size": 0.8 }}></td></tr>
+                <tr><td style={{ "--start": 0.8, "--size": 0.3 }}></td></tr>
+                <tr><td style={{ "--start": 0.4, "--size": 0.8 }}></td></tr>
+                <tr><td style={{ "--start": 0.4, "--size": 0.8 }}></td></tr> 
+            </tbody>
+            </table> 
+                   
+            <table class="charts-css line">
+              <caption> Trend Line </caption> 
+              
+              <tbody>
+              <tr><td style={{ "--start": 0.2, "--size": 0.6 }}></td></tr> 
+              <tr><td style={{ "--start": 0.6, "--size": 0.8 }}></td></tr> 
+              <tr><td style={{ "--start": 0.8, "--size": 0.5 }}></td></tr> 
+              <tr><td style={{ "--start": 0.5, "--size": 0.8 }}></td></tr> 
+              </tbody>
+                    
+            </table>
+                    
+     
+            <table className="charts-css column data-spacing-2">
+              <caption> Stock trade volume </caption> 
+              <tbody>
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+              </tbody>
+          </table> 
+                  <div className="primary-axis"> Primary Axis Title </div> 
+                  <div className="data-1-axis"> Stock Price </div>
+                  <div className="data-2-axis"> Moving Average </div>
+                </div>
+        </div>
         </div>
       </div>
     </div>
