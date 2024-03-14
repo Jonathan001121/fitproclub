@@ -214,13 +214,13 @@
 
 
 /*-----MuliGraph-----------*/
-body {
+/* body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-}
+} */
 
 #stock-chart-example-2 {
   display: grid;
