@@ -11,7 +11,7 @@ const Exercises= () => {
 
 
     return (
-<div className="ExerciseCard">
+        <div className="ExerciseCard">
           <div className="exercise-header">
             <span>Exercises</span>
             <span className="stroke-text">Description</span>
