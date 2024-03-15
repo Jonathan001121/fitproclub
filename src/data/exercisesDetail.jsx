@@ -1,6 +1,7 @@
 export const exercisesDetail = [
 {   
     number: "1",
+    cid: 1,
     category:"UpperBody-Back",
     exersise: "Row with Resistance Band",
     targetmuscle: "Rhomboids, Trapezius, and Rear Deltoids",
@@ -9,6 +10,7 @@ export const exercisesDetail = [
 },
 { 
     number: "2",
+    cid:1,
     category:"UpperBody-Shoulder",
     exersise:"Dumbbell OverheadPress",
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
@@ -17,6 +19,7 @@ export const exercisesDetail = [
 },
 { 
     number: "3",
+    cid:1,
     category:"UpperBody-Arm",
     exersise:"Dumbbell Bicep Curl",
     targetmuscle: "Biceps",
@@ -25,6 +28,7 @@ export const exercisesDetail = [
 },
 { 
     number: "4",
+    cid:1,
     category:"LowerBody-Leg",
     exersise:"Squat with Weight",
     targetmuscle: "Quadriceps, Hamstrings, and Glutes",
@@ -33,6 +37,7 @@ export const exercisesDetail = [
 },
 { 
     number: "5",
+    cid:1,
     category:"LowerBody-Leg",
     exersise:"Standing Side Leg Lift",
     targetmuscle: "Hip,Abductors and Core",
@@ -41,6 +46,7 @@ export const exercisesDetail = [
 },
 { 
     number: "6",
+    cid:1,
     category:"CoreMuscle-Lower Back",
     exersise:"Lower Back Extension",
     targetmuscle: "Erector Spinae",

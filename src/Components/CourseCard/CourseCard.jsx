@@ -6,7 +6,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-const CourseCard= () => {
+import { useNavigate } from 'react-router-dom';
+
+const CourseCard = () => {
+  const navigate = useNavigate();
+  
+  const handleStartNow = (exercisePath) => {
+    navigate(exercisePath);
+  };
+
   return (
 
    
@@ -39,7 +47,13 @@ const CourseCard= () => {
       </Typography>
     </CardContent>
     <CardActions>
-      <Button size="small">Start Now</Button>
+
+    <Button size="small" onClick={() => handleStartNow(`/exercise${course.id}`)}>
+        Start Now  
+                           </Button>
+
+
+
     </CardActions>
   </Card>
   </div>
