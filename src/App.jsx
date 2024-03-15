@@ -16,7 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<InfoPage />} />
           <Route path="/mycourse" element={<MyCourse />} />
-          <Route path="/exercise" element={<Exercises />} />
+          <Route path="/exercise1" element={<Exercises />} />
+          <Route path="/exercise2" element={<Exercises />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/MyCourse" element={<MyCourse />} />

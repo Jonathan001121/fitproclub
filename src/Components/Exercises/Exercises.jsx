@@ -1,43 +1,62 @@
 import React from 'react'
 import {exercisesDetail} from "../../data/exercisesDetail"
 import "./Exercises.css"
-import RightArrow from "../../assets/rightArrow.png"
-import { motion } from "framer-motion"
-const Exercises= (prop) => {
-  return (
-    <div className="Exercise" >
-        <div className="programs-header">
-    
-            <span>Exercises</span>
-            <span className='stroke-text'>Description</span>
-        </div>
-        <div className="exercise-categories">
-            {exercisesDetail.map((exercise)=>(
-                <div className="category">
-                    {/* {program.image} */}
-                    <span>Exercise:{exercise.number}</span>
-                    <span>Name: {exercise.exersise}</span>
-                    <span>Category: {exercise.category}</span>
-                    <span>Target Muscle: {exercise.targetmuscle}</span>
-                    <span>Set and Reps: {exercise.setandrep}</span>
-                    <span>{exercise.Instruction}</span>
-                    <div className="join-now">
-                        <span>Start now</span>
-                        <motion.img
-                    animate={{x:10}}
-                    transition={{ ease: "backOut", duration: 1, repeat:Infinity }}
-                    
-                    src={RightArrow}
-                    />
-                        
-                    
-                    </div>
-                </div>
-            ))}
-        </div>
-    </div>
+import { useLocation } from 'react-router-dom';
+import ExerciseCard from '../ExerciseCard/ExerciseCard';
+const Exercises= () => {
 
-  )
-}
+    const location = useLocation();
+    const exerciseId = location.pathname.split('/exercise').pop(); // Extract the exercise ID from the path
+    let num=0;
+
+
+    return (
+<div className="ExerciseCard">
+          <div className="exercise-header">
+            <span>Exercises</span>
+            <span className="stroke-text">Description</span>
+          </div>
+          <div className="Exercise">
+            {exercisesDetail.map((exercise) => {
+                
+              if (exercise.cid == exerciseId) {
+                num= num+1;
+
+                return (
+                    <div>
+                    <ExerciseCard
+                        num={num}
+                        exercise={exercise.exersise}
+                        category={exercise.category}
+                        Instruction={exercise.Instruction}
+                    /> 
+                    </div>
+                );
+              } else {
+                return null; // Render nothing if the condition is not met
+              }
+            })}
+
+     
+          </div>
+        </div>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      );
+    };
 
 export default Exercises
