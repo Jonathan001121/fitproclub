@@ -7,6 +7,7 @@ import home from "../../assets/icons/home.png";
 import dumbell from "../../assets/icons/dumbell_icon.png";
 import user from "../../assets/icons/user.png";
 import left_arrow from "../../assets/icons/leftArrow.png";
+import glow_list from "../../assets/icons/glow_list.png";
 
 const Navnode = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ const Navnode = () => {
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       onDrag={handleDrag}
       onClick={() => setIsOpen(!isOpen)}
-    >
+    > {!isOpen && <img style={{ width: "80px", height: "50px","pointer-events": "none" }} src={glow_list} alt="glow list" />}
       {isOpen && (
         <motion.div layout className="child">
           <nav className="floating-nav">
