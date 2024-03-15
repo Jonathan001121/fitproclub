@@ -2,9 +2,11 @@ import React from 'react';
 import './Dashboard.css';
 import Xavier from "../../assets/Xavier.jpeg"
 import bmi from  "../../assets/icons/bmi.png"
+import calories from  "../../assets/icons/calories.png"
 import increase from  "../../assets/icons/increase.png"
 import 'charts.css'
 import Navnode from '../Navnode/Navnode'; 
+import ProgressBar from '../ProgressBar/ProgressBar'; 
 const Dashboard = () => {
   return (
 
@@ -81,11 +83,13 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="container small">
-              <img src={bmi}></img>
+              <img src={calories}></img>
               <div className="metric-text">
-                <p className="bmi-label">BMI</p>
+                <p className="bmi-label">Calories</p>
                 <div className="bmi-value">
-                  <p>20</p>
+                  <p>20010</p>
+             
+                  <p style={{"color": "gray"}}>&nbsp;/38000 </p>
                   <img src={increase}></img>
                 </div>
               </div>
@@ -115,45 +119,62 @@ const Dashboard = () => {
           </div>
  
         <div className="row-2">
-          <div className="container medium">A brief Pie chart
+          <div className="container medium">
+            <h3>Activity</h3>
           <div id="animations-example-3">
             <table className="charts-css column show-labels hide-data data-spacing-5 show-primary-axis">
-              <caption> Animation Example #3 </caption>
+              <caption> barchart animation </caption>
                <thead>
                 <tr>
                   <th > Year </th>
-                   <th scope="col"> Progress </th>
+                   <th scope="col">  </th>
                    </tr>
                    </thead>
+
                     <tbody>
                        <tr>
-                        <th scope="row"> 2020 </th> 
-                         <td> 
+                        <th scope="row"> MON </th> 
+                         <td style={{"--size": 0.8}}> 
                           <span className="data"> 30 </span>
                            </td> 
                         </tr>
                         <tr>
-                        <th scope="row"> 2021 </th> 
-                         <td> 
+                        <th scope="row"> TUE </th> 
+                         <td style={{"--size": 0.6}}> 
                           <span className="data"> 100 </span>
                            </td> 
                         </tr>
                         <tr>
-                        <th scope="row"> 2022 </th> 
-                         <td> 
-                          <span className="data"> 100 </span>
+                        <th scope="row"> WED </th> 
+                         <td style={{"--size": 0.8}}> 
+                          <span className="data"> 80 </span>
                            </td> 
                         </tr>
                         <tr>
-                        <th scope="row"> 2023 </th> 
-                         <td> 
-                          <span className="data"> 100 </span>
+                       
+                        <th scope="row"> THU </th> 
+                         <td style={{"--size": 0.34}}> 
+                          <span className="data"> 34 </span>
+                          </td> 
+                       
+                        </tr>
+
+                        <tr>
+                        <th scope="row"> FRI </th> 
+                         <td style={{"--size": 0.2}}> 
+                          <span className="data"> 20 </span>
                            </td> 
                         </tr>
                         <tr>
-                        <th scope="row"> 2016 </th> 
-                         <td> 
-                          <span className="data"> 100 </span>
+                        <th scope="row"> SAT </th> 
+                         <td style={{"--size": 0.7}}> 
+                          <span className="data"> 70 </span>
+                           </td> 
+                        </tr>
+                        <tr>
+                        <th scope="row"> SUN </th> 
+                         <td style={{"--size": 0.9}}> 
+                          <span className="data"> 90 </span>
                            </td> 
                         </tr>
                          
@@ -162,15 +183,31 @@ const Dashboard = () => {
                     </div>
           
           </div>
-          <div className="container medium">A brief Bar chart</div>
+          <div className="container medium">
+            <h3>Learning Progress</h3>
+          
+            <div className='program-progress'>
+              <div className='its-program'>  Fitness 101 </div>
+                <div className='its-progress'>  <ProgressBar />  </div>
+            </div>
+
+            <div className='program-progress'>
+              <div className='its-program'>  Best Program for Elderly </div>
+                <div className='its-progress'>  <ProgressBar />  </div>
+            </div>
+        
+            
+            
+            
+            </div>
         </div>
         <div className="row-3">
           <div className="container long">
-            A paragraph of random text
+         <h3>Metrics Trend</h3>
            <div id="stock-chart-example-2">
            
             <table className="charts-css area">
-              <caption> Stock Price </caption> 
+              <caption> WorkRate </caption> 
               <tbody>
                 <tr><td></td></tr>
                 <tr><td style={{ "--start": 0.3, "--size": 0.4 }}></td></tr>
@@ -183,7 +220,7 @@ const Dashboard = () => {
             </table> 
                    
             <table class="charts-css line">
-              <caption> Trend Line </caption> 
+              <caption> Body Weight Trend Line </caption> 
               
               <tbody>
               <tr><td style={{ "--start": 0.2, "--size": 0.6 }}></td></tr> 
@@ -196,7 +233,7 @@ const Dashboard = () => {
                     
      
             <table className="charts-css column data-spacing-2">
-              <caption> Stock trade volume </caption> 
+              <caption> Progress </caption> 
               <tbody>
                 <tr><td style={{ "--size": 0.9}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
@@ -220,9 +257,9 @@ const Dashboard = () => {
                 <tr><td style={{ "--size": 0.6}}></td></tr>
               </tbody>
           </table> 
-                  <div className="primary-axis"> Primary Axis Title </div> 
-                  <div className="data-1-axis"> Stock Price </div>
-                  <div className="data-2-axis"> Moving Average </div>
+                  <div className="primary-axis"> Exercises </div> 
+                  <div className="data-1-axis"> Calories </div>
+                  <div className="data-2-axis"> Distances  </div>
                 </div>
         </div>
         </div>
