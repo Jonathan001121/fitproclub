@@ -9,6 +9,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 const ExerciseCard= (prop) => {
     const [open, setOpen] = React.useState();
     const handleClick = () => {
@@ -16,6 +18,11 @@ const ExerciseCard= (prop) => {
         setOpen(!open);
     };
    
+    const navigate = useNavigate();
+  
+    const handleStartNow = (exercisePath) => {
+      navigate(exercisePath);
+    };
 
 
     return (
@@ -46,10 +53,15 @@ const ExerciseCard= (prop) => {
                 <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 0 }}>
 
+
             <ListItemText primary={prop.Instruction} />
           </ListItemButton>
         </List>
+        
       </Collapse>
+      <Button size="small" onClick={() => handleStartNow(`/mediapipe`)}>
+                    Start Now  
+                    </Button>
     </List>
                         </CardContent>
 

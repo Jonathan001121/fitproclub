@@ -7,6 +7,7 @@ import InfoPage from './InfoPage';
 import Home from './Components/Home/Home';
 import Exercises from './Components/Exercises/Exercises';
 import MyCourse from './Components/MyCourse/MyCourse';
+import Mediapipe from './Components/Mediapipe/Mediapipe';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/MyCourse" element={<MyCourse />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/mediapipe" element={<Mediapipe/>} />
           
         </Routes>
       </div>
