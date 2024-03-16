@@ -110,9 +110,10 @@ const Dashboard = () => {
             <div className="container small">
               <img src={bmi}></img>
               <div className="metric-text">
-                <p className="bmi-label">BMI</p>
+                <p className="bmi-label">Muscle Mass</p>
                 <div className="bmi-value">
-                  <p>20</p>
+                  <p style={{"color": "lightgreen"}}> 6 </p>
+                  <p style={{"color": "gray"}}> &nbsp; %</p>
                   <img src={increase}></img>
                 </div>
               </div>
@@ -189,12 +190,12 @@ const Dashboard = () => {
           
             <div className='program-progress'>
               <div className='its-program'>  Fitness 101 </div>
-                <div className='its-progress'>  <ProgressBar />  </div>
+                <div className='its-progress'>  <ProgressBar width={95} /> </div>
             </div>
 
             <div className='program-progress'>
               <div className='its-program'>  Best Program for Elderly </div>
-                <div className='its-progress'>  <ProgressBar />  </div>
+                <div className='its-progress'> <ProgressBar width={25} /> </div>
             </div>
         
             
