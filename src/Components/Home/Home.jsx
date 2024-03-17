@@ -15,11 +15,15 @@ import Navnode from '../Navnode/Navnode';
 const Home = () => {
   return (
     <div className="home">
+         <div className="HomepageHeader">
+            <h1 className="Welcome">Welcome Back To</h1>
+            <span className="stroke-text">SILVIS</span>
+          </div>
       <Canvas shadows camera={{ position: [0, 2, 5], fov: 30 }}>
        {/* <color attach="background" args={["#ececec"]} /> */}
       <Exp></Exp>
     </Canvas>
- 
+ <Navnode />
         </div>
 
     );
