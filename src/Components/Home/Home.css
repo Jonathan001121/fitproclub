@@ -23,4 +23,6 @@
         background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
     }
   }
-  
+  .canvas {
+    background-color: transparent;
+  }
