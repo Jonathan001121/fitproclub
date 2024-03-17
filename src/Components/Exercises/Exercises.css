@@ -14,17 +14,47 @@
 
   
 }
-.ExerciseCard{
+/* .ExerciseCard{
   height: 100vh;
   overflow: auto;
+} */
+
+.ExerciseDirectory{
+  gap: 3%;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  font-family: Roboto, sans-serif; 
+  font-weight: lighter ;
+  min-Height: 100vh;
+  min-Width: 100vw;
+  background: linear-gradient(45deg, rgba(7, 186, 144, 0.752) 85%, transparent 25%) 0 0,
+              linear-gradient(-45deg,rgba(7, 186, 144, 0.752) 50%, transparent 25%) 0 0,
+              linear-gradient(45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0,
+              linear-gradient(-45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0;
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+  animation: wave 2s linear infinite;
 }
 
-.Exercise{
+@keyframes wave {
+  0% {
+      background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+  }
+  100% {
+      background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
+  }
+
+  
+}
+.ExerciseCards {
   display: flex;
   flex-direction: row;
-  gap: 3%;
-  margin-left: 2%;
-  margin-right: 2%;
-  overflow: auto;
-  margin-bottom: 2%;
+  flex-wrap: wrap;
+ 
+}
+
+.AnExerciseCard {
+  margin: 20px;
+  flex-basis: calc(15% - 20px);
 }

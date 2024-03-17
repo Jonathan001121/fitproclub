@@ -11,24 +11,27 @@ const Exercises= () => {
 
 
     return (
-        <div className="ExerciseCard">
+        <div className="ExerciseDirectory">
           <div className="exercise-header">
             <span>Exercises</span>
             <span className="stroke-text">Description</span>
           </div>
-          <div className="Exercise">
+
+
+          <div className="ExerciseCards">
             {exercisesDetail.map((exercise) => {
                 
               if (exercise.cid == exerciseId) {
                 num= num+1;
 
                 return (
-                    <div>
+                    <div className="AnExerciseCard">
                     <ExerciseCard
                         num={num}
                         exercise={exercise.exersise}
                         category={exercise.category}
                         Instruction={exercise.Instruction}
+                 
                     /> 
                     </div>
                 );

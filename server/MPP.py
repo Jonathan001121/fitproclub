@@ -13,7 +13,7 @@ app.add_url_rule('/statics/<path:filename>',
 app.secret_key = "the secret key"
 @app.after_request
 def add_cors_headers(response):
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5173')
     return response
 
 def calculate_joint_angle_mediapipe(a, b, c):

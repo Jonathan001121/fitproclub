@@ -1,0 +1,22 @@
+.overlayContainer {
+    display: flex;
+    height: 100vh;
+    z-index: 999;
+    margin:10px;
+    flex-direction: row;
+  }
+  
+  .textInfo {
+    width: 30%;
+    height: 70%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    margin:10px;
+  }
+
+  .videoFeed{
+    width:auto;
+    height: auto;
+  }
