@@ -12,7 +12,7 @@ import * as THREE from "three";
 export function Avatar(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF('models/Trainer.glb')
-  const {animations: squatAnimation} = useFBX("animations/bicep1.fbx")
+  const {animations: squatAnimation} = useFBX("animations/row.fbx")
   console.log(squatAnimation);
 
   squatAnimation[0].name = "Squating";
