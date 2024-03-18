@@ -1,5 +1,6 @@
 .home {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     height: 100vh;
     font-family: Roboto, sans-serif; 
@@ -23,4 +24,19 @@
         background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
     }
   }
-  
+  .canvas {
+    background-color: transparent;
+  }
+  .HomepageHeader{
+    text-align: center;
+    font-size: 80px;
+    padding-bottom: 5%;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .HomepageHeader .Welcome{
+    font-weight: lighter;
+    font-style: Italic;
+    font-size: 30px;
+  }
