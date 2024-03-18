@@ -10,9 +10,10 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 export function Avatar(props) {
+  const { avatarProp } = props;
   const group = useRef();
   const { nodes, materials } = useGLTF('models/Trainer.glb')
-  const {animations: squatAnimation} = useFBX("animations/row.fbx")
+  const { animations: squatAnimation } = useFBX(avatarProp);
   console.log(squatAnimation);
 
   squatAnimation[0].name = "Squating";

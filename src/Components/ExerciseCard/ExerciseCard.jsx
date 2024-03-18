@@ -11,7 +11,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-const ExerciseCard= (prop) => {
+const ExerciseCard= (props) => {
+
     const [open, setOpen] = React.useState();
     const handleClick = () => {
                     
@@ -21,13 +22,13 @@ const ExerciseCard= (prop) => {
     const navigate = useNavigate();
   
     const handleStartNow = (exercisePath) => {
-      navigate(exercisePath);
+      navigate(exercisePath ,{ state: { fbx: props.fbx } });
     };
 
 
     return (
         <Card sx={{ minWidth:250, minHeight:450}}>
-            <Typography variant="h4">Exercise{prop.num}</Typography>
+            <Typography variant="h4">Exercise{props.num}</Typography>
                 <CardMedia
                     sx={{ height: 140 }}
                     // image={image}
@@ -36,9 +37,9 @@ const ExerciseCard= (prop) => {
 
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                {prop.exercise}
+                {props.exercise}
                 </Typography>
-                <Typography>Category: {prop.category}</Typography>
+                <Typography>Category: {props.category}</Typography>
 
                 <List
                     sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -54,7 +55,7 @@ const ExerciseCard= (prop) => {
                 <ListItemButton sx={{ pl: 0 }}>
 
 
-            <ListItemText primary={prop.Instruction} />
+            <ListItemText primary={props.Instruction} />
           </ListItemButton>
         </List>
         

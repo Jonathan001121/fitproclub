@@ -26,7 +26,7 @@
   
   .textInfo {
     width: 30%;
-    height: 80%;
+    height: 70%;
     padding: 10px;
     background-color: white;
     color: black;
@@ -39,5 +39,5 @@
   .videoFeed{
     margin-top:100px;
     width:80%;
-    height:80%;
+    height: 80%;
   }
