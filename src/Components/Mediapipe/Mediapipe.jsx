@@ -4,8 +4,7 @@ const Mediapipe = () => {
 
 
   return (
-
-    <div >
+<div >
         <h1>Mediapipe</h1>
 <div id="responseContainer">
 
