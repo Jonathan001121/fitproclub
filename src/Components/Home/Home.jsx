@@ -19,12 +19,20 @@ const Home = () => {
             <h1 className="Welcome">Welcome Back To</h1>
             <span className="stroke-text">SILVIS</span>
           </div>
-      <Canvas shadows camera={{ position: [0, 2, 5], fov: 30 }}>
+          <div className="canvas-container ">
+      <Canvas shadows camera={{ position: [0, 0, 3], fov: 45}}>
+
        {/* <color attach="background" args={["#ececec"]} /> */}
       <Exp></Exp>
     </Canvas>
+    
+    </div>
+    <div className="homepageFoot">
+      
+    </div>
+
  <Navnode />
-        </div>
+    </div>
 
     );
 };

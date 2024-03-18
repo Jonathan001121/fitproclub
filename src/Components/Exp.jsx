@@ -4,8 +4,8 @@ import { Avatar } from "./Avatar";
 export const Exp = () => {
   return (
     <>
-      <OrbitControls />
-      <group position-y={-1}>
+      <OrbitControls enablePan={true} enableZoom={false} enableRotate={true} />
+      <group position-y={0}>
       <Avatar />
       </group>
     <ambientLight intensity={1} />

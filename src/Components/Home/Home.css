@@ -24,8 +24,9 @@
         background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
     }
   }
-  .canvas {
+  canvas {
     background-color: transparent;
+  
   }
   .HomepageHeader{
     text-align: center;
@@ -40,3 +41,12 @@
     font-style: Italic;
     font-size: 30px;
   }
+
+  .homepageFoot{
+   height: 120px;
+  }
+  .canvas-container {
+    width: 100%; /* Make the container responsive */
+    height: 100%; /* Set the container height to 50% of the viewport height */
+    position: relative; /* Ensure the canvas is positioned relative to this container */
+   }

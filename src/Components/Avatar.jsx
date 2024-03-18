@@ -12,7 +12,7 @@ import * as THREE from "three";
 export function Avatar(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF('models/Trainer.glb')
-  const {animations: squatAnimation} = useFBX("animations/BackSquat.fbx")
+  const {animations: squatAnimation} = useFBX("animations/bicep1.fbx")
   console.log(squatAnimation);
 
   squatAnimation[0].name = "Squating";
@@ -25,7 +25,9 @@ export function Avatar(props) {
     },[]);
 
   return (
+ 
     <group {...props} ref={group} dispose={null}>
+      <group rotation-x={-Math.PI / 2 }>
       <primitive object={nodes.Hips} />
       <skinnedMesh
         name="EyeLeft"
@@ -96,6 +98,7 @@ export function Avatar(props) {
         morphTargetDictionary={nodes.Wolf3D_Body.morphTargetDictionary}
         morphTargetInfluences={nodes.Wolf3D_Body.morphTargetInfluences}
       />
+     </group>
     </group>
   )
 }
