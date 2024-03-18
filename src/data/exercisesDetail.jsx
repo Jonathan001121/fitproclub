@@ -32,7 +32,7 @@ export const exercisesDetail = [
 { 
     number: "4",
     cid:1,
-    fbx: "animations/squat.fbx",
+    fbx: "animations/BackSquat.fbx",
     category:"LowerBody-Leg",
     exersise:"Squat with Weight",
     targetmuscle: "Quadriceps, Hamstrings, and Glutes",

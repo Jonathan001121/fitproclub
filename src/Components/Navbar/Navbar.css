@@ -3,7 +3,7 @@
     justify-content: space-between;
     position: fixed; 
     top: 0;
-    background-color: var(--appColor);
+    background-color: rgba(7, 186, 144, 0.752);
     width:100%
 }
 .signin{
@@ -26,13 +26,13 @@
 
 .header-menu>li:hover{
     cursor: pointer;
-    color: var(--orange);
+    color: var(--lightorange);
 }
 
 @media screen and (max-width: 767px) {
     .header-menu>li:hover{
         cursor: pointer;
-        color: var(--orange);
+        color: var(--lightorange);
     }
     
     .header>:nth-child(2)
