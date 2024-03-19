@@ -31,13 +31,13 @@ const ProgressBar = ({ width }) => {
         <div className="bar">
         {showDialog && (
 
-            <div className="dialog-box" style={{ width: `${width}%`}}>
-            {width}%
+            <div className="dialog-box" style={{ width: `${width*100}%`}}>
+            {width*100}%
             </div>
 
         )}
         <div className="progress-bar">
-            <span className="css" style={{ width: `${width}%` }}></span>
+            <span className="css" style={{ width: `${width*100}%` }}></span>
         </div>
         </div>
       </div>

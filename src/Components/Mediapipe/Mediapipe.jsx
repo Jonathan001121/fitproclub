@@ -6,6 +6,11 @@ import { useLocation } from 'react-router-dom';
 const Mediapipe = () => {
   const location = useLocation();
   const fbx = location.state?.fbx;
+  const cameraHeight = {
+    "normal" : 0,
+    "shoulderPress" : 5,
+    "shoulderPress" : 5
+  }
   return (
     <div className="MediaPipePage">
       <div className="MppPageHeader">
