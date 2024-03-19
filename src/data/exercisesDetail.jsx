@@ -12,7 +12,7 @@ export const exercisesDetail = [
 { 
     number: "2",
     cid:1,
-    fbx: "animations/row.fbx",
+    fbx: "animations/shoulderpress.fbx",
     category:"UpperBody-Shoulder",
     exersise:"Dumbbell OverheadPress",
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
@@ -22,7 +22,7 @@ export const exercisesDetail = [
 { 
     number: "3",
     cid:1,
-    fbx: "animations/bicep1.fbx",
+    fbx: "animations/bicep.fbx",
     category:"UpperBody-Arm",
     exersise:"Dumbbell Bicep Curl",
     targetmuscle: "Biceps",
@@ -42,7 +42,7 @@ export const exercisesDetail = [
 { 
     number: "5",
     cid:1,
-    fbx: "animations/row.fbx",
+    fbx: "animations/standingSideLegRaise.fbx",
     category:"LowerBody-Leg",
     exersise:"Standing Side Leg Lift",
     targetmuscle: "Hip,Abductors and Core",
@@ -52,6 +52,17 @@ export const exercisesDetail = [
 { 
     number: "6",
     cid:1,
+    fbx: "animations/deadlift.fbx",
+    category:"CoreMuscle",
+    exersise:"Dead Lift with Dumbbell",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"",
+},
+
+{ 
+    number: "7",
+    cid:2,
     fbx: "animations/row.fbx",
     category:"CoreMuscle-Lower Back",
     exersise:"Lower Back Extension",
@@ -59,6 +70,56 @@ export const exercisesDetail = [
     setandrep: "3 sets of 15-20 reps",
     Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
 },
+{ 
+    number: "8",
+    cid:2,
+    fbx: "animations/row.fbx",
+    category:"CoreMuscle-Lower Back",
+    exersise:"Lower Back Extension",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
+},
+{ 
+    number: "9",
+    cid:2,
+    fbx: "animations/row.fbx",
+    category:"CoreMuscle-Lower Back",
+    exersise:"Lower Back Extension",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
+},
+{ 
+    number: "10",
+    cid:2,
+    fbx: "animations/row.fbx",
+    category:"CoreMuscle-Lower Back",
+    exersise:"Lower Back Extension",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
+},
+{ 
+    number: "11",
+    cid:2,
+    fbx: "animations/row.fbx",
+    category:"CoreMuscle-Lower Back",
+    exersise:"Lower Back Extension",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
+},
+{ 
+    number: "12",
+    cid:2,
+    fbx: "animations/row.fbx",
+    category:"CoreMuscle-Lower Back",
+    exersise:"Lower Back Extension",
+    targetmuscle: "Erector Spinae",
+    setandrep: "3 sets of 15-20 reps",
+    Instruction:"Lie face down on the floor with your legs extended and your arms at your sides. Lift your chest and legs off the floor, keeping your neck in a neutral position. Hold for 1 or 2 seconds, then lower your chest and legs back to the starting position.",
+}
 ];
   
   
