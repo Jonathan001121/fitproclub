@@ -6,11 +6,13 @@ import calories from  "../../assets/icons/calories.png"
 import increase from  "../../assets/icons/increase.png"
 import user from  "../../assets/icons/user.png"
 import location from  "../../assets/icons/location.png"
+import weight from  "../../assets/icons/weight.png"
 import coin from  "../../assets/icons/coin.png"
 import bloodPressure from  "../../assets/icons/blood-pressure.png"
 import 'charts.css'
 import Navnode from '../Navnode/Navnode'; 
 import ProgressBar from '../ProgressBar/ProgressBar'; 
+
 const Dashboard = () => {
   return (
 
@@ -108,7 +110,7 @@ const Dashboard = () => {
             </div>
       
             <div className="container small">
-              <img src={bmi}></img>
+              <img src={weight}></img>
               <div className="metric-text">
                 <p className="bmi-label">Muscle Mass</p>
                 <div className="bmi-value">

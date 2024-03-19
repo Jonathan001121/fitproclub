@@ -37,3 +37,19 @@
 .bar .progress-bar span.css{
     width: 90%;
 }
+/* .dialog-box {
+    margin-left: auto;
+    margin-bottom: 10px;
+    width: 30%;
+    /* background-color: #fff; */
+    /* padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: black;
+} */
+.dialog-box {
+    /* position: relative ; */
+    z-index: 999; /* Adjust the z-index value as needed */
+    color:white;
+    margin-left: auto;
+  }
