@@ -41,7 +41,29 @@
 
   justify-content: space-between;
 }
-
+.connection{
+  font-size:10px;
+  margin-right: auto;
+  width:100%;
+}
+.connection img{
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  margin-bottom: 3px;
+}
+.connected-text{
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  color:lightgreen
+}
+.disconnected-text{
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  color:darkgray
+}
 .container {
     border-radius: 10px;
     background-color: rgb(34, 39, 44);

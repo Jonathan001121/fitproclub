@@ -11,6 +11,8 @@ import weight from  "../../assets/icons/weight.png"
 import coin from  "../../assets/icons/coin.png"
 import body_fat from  "../../assets/icons/body_fat.png"
 import bloodPressure from  "../../assets/icons/blood-pressure.png"
+import greenWifi from  "../../assets/icons/green_wifi.png"
+import blackWifi from  "../../assets/icons/black_wifi1.png"
 // ----------------------------------------
 
 import React, { useState, useEffect } from 'react';
@@ -24,6 +26,24 @@ import axios from 'axios';
 const Dashboard = () => {
   const [userInventory, setUserInventory] = useState(null);
   const [userRegisterCourses, setRegisterCourses] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:9000/pingFlask');
+        if (response.status ===200) {
+          setIsConnected(true);
+        } else {
+          setIsConnected(false);
+        }
+      } catch (error) {
+        setIsConnected(false);
+      }
+    };
+
+    checkConnection();
+  }, []);
 
   useEffect(() => {
     const fetchUserInventory = async () => {
@@ -80,7 +100,17 @@ const Dashboard = () => {
       <Navnode /> 
       <div className="left">
         <div className="container large">
-
+        <div className="connection" >
+        {isConnected ? (
+            <div className="connected-text" >
+              <img src={greenWifi}></img>
+              <p> Connected</p>
+            </div>
+          ) : (
+            <div className="disconnected-text" >    <img src={blackWifi}></img>
+            <p> Disconnected</p></div>
+          )}
+          </div>
           <div className="personal-info">
 
            <div className="icon-part">

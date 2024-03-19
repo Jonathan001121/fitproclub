@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Tooltip } from '@mui/material';
 import "./ProgressBar.css";
 
 const ProgressBar = ({ width }) => {
@@ -27,20 +28,20 @@ const ProgressBar = ({ width }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="bar-back">
+  
+  <Tooltip title={`${width * 100}%`} followCursor>
+
+  <div className="bar-back">
         <div className="bar">
-        {showDialog && (
-
-            <div className="dialog-box" style={{ width: `${width*100}%`}}>
-            {width*100}%
+      
+            <div className="progress-bar">
+                <span className="css" style={{ width: `${width*100}%` }}></span>
             </div>
-
-        )}
-        <div className="progress-bar">
-            <span className="css" style={{ width: `${width*100}%` }}></span>
-        </div>
         </div>
       </div>
+
+   </Tooltip>
+   
      
     </div>
   );
