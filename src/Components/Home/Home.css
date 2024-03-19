@@ -26,13 +26,13 @@
   }
   canvas {
     background-color: transparent;
-  
+    height: 100%;
   }
   .HomepageHeader{
     text-align: center;
     font-size: 80px;
     padding-bottom: 5%;
-    margin: 20px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
   }
@@ -47,6 +47,6 @@
   }
   .canvas-container {
     width: 100%; /* Make the container responsive */
-    height: 100%; /* Set the container height to 50% of the viewport height */
+    height: 120%; /* Set the container height to 50% of the viewport height */
     position: relative; /* Ensure the canvas is positioned relative to this container */
    }

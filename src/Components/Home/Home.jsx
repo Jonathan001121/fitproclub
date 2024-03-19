@@ -20,16 +20,19 @@ const Home = () => {
             <span className="stroke-text">SILVIS</span>
           </div>
           <div className="canvas-container ">
-      <Canvas shadows camera={{ position: [0, 0, 3], fov: 45}}>
+       {/*  x: The horizontal position of the camera. 
+            y: The vertical position of the camera. 
+            z: The depth position of the camera. 
+            The fov Field of View parameter represents the extent of the observable world 
+            that is seen at any given moment. 
+            It is specified in degrees and determines how "zoomed in" or "zoomed out" the camera's view is. A higher fov value results in a wider field of view, making objects appear smaller and further away, while a lower fov value results in a narrower field of view,*/}
 
-       {/* <color attach="background" args={["#ececec"]} /> */}
-       <Exp avatarProp={"animations/BackSquat.fbx"}></Exp>
-    </Canvas>
-    
-    </div>
-    <div className="homepageFoot">
-      
-    </div>
+               <Canvas shadows camera={{ position: [0, 2, 10], fov: 21 }}>
+               {/* <color attach="background" args={["#ececec"]} /> */}
+               <Exp avatarProp={"animations/standingSideLegRaise.fbx"}></Exp>
+            </Canvas>
+            </div>
+
 
  <Navnode />
     </div>
