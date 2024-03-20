@@ -1,19 +1,22 @@
 import  { React, useRef }from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
+import useCursor from "../elderly_cursor";
+
+
 
 const Login = () => {
-  const cursor = useRef(null);
-  const changePosition = (e) => {
-    cursor.current.style.top = `${e.clientY}px`;
-    cursor.current.style.left = `${e.clientX}px`;
-  }
+  // const cursor = useRef(null);
+  // const changePosition = (e) => {
+  //   cursor.current.style.top = `${e.clientY}px`;
+  //   cursor.current.style.left = `${e.clientX}px`;
+  // }
 
-
+  const { cursor, changePosition } = useCursor();
 
 
   return (
-
+    
     <div className="login-container" onMouseMove={changePosition}>
       <div className="cursor-style" ref={cursor} ></div>
       <div className="login-form">

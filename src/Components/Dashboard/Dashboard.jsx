@@ -22,11 +22,13 @@ import 'charts.css'
 import Navnode from '../Navnode/Navnode'; 
 import ProgressBar from '../ProgressBar/ProgressBar'; 
 import axios from 'axios';
+import useCursor from "../elderly_cursor";
 
 const Dashboard = () => {
   const [userInventory, setUserInventory] = useState(null);
   const [userRegisterCourses, setRegisterCourses] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const { cursor, changePosition } = useCursor();
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -96,7 +98,8 @@ const Dashboard = () => {
 
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" onMouseMove={changePosition}>
+           <div className="cursor-style" ref={cursor} ></div>
       <Navnode /> 
       <div className="left">
         <div className="container large">
