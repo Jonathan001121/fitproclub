@@ -122,20 +122,20 @@ def gen(model):
                     y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
                    
-                    # #hip shoulder, elbow(left)
-                    # angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13])
-                    # angle_text = str(round(angles, 1))
-                    # isFront = False
-                    # if (int(result.pose_landmarks.landmark[13].x*img.shape[1]) < int(result.pose_landmarks.landmark[23].x*img.shape[1])):
-                    #     isFront = True
-                    # # print(isFront)
-                    # x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
-                    # y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
+                    #hip shoulder, elbow(left)
+                    angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13])
+                    angle_text = str(round(angles, 1))
+                    isFront = False
+                    if (int(result.pose_landmarks.landmark[13].x*img.shape[1]) < int(result.pose_landmarks.landmark[23].x*img.shape[1])):
+                        isFront = True
+                    # print(isFront)
+                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
+                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
                     
-                    # if((angles<15 and angles>0 and isFront) or (angles<10 and angles>0 and not isFront)):
-                    #     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)  # for angle in angles:
-                    # else:
-                    #     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)  # for angle in angles:
+                    if((angles<15 and angles>0 and isFront) or (angles<10 and angles>0 and not isFront)):
+                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)  # for angle in angles:
+                    else:
+                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)  # for angle in angles:
                 elif(model==2):
                     #bicep for row 
                     # wrist,elbow, shoulder(left)
