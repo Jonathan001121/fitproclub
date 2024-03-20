@@ -6,10 +6,12 @@ import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineOppositeContent , {timelineOppositeContentClasses,} from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import FlagIcon from '@mui/icons-material/Flag';
 import Typography from '@mui/material/Typography';
+
+
 
 const Step= () => {
     return (
@@ -18,13 +20,20 @@ const Step= () => {
      
           
      
-    <Timeline >
+<Timeline
+      sx={{
+        [`& .${timelineOppositeContentClasses.root}`]: {
+          flex: 0.2,
+        },
+      }}
+    >
       <TimelineItem>
         <TimelineOppositeContent
           sx={{ m: 'auto 0' }}
-          align="right"
+          align="left"
           variant="body2"
           color="text.secondary"
+          flex="0"
         >
           Step1
         </TimelineOppositeContent>
@@ -35,11 +44,11 @@ const Step= () => {
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '30px', px: 2 }}>
           <Typography variant="h6" component="span">
             Start
           </Typography>
-          <Typography><img src={image}/></Typography>
+          <Typography><img src={image} style={{"width":"70%", "height":"70%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -58,11 +67,11 @@ const Step= () => {
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '30px', px: 2 }}>
           <Typography variant="h6" component="span">
             Middle
           </Typography>
-          <Typography><img src={image}/></Typography>
+          <Typography><img src={image} style={{"width":"70%", "height":"70%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -81,11 +90,11 @@ const Step= () => {
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '70px', px: 2 }}>
           <Typography variant="h6" component="span">
             End
           </Typography>
-          <Typography><img src={image}/></Typography>
+          <Typography><img src={image}  style={{"width":"70%", "height":"70%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
     </Timeline>

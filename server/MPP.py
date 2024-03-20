@@ -206,7 +206,7 @@ def gen(model):
         previous_time = current_time
 
         cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-
+        img = cv2.flip(img,1)
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         key = cv2.waitKey(20)
