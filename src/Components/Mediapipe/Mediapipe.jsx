@@ -3,9 +3,11 @@ import "./Mediapipe.css"
 import { Canvas } from "@react-three/fiber";
 import { Exp } from "../Exp";
 import { useLocation } from 'react-router-dom';
+import Step from "../Step/Step"
 const Mediapipe = () => {
   const location = useLocation();
   const fbx = location.state?.fbx;
+  const exerciseName= location.state?.exerciseName;
   const cameraHeight = {
     "normal" : 0,
     "shoulderPress" : 5,
@@ -14,7 +16,7 @@ const Mediapipe = () => {
   return (
     <div className="MediaPipePage">
       <div className="MppPageHeader">
-            <h1 className="Welcome">Bicep Curl</h1>
+            <h1 className="Welcome">{exerciseName}</h1>
             <span className="stroke-text">MediaPipe Pose</span>
             <div className="canvas-container ">
       <Canvas shadows camera={{ position: [0, 0, 3], fov: 45}}>
@@ -27,7 +29,9 @@ const Mediapipe = () => {
         </div>
       <div class="overlayContainer">
         <img id="videoFeed" class ="videoFeed" src="http://127.0.0.1:8000/video_feed_for_curl" />
-        <div class="textInfo">Your text info here</div>
+        <div class="textInfo">
+          <Step/>
+        </div>
       </div>
 
     

@@ -214,8 +214,6 @@ def gen(model):
             break
 
 
-
-
 @app.route('/video_feed_for_curl')
 def video_feed_for_curl():
     """Video streaming route. Put this in the src attribute of an img tag."""
