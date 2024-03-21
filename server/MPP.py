@@ -1,20 +1,19 @@
 import time
 import cv2
-from flask import Flask, Response
+from flask import Flask, Response, jsonify
 import mediapipe as mp
 import numpy as np
 from flask_cors import CORS
 
 
 
+
+
 app = Flask(__name__, static_folder='statics', static_url_path='/statics')
+CORS(app)
 app.add_url_rule('/statics/<path:filename>',
                  endpoint='statics', view_func=app.send_static_file)
 app.secret_key = "the secret key"
-@app.after_request
-def add_cors_headers(response):
-    response.headers.add('Access-Control-Allow-Origin', ' http://127.0.0.1:5173')
-    return response
 
 def calculate_joint_angle_mediapipe(a, b, c):
     number_az=a.z
@@ -49,6 +48,10 @@ def calculate_joint_angle_mediapipe(a, b, c):
 
     return angle_degrees
 
+start = False
+middle = False
+end = False
+count=0
 
 def gen(model):
     previous_time = 0
@@ -60,6 +63,8 @@ def gen(model):
 
     cap = cv2.VideoCapture(0)
     prev_keypoints = None
+   
+    global count, start, middle, end
     start = False
     middle = False
     end = False
@@ -122,18 +127,18 @@ def gen(model):
                     #     print("wrong shoulder detected")
 
                     # Start position
-                    if shoulder_angles <27  and elbow_angles > 160 and start==False:
+                    if shoulder_angles <35  and elbow_angles > 160 and start==False:
                         start = True
                         print("Start flag done")  
                        
 
 
-                    if shoulder_angles <27  and elbow_angles < 35 and start == True and middle == False:
+                    if shoulder_angles <35  and elbow_angles < 45 and start == True and middle == False:
                         middle = True 
                         print("MIddle flag done")
 
 
-                    if shoulder_angles <27  and elbow_angles > 160 and start == True and middle == True and end== False:
+                    if shoulder_angles <35  and elbow_angles > 160 and start == True and middle == True and end== False:
                    
                         end = True
                         print("End flag done")
@@ -238,12 +243,28 @@ def gen(model):
             break
 
 
+@app.route('/data',methods=["GET"])
+def get_data():
+    global count, start, middle, end
+    data = {
+        'count': count,
+        'start': start,
+        'middle': middle,
+        'end': end
+    }
+    return jsonify(data)
+
+
+
+
 @app.route('/video_feed_for_curl')
 def video_feed_for_curl():
     """Video streaming route. Put this in the src attribute of an img tag."""
     print("curl is called ")
     return Response(gen(1),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 
 
 @app.route('/video_feed_for_row')

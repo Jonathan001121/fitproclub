@@ -23,6 +23,10 @@
     margin:10px;
     flex-direction: row;
   }
+  .MppPageStructure{
+    display: flex;
+    flex-direction: column;
+  }
   .MppPageHeader{
     width:20%;
   }
@@ -52,5 +56,14 @@
     border-radius: 10px;
     padding: 25px;
     padding-left:10px;
+    margin:10px;
   }
-  
+  .count-container{
+    border-radius: 10px;
+    background-color: rgb(149, 147, 147);
+    margin-left: 50;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+
+  }

@@ -5,19 +5,23 @@ import { Exp } from "../Exp";
 import { useLocation } from 'react-router-dom';
 import Step from "../Step/Step"
 import Slider from '@mui/material/Slider';
+import axios from 'axios';
+import { Alert, AlertTitle , Collapse} from '@mui/material';
 
 const Mediapipe = () => {
+
+
   const location = useLocation();
   const fbx = location.state?.fbx;
   const exerciseName = location.state?.exerciseName;
-  const cameraHeight = {
-    "normal": 0,
-    "shoulderPress": 5,
-    "shoulderPress": 5
-  };
+
 
   const [zAxis, setZAxis] = useState(3);
   const [camera, setCamera] = useState({ position: [0, 0, zAxis], fov: 45 });
+
+
+
+
 
   useEffect(() => {
     // Update the camera prop with the new z-axis value
@@ -29,13 +33,20 @@ const Mediapipe = () => {
 
   return (
     <div className="MediaPipePage">
+   
+     
       <div className="MppPageHeader">
+      {/* <Alert style ={{"display": "block"}}severity='error'>
+          <AlertTitle> Warning</AlertTitle>
+          This is the warning.
+        </Alert> */}
         <h1 className="Welcome">{exerciseName}</h1>
         <span className="stroke-text">MediaPipe Pose</span>
         <div className="canvas-container ">
           <Canvas shadows camera={camera}>
             <Exp avatarProp={fbx}></Exp>
           </Canvas>
+          <div className="character-control-panel">
           <Slider
             defaultValue={3}
             value={zAxis}
@@ -45,17 +56,22 @@ const Mediapipe = () => {
             step={0.1}
             sx={{
               width: 260,
-              color: 'success.main',
+              color: 'lightgreen',
             }}
-          />
+          /></div>
         </div>
       </div>
       <div class="overlayContainer">
+   
         <img id="videoFeed" class="videoFeed" src="http://127.0.0.1:8000/video_feed_for_curl" />
         <div class="textInfo">
           <Step />
+  
+    
+
         </div>
-      </div>
+   
+    </div>
     </div>
   );
 };
