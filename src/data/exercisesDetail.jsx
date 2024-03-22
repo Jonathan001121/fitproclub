@@ -63,7 +63,7 @@ export const exercisesDetail = [
 { 
     number: "7",
     cid:2,
-    fbx: "animations/row.fbx",
+    fbx: "animations/lowerbackextension.fbx",
     category:"CoreMuscle-Lower Back",
     exersise:"Lower Back Extension",
     targetmuscle: "Erector Spinae",
@@ -133,7 +133,7 @@ export const exercisesDetail = [
 { 
     number: "14",
     cid:1,
-    fbx: "animations/bentoverrow.fbx",
+    fbx: "animations/plank.fbx",
     category:"CoreMuscle-Abdominal",
     exersise:"Plank",
     targetmuscle: "Rectus Abdominis and Obliques",
