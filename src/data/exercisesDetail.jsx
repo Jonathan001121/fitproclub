@@ -73,7 +73,7 @@ export const exercisesDetail = [
 { 
     number: "8",
     cid:2,
-    fbx: "animations/row.fbx",
+    fbx: "animations/lyinglegraise.fbx",
     category:"CoreMuscle-Abdominal",
     exersise:"Lying Leg Raise",
     targetmuscle: "Rectus Abdominis and Obliques",
@@ -113,7 +113,7 @@ export const exercisesDetail = [
 {   
     number: "12",
     cid: 1,
-    fbx: "animations/row.fbx",
+    fbx: "animations/bentoverrow.fbx",
     category:"UpperBody-Back",
     exersise: "Bent Over Row",
     targetmuscle: "Rhomboids, Trapezius, and Rear Deltoids",
@@ -123,7 +123,7 @@ export const exercisesDetail = [
 { 
     number: "13",
     cid:1,
-    fbx: "animations/row.fbx",
+    fbx: "animations/lyinglegraise.fbx",
     category:"CoreMuscle-Abdominal",
     exersise:"Lying Leg Raise",
     targetmuscle: "Rectus Abdominis and Obliques",
@@ -133,7 +133,7 @@ export const exercisesDetail = [
 { 
     number: "14",
     cid:1,
-    fbx: "animations/row.fbx",
+    fbx: "animations/bentoverrow.fbx",
     category:"CoreMuscle-Abdominal",
     exersise:"Plank",
     targetmuscle: "Rectus Abdominis and Obliques",
