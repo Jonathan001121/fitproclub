@@ -7,6 +7,7 @@ import Step from "../Step/Step"
 import Slider from '@mui/material/Slider';
 import axios from 'axios';
 import { Alert, AlertTitle , Collapse} from '@mui/material';
+import ExerciseDialog from '../ExerciseDialog/ExerciseDialog';
 
 const Mediapipe = () => {
 
@@ -33,7 +34,7 @@ const Mediapipe = () => {
 
   return (
     <div className="MediaPipePage">
-   
+  
      
       <div className="MppPageHeader">
       {/* <Alert style ={{"display": "block"}}severity='error'>
@@ -47,6 +48,7 @@ const Mediapipe = () => {
             <Exp avatarProp={fbx}></Exp>
           </Canvas>
           <div className="character-control-panel">
+          <ExerciseDialog />
           <Slider
             defaultValue={3}
             value={zAxis}
@@ -61,10 +63,13 @@ const Mediapipe = () => {
           /></div>
         </div>
       </div>
+
       <div class="overlayContainer">
    
         <img id="videoFeed" class="videoFeed" src="http://127.0.0.1:8000/video_feed_for_curl" />
+   
         <div class="textInfo">
+   
           <Step />
   
     
