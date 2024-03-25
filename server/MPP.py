@@ -4,6 +4,7 @@ from flask import Flask, Response, jsonify
 import mediapipe as mp
 import numpy as np
 from flask_cors import CORS
+import math
 
 
 
@@ -16,12 +17,12 @@ app.add_url_rule('/statics/<path:filename>',
 app.secret_key = "the secret key"
 
 def calculate_joint_angle_mediapipe(a, b, c):
-    number_az=a.z
-    az= round(number_az, 5)
-    number_bz=b.z
-    bz= round(number_bz, 5)
-    number_cz=b.z
-    cz= round(number_cz, 5)
+
+    az=round(a.z,8)
+    bz=round(b.z,8)
+    cz=round(c.z,8)
+
+   
     a_coords = np.array([a.x, a.y, az])  # First
     b_coords = np.array([b.x, b.y, bz])  # Mid
     c_coords = np.array([c.x, c.y, cz])  # End
@@ -71,41 +72,32 @@ def gen(model):
     count=0
     while True:
         success, img = cap.read()
+        img = cv2.flip(img,1)
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
         result = pose.process(imgRGB)
 
-        if result.pose_landmarks:
-                # print(result.pose_landmarks)
-                # if prev_keypoints is not None:
-                #     for i, (prev_kp, kp) in enumerate(zip(prev_keypoints, result.pose_landmarks)):
-                
-                #         smoothed_kp_x = 0.6 * prev_kp[0] + 0.4 * kp[0]
-                #         smoothed_kp_y = 0.6 * prev_kp[1] + 0.4 * kp[1]
-                #         smoothed_kp_z = 0.6 * prev_kp[2] + 0.4 * kp[2]
-                #         result.pose_landmarks[i] = [smoothed_kp_x, smoothed_kp_y, smoothed_kp_z]
-                # prev_keypoints = result.pose_landmarks
+
+        if result.pose_world_landmarks:
                 if prev_keypoints is not None:
-                    result_pose_landmarks = list(result.pose_landmarks)  # Convert to list
-                    for i, (prev_kp, kp) in enumerate(zip(prev_keypoints, result_pose_landmarks)):
+                    result_pose_world_landmarks = list(result.pose_world_landmarks)  # Convert to list
+                    for i, (prev_kp, kp) in enumerate(zip(prev_keypoints, result.pose_world_landmarks)):
                         smoothed_kp_x = 0.5 * prev_kp.x + 0.5 * kp.x
                         smoothed_kp_y = 0.5 * prev_kp.y + 0.5 * kp.y
                         smoothed_kp_z = 0.5 * prev_kp.z + 0.5 * kp.z
-                        result_pose_landmarks[i].x = smoothed_kp_x
-                        result_pose_landmarks[i].y = smoothed_kp_y
-                        result_pose_landmarks[i].z = smoothed_kp_z
-                    prev_keypoints = result_pose_landmarks
+                        result.pose_world_landmarks[i].x = smoothed_kp_x
+                        result.pose_world_landmarks[i].y = smoothed_kp_y
+                        result.pose_world_landmarks[i].z = smoothed_kp_z
+                    prev_keypoints = result.pose_world_landmarks
                 mpDraw.draw_landmarks(img, result.pose_landmarks, connections)
               
                 
-                # print(result.pose_landmarks.landmark[11])
-                # print(result.pose_landmarks.landmark[13])
-                # print(result.pose_landmarks.landmark[15])
+
                 if(model==1):
-               
-        
+                    print()
                     #bicep
                     # wrist,elbow, shoulder(left)
-                    elbow_angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13],result.pose_landmarks.landmark[15])
+                    elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
                     angle_text = str(round(elbow_angles, 1))
                     x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
                     y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
@@ -235,7 +227,7 @@ def gen(model):
         previous_time = current_time
 
         cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-        # img = cv2.flip(img,1)
+     
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         key = cv2.waitKey(20)
