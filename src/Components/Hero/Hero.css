@@ -152,8 +152,9 @@
   position: absolute;
   top: 13rem;
   right: 0.1rem;
-  width: 40rem;
-  z-index:-1;
+  width: 20rem;
+  /* z-index:-1; */
+  margin-right: 30px;
 
 }
 .hero-back {
