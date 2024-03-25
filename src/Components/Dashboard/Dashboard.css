@@ -30,10 +30,11 @@
   flex: 1;
   margin: 10px;
   height: 90%;
+
 }
 
 .right {
-  flex: 2;
+  flex: 3;
   margin-right: 10px;
   height: 90%;
   display: flex; 
@@ -92,6 +93,8 @@
   display: flex;
   flex-direction: column;
   margin-top:10px;
+  font-size:  max(0.6vw, 11px);
+ 
 }
 .bmi-label {
   margin:0px;
@@ -103,8 +106,10 @@
   align-items: center;
 }
 
+
 .bmi-value p {
   margin: 0px;
+
 }
 .bmi-value img{
   width:  20px;
@@ -199,7 +204,8 @@
 .info{
   display: flex;
   flex-direction: row;
-  font-size: 13px;
+  /* font-size: 13px; */
+  font-size:  max(0.8vw, 13px);
   align-items: center;
   padding: 2px;
   margin-left: 30px;
@@ -215,7 +221,8 @@
 
 #animations-example-3 {
   width: 75%;
-  max-width: 70%;
+  min-width: 80%;
+  max-width: 100%;
   height: 190px;
   margin: 0 auto;
 }
@@ -234,7 +241,8 @@
   background-color: #2b2626;
   z-index: 1;
   font-weight: lighter;
-  font-size: 11px;
+  font-size:  0.8vw;
+  
 }
 #animations-example-3 .column tbody td {
   animation: moving-bars 4s linear infinite;
@@ -261,7 +269,7 @@
 }
 .its-program{
   width:40%;
-  font-size: 15px;
+  font-size:  max(0.6vw, 11px);
   color: rgb(53, 217, 184);
 }
 .its-progress {
@@ -351,17 +359,20 @@
 #stock-chart-example-2 .primary-axis {
   grid-area: primary-axis;
   margin-bottom: 220px;
+  font-size:  max(0.6vw, 12px);
 }
 #stock-chart-example-2 .data-1-axis {
   grid-area: data-1-axis;
   writing-mode: tb-rl;
   transform: rotateZ(180deg);
-  margin-bottom: 80px;
+  margin-bottom: 100px;
+  font-size:  max(0.6vw, 12px);
 }
 #stock-chart-example-2 .data-2-axis {
   grid-area: data-2-axis;
   writing-mode: tb-rl;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
+  font-size:  max(0.6vw, 12px);
 }
 /* Colors */
 #stock-chart-example-2 .area {

@@ -24,6 +24,10 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import axios from 'axios';
 import useCursor from "../elderly_cursor";
 
+import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
+
+
+
 const Dashboard = () => {
   const [userInventory, setUserInventory] = useState(null);
   const [userRegisterCourses, setRegisterCourses] = useState(null);
@@ -186,14 +190,31 @@ const Dashboard = () => {
                 </div>
               </div>
         </div>
+        
         <div className="container small">
               <img src={calories}></img>
+              <Gauge
+                  value={75}
+                  startAngle={-110}
+                  endAngle={110}
+                  style={{"color":"white"}}
+                  sx={{
+                    [`& .${gaugeClasses.valueText}`]: {
+                      fontSize: 10,
+                      transform: 'translate(0px, 0px)',
+                      fontColor: '#ffffff',
+                      fontColor : "white" 
+               
+                    },
+                  }}
+                  text={
+                    ({ value }) => `${value} / 40000`
+                  }
+                />
               <div className="metric-text">
                 <p className="bmi-label">Calories Burnt</p>
                 <div className="bmi-value">
-                  <p>{userInventory ? userInventory.calories : '---'}</p>
-             
-                  <p style={{"color": "gray"}}>&nbsp;/38000 </p>
+
                   <img src={increase}></img>
                 </div>
               </div>
@@ -312,6 +333,23 @@ const Dashboard = () => {
             
             
             </div>
+            <div className="container medium">
+            <h3>Recommended Courses for You </h3>
+          
+            <div className='program-progress'>
+              <div className='its-program'>  Fitness 101 </div>
+                <div className='its-progress'>  <ProgressBar width={userRegisterCourses ?userRegisterCourses.Fitness_101 : 0.0} /> </div>
+            </div>
+
+            <div className='program-progress'>
+              <div className='its-program'>  Best Program for Elderly </div>
+                <div className='its-progress'> <ProgressBar width={userRegisterCourses ?userRegisterCourses.Best_Program_for_Elderly : 0.0} /> </div>
+            </div>
+        
+            
+            
+            
+            </div>
         </div>
         <div className="row-3">
           <div className="container long">
@@ -357,6 +395,7 @@ const Dashboard = () => {
                 <tr><td style={{ "--size": 0.6}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
+
                 <tr><td style={{ "--size": 0.9}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
@@ -367,10 +406,25 @@ const Dashboard = () => {
                 <tr><td style={{ "--size": 0.6}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
                 <tr><td style={{ "--size": 0.6}}></td></tr>
+
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                <tr><td style={{ "--size": 0.6}}></td></tr>
+                
+                {/* The 31st day */}
+                <tr><td style={{ "--size": 0.9}}></td></tr>
+             
               </tbody>
           </table> 
-                  <div className="primary-axis"> Exercises </div> 
-                  <div className="data-1-axis"> Calories </div>
+                  <div className="primary-axis">Exercises Time Duration </div> 
+                  <div className="data-1-axis"> Calories Burnt (Daily)</div>
                   <div className="data-2-axis"> Distances  </div>
                 </div>
         </div>
