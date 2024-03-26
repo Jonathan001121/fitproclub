@@ -1,8 +1,20 @@
+import row from "../assets/row_noBg.png"
+import shoulderpress from "../assets/shoulderpress_noBg.png"
+import bicepcurl from "../assets/bicepcurl_noBg.png"
+import squat from "../assets/squat_noBg.png"
+import standingSideLegRaise from "../assets/standinglegraise_noBg.png"
+import deadlift from "../assets/deadlift_noBg.png"
+import lowerbackextension from "../assets/lowerbackextension_noBg.png"
+import lyinglegraise from "../assets/lyinglegraise_noBg.png"
+import bentoverrow from "../assets/bentoverrow_noBg.png"
+import plank from "../assets/plank_noBg.png"
+
 export const exercisesDetail = [
 {   
     number: "1",
     cid: 2,
     fbx: "animations/row.fbx",
+    image: row,
     category:"UpperBody-Back",
     exersise: "Row with Resistance Band",
     targetmuscle: "Rhomboids, Trapezius, and Rear Deltoids",
@@ -13,6 +25,7 @@ export const exercisesDetail = [
     number: "2",
     cid:2,
     fbx: "animations/shoulderpress.fbx",
+    image: shoulderpress,
     category:"UpperBody-Shoulder",
     exersise:"Dumbbell OverheadPress",
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
@@ -23,6 +36,7 @@ export const exercisesDetail = [
     number: "3",
     cid:2,
     fbx: "animations/bicep.fbx",
+    image: bicepcurl,
     category:"UpperBody-Arm",
     exersise:"Dumbbell Bicep Curl",
     targetmuscle: "Biceps",
@@ -33,6 +47,7 @@ export const exercisesDetail = [
     number: "4",
     cid:2,
     fbx: "animations/BackSquat.fbx",
+    image: squat,
     category:"LowerBody-Leg",
     exersise:"Squat with Weight",
     targetmuscle: "Quadriceps, Hamstrings, and Glutes",
@@ -43,6 +58,7 @@ export const exercisesDetail = [
     number: "5",
     cid:2,
     fbx: "animations/standingSideLegRaise.fbx",
+    image: standingSideLegRaise,
     category:"LowerBody-Leg",
     exersise:"Standing Side Leg Lift",
     targetmuscle: "Hip,Abductors and Core",
@@ -53,6 +69,7 @@ export const exercisesDetail = [
     number: "6",
     cid:1,
     fbx: "animations/deadlift.fbx",
+    image: deadlift,
     category:"CoreMuscle",
     exersise:"Deadlift with Dumbbell",
     targetmuscle: "Erector Spinae",
@@ -64,6 +81,7 @@ export const exercisesDetail = [
     number: "7",
     cid:2,
     fbx: "animations/lowerbackextension.fbx",
+    image: lowerbackextension,
     category:"CoreMuscle-Lower Back",
     exersise:"Lower Back Extension",
     targetmuscle: "Erector Spinae",
@@ -74,6 +92,7 @@ export const exercisesDetail = [
     number: "8",
     cid:2,
     fbx: "animations/lyinglegraise.fbx",
+    image: lyinglegraise,
     category:"CoreMuscle-Abdominal",
     exersise:"Lying Leg Raise",
     targetmuscle: "Rectus Abdominis and Obliques",
@@ -84,6 +103,7 @@ export const exercisesDetail = [
     number: "9",
     cid:1,
     fbx: "animations/BackSquat.fbx",
+    image: squat,
     category:"LowerBody-Leg",
     exersise:"Squat with Weight",
     targetmuscle: "Quadriceps, Hamstrings, and Glutes",
@@ -94,6 +114,7 @@ export const exercisesDetail = [
     number: "10",
     cid:1,
     fbx: "animations/shoulderpress.fbx",
+    image: shoulderpress,
     category:"UpperBody-Shoulder",
     exersise:"Dumbbell OverheadPress",
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
@@ -104,6 +125,7 @@ export const exercisesDetail = [
     number: "11",
     cid:1,
     fbx: "animations/bicep.fbx",
+    image: bicepcurl,
     category:"UpperBody-Arm",
     exersise:"Dumbbell Bicep Curl",
     targetmuscle: "Biceps",
@@ -114,6 +136,7 @@ export const exercisesDetail = [
     number: "12",
     cid: 1,
     fbx: "animations/bentoverrow.fbx",
+    image: bentoverrow,
     category:"UpperBody-Back",
     exersise: "Bent Over Row",
     targetmuscle: "Rhomboids, Trapezius, and Rear Deltoids",
@@ -124,6 +147,7 @@ export const exercisesDetail = [
     number: "13",
     cid:1,
     fbx: "animations/lyinglegraise.fbx",
+    image: lyinglegraise,
     category:"CoreMuscle-Abdominal",
     exersise:"Lying Leg Raise",
     targetmuscle: "Rectus Abdominis and Obliques",
@@ -134,6 +158,7 @@ export const exercisesDetail = [
     number: "14",
     cid:1,
     fbx: "animations/plank.fbx",
+    image: plank,
     category:"CoreMuscle-Abdominal",
     exersise:"Plank",
     targetmuscle: "Rectus Abdominis and Obliques",

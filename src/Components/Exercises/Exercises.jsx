@@ -32,6 +32,7 @@ const Exercises= () => {
                         category={exercise.category}
                         Instruction={exercise.Instruction}
                         fbx={exercise.fbx}
+                        image={exercise.image}
                  
                     /> 
                     </div>

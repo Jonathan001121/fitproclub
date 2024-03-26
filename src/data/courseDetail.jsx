@@ -1,5 +1,5 @@
-import elderly from "../assets/elderly.jpeg"
-import i101 from "../assets/101.jpeg"
+import elderly from "../assets/elderly.jpg"
+import i101 from "../assets/i101.jpg"
 export const courseDetail = [
     { 
         id: 1,

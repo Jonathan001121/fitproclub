@@ -28,11 +28,11 @@ const ExerciseCard= (props) => {
 
     return (
         <Card sx={{ minWidth:250, minHeight:450}}>
-            <Typography variant="h4">Exercise{props.num}</Typography>
+     
                 <CardMedia
-                    sx={{ height: 140 }}
-                    // image={image}
-                    title="green iguana"
+                    sx={{ height: 400, width: 330}}
+                    image={props.image}
+                    title="a"
                     />
 
                 <CardContent>
