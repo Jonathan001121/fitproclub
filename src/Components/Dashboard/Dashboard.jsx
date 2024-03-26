@@ -25,6 +25,7 @@ import axios from 'axios';
 import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
+import { color } from "framer-motion"
 
 
 
@@ -33,6 +34,8 @@ const Dashboard = () => {
   const [userRegisterCourses, setRegisterCourses] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const { cursor, changePosition } = useCursor();
+
+
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -192,32 +195,40 @@ const Dashboard = () => {
         </div>
         
         <div className="container small">
+
+             
+              <div className="metric-text">
               <img src={calories}></img>
+                <p className="bmi-label">Calories Burnt</p>
+                <div className="bmi-value">
+                  {/* <img src={increase}></img> */}
+                </div>
+              </div>
+           
               <Gauge
                   value={75}
                   startAngle={-110}
                   endAngle={110}
-                  style={{"color":"white"}}
+                  fill="white"
+              
                   sx={{
                     [`& .${gaugeClasses.valueText}`]: {
                       fontSize: 10,
                       transform: 'translate(0px, 0px)',
-                      fontColor: '#ffffff',
-                      fontColor : "white" 
+                      fill: 'white', // Explicitly set fill color
                
+                    },
+            
+                    [`& .${gaugeClasses.valueArc}`]: {
+                      fill: '#52b202',
                     },
                   }}
                   text={
                     ({ value }) => `${value} / 40000`
                   }
+           
                 />
-              <div className="metric-text">
-                <p className="bmi-label">Calories Burnt</p>
-                <div className="bmi-value">
-
-                  <img src={increase}></img>
-                </div>
-              </div>
+             
         </div>
 
         <div className="container small">
