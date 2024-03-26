@@ -27,7 +27,7 @@ const Home = () => {
             that is seen at any given moment. 
             It is specified in degrees and determines how "zoomed in" or "zoomed out" the camera's view is. A higher fov value results in a wider field of view, making objects appear smaller and further away, while a lower fov value results in a narrower field of view,*/}
 
-               <Canvas shadows camera={{ position: [0, 2, 30], fov: 21 }}>
+               <Canvas shadows camera={{ position: [0, 2, 4], fov: 50 }}>
                {/* <color attach="background" args={["#ececec"]} /> */}
                <Exp avatarProp={"animations/standRaise.fbx"}></Exp>
             </Canvas>

@@ -42,7 +42,7 @@ const Navnode = () => {
             <img src={left_arrow} alt="left arrow" />
          
     
-         
+  
             <RouteLink to="/home">
               <img src={home} alt="home" />
             </RouteLink>
