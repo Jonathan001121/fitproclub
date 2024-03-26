@@ -5,9 +5,10 @@
     width: 80px;
     height: 80px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     animation: glowing-border 2s infinite;
+    z-index: 999;
 }
 
 @keyframes glowing-border {
@@ -39,11 +40,11 @@
 
 
 .floating-nav {
+  padding-left: 0;
     z-index: 9999;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-
     text-decoration: none;
     color: black;
 
