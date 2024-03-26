@@ -1,8 +1,8 @@
 import React from 'react'
 import "./Hero.css"
 import hero_image from "../../assets/homepage_model.png"
-import infopageModel_1 from "../../assets/infopageModel_1.png";
-import infopageModel_2 from "../../assets/infopageModel_2.png";
+
+import infopageModel_2 from "../../assets/homepage.png";
 import hero_back from "../../assets/hero_image_back.png"
 import heart from "../../assets/icons/heart.png"
 import calories from "../../assets/icons/calories.png"
@@ -70,24 +70,10 @@ const Hero = () => {
 
       {/* Right Side */}
       <div className="right-h">
+      
+       
+          <img className="hero-img" src={infopageModel_2}  alt="" />
 
-        {/* heart rate */}
-        {/* <motion.div
-          initial={{ right: "-1rem" }}
-          whileInView={{ right: "4rem" }}
-          transition={transition}
-          className="heart-rate"
-        >
-          <img src={heart} alt="" />
-          <span>Heart Rate</span>
-          <span>116 bpm</span>
-        </motion.div> */}
-
-        {/* hero images */}
- 
-        <img className="hero-img" src={infopageModel_1} style={{ transform: 'translate(-130px)', height:"43%"}} alt="" />
-          <img className="hero-img" src={infopageModel_2}style={{ height:"42%", "margin-top": "1em"}}  alt="" />
-    
         <motion.img
             initial={{right: mobile? "11rem": '11rem' }}
           whileInView={{ right: "20rem" }}
