@@ -55,6 +55,7 @@ end = False
 count=0
 
 def gen(model):
+    
     previous_time = 0
     mpDraw = mp.solutions.drawing_utils
     my_pose = mp.solutions.pose
@@ -64,6 +65,7 @@ def gen(model):
 
     cap = cv2.VideoCapture(0)
     prev_keypoints = None
+    
    
     global count, start, middle, end
     start = False
@@ -79,6 +81,7 @@ def gen(model):
 
 
         if result.pose_world_landmarks:
+                
                 if prev_keypoints is not None:
                     result_pose_world_landmarks = list(result.pose_world_landmarks)  # Convert to list
                     for i, (prev_kp, kp) in enumerate(zip(prev_keypoints, result.pose_world_landmarks)):
@@ -90,47 +93,75 @@ def gen(model):
                         result.pose_world_landmarks[i].z = smoothed_kp_z
                     prev_keypoints = result.pose_world_landmarks
                 mpDraw.draw_landmarks(img, result.pose_landmarks, connections)
+                
               
                 
-
+                # bicep curl
                 if(model==1):
-                    print()
-                    #bicep
-                    # wrist,elbow, shoulder(left)
-                    elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(elbow_angles, 1))
+                    # wrist,elbow, shoulder(right)
+                    r_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
+                    angle_text = str(round(r_elbow_angles, 1))
                     x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
                     y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
                    
-                    #hip shoulder, elbow(left)
-                    shoulder_angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13])
-                    angle_text = str(round(shoulder_angles, 1))
-             
+                    # wrist,elbow, shoulder(left)
+                    l_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14],result.pose_world_landmarks.landmark[16])
+                    angle_text = str(round(l_elbow_angles, 1))
+                    x = int(result.pose_landmarks.landmark[14].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[14].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
 
+                    #hip shoulder, elbow(right)
+                    r_shoulder_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13])
+                    angle_text = str(round(r_shoulder_angles, 1))
                     x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
                     y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
-                    
-                    # if(angles<27 ):
-                    #     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)  # for angle in angles:
-                 
-                    # else:
-                    #     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)  # for angle in angles:
-                    #     print("wrong shoulder detected")
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
 
+
+                    #hip shoulder, elbow(left)
+                    l_shoulder_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14])
+                    angle_text = str(round(l_shoulder_angles, 1))
+                    x = int(result.pose_landmarks.landmark[12].x * img.shape[1]+20)
+                    y = int(result.pose_landmarks.landmark[12].y * img.shape[0]+20)
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+
+
+                    #shoulder, hip, knee(right)
+                    r_hip_angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    #shoulder, hip, knee(left)
+                    l_hip_angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[12],result.pose_landmarks.landmark[24],result.pose_landmarks.landmark[26])
+                    angle_text = str(round(l_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[24].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[24].y * img.shape[0])
+                 
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                  
+
+
+                    
+                    
                     # Start position
-                    if shoulder_angles <35  and elbow_angles > 160 and start==False:
+                    if l_elbow_angles > 140 and  r_elbow_angles > 140 and start==False:
                         start = True
                         print("Start flag done")  
                        
 
 
-                    if shoulder_angles <35  and elbow_angles < 45 and start == True and middle == False:
+                    if l_elbow_angles < 80 and  r_elbow_angles < 80 and start == True and middle == False:
                         middle = True 
                         print("MIddle flag done")
 
 
-                    if shoulder_angles <35  and elbow_angles > 160 and start == True and middle == True and end== False:
+                    if l_elbow_angles > 140 and  r_elbow_angles > 140 and start == True and middle == True and end== False:
                    
                         end = True
                         print("End flag done")
@@ -140,87 +171,105 @@ def gen(model):
                         end = False
                         print(count)
 
-                   
+
+
+                    if  r_shoulder_angles >40 :
+                        start = False
+                        middle = False
+                        end = False
+                        print("Resetting flags")
                     
-
-
-                   
+                    if  r_hip_angles < 155:
+                        start = False
+                        middle = False
+                        end = False
+                        print("Resetting flags")
                     
-                    
-
-
-
-
-
-
-
-
-
-
+                # row with resistance band
                 elif(model==2):
-                    #bicep for row 
-                    # wrist,elbow, shoulder(left)
-                    angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13],result.pose_landmarks.landmark[15])
-                    angle_text = str(round(angles, 1))
+                     # wrist,elbow, shoulder(right)
+                    r_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
+                    angle_text = str(round(r_elbow_angles, 1))
                     x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
                     y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    if(angles<80):
-                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                    else:
-                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                   
+                    # wrist,elbow, shoulder(left)
+                    l_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14],result.pose_world_landmarks.landmark[16])
+                    angle_text = str(round(l_elbow_angles, 1))
+                    x = int(result.pose_landmarks.landmark[14].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[14].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
 
-
-                    #hip shoulder, elbow(left) for row
-                    angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[13])
-                    angle_text = str(round(angles, 1))
-                    isFront = False
-                    if (int(result.pose_landmarks.landmark[13].x*img.shape[1]) < int(result.pose_landmarks.landmark[23].x*img.shape[1])):
-                        isFront = True
-                    # print(isFront)
+                    #hip shoulder, elbow(right)
+                    r_shoulder_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13])
+                    angle_text = str(round(r_shoulder_angles, 1))
                     x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
                     y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+
+                    #hip shoulder, elbow(left)
+                    l_shoulder_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14])
+                    angle_text = str(round(l_shoulder_angles, 1))
+                    x = int(result.pose_landmarks.landmark[12].x * img.shape[1]+20)
+                    y = int(result.pose_landmarks.landmark[12].y * img.shape[0]+20)
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+                    #shoulder, hip, knee(right)
+                    r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
                     
-                    if((angles<50 and angles>0 and isFront) or (angles<20 and angles>0 and not isFront)):
-                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)  # for angle in angles:
-                    else:
-                        cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)  # for angle in angles:
-               
-
-
-
-
-                #ear, shoulder, hip(left)
-                angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[7],result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[23])
-                angle_text = str(round(angles, 1))
-                x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                if(angles>180 and angles<200):
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                else:
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-
-                #shoulder, hip, knee(left)
-                angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[11],result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[25])
-                angle_text = str(round(angles, 1))
-                x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                if(angles>170 and angles<190):
+                    
+                    #shoulder, hip, knee(left)
+                    l_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26])
+                    angle_text = str(round(l_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[24].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[24].y * img.shape[0])
+                 
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                else:
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-
-                #hip, knee, ankle(left)
-                angles = calculate_joint_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[25],result.pose_landmarks.landmark[27])
-                angle_text = str(round(angles, 1))
-                x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
-                y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
-                if(angles>=170 and angles<180):
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                else:
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
+                  
 
 
+
+                      # Start position
+                    if r_elbow_angles > 140 and  r_shoulder_angles > 60 and start==False:
+                        start = True
+                        print("Start flag done")  
+                       
+
+
+                    if r_shoulder_angles < 50 and  r_elbow_angles < 100 and start == True and middle == False:
+                        middle = True 
+                        print("MIddle flag done")
+
+
+                    if r_elbow_angles > 140 and  r_shoulder_angles > 60 and start == True and middle == True and end== False:
+                   
+                        end = True
+                        print("End flag done")
+                        count = count + 1
+                        start = False
+                        middle = False
+                        end = False
+                        print(count)
+
+
+
+                    # if  r_elbow_angles <80 :
+                    #     start = False
+                    #     middle = False
+                    #     end = False
+                    #     print("Resetting flags")
+                    
+                    # if  r_hip_angles < 155:
+                    #     start = False
+                    #     middle = False
+                    #     end = False
+                    #     print("Resetting flags")
 
         current_time = time.time()
         fps = 1 / (current_time - previous_time)
@@ -249,7 +298,7 @@ def get_data():
 
 
 
-@app.route('/video_feed_for_curl')
+@app.route('/dumbbellbicepcurl')
 def video_feed_for_curl():
     """Video streaming route. Put this in the src attribute of an img tag."""
     print("curl is called ")
@@ -259,7 +308,7 @@ def video_feed_for_curl():
 
 
 
-@app.route('/video_feed_for_row')
+@app.route('/rowwithresistanceband')
 def video_feed_for_row():
     """Video streaming route. Put this in the src attribute of an img tag."""
     print("row is called ")

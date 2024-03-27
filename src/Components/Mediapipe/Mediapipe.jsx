@@ -15,8 +15,7 @@ const Mediapipe = () => {
   const location = useLocation();
   const fbx = location.state?.fbx;
   const exerciseName = location.state?.exerciseName;
-
-
+  const [path, setPath] = useState('');
   const [zAxis, setZAxis] = useState(3);
   const [camera, setCamera] = useState({ position: [0, 0, zAxis], fov: 45 });
 
@@ -24,14 +23,18 @@ const Mediapipe = () => {
 
 
 
-  useEffect(() => {
-    // Update the camera prop with the new z-axis value
-    const updatedCamera = { position: [0, 0, zAxis], fov: 45 };
-    // Update the camera prop in the Canvas component
-    setCamera(updatedCamera);
-    console.log("Latest z-axis value:", zAxis);
-  }, [zAxis]);
+  // useEffect(() => {
+  //   // Update the camera prop with the new z-axis value
+  //   const updatedCamera = { position: [0, 0, zAxis], fov: 45 };
+  //   // Update the camera prop in the Canvas component
+  //   setCamera(updatedCamera);
+  //   console.log("Latest z-axis value:", zAxis);
+  // }, [zAxis]);
 
+  useEffect(() => {
+    // const path= exerciseName.toLowerCase().replace(/\s/g, '');
+    setPath(exerciseName.toLowerCase().replace(/\s/g, ''));
+  },[path]);
   return (
     <div className="MediaPipePage">
   
@@ -66,7 +69,7 @@ const Mediapipe = () => {
 
       <div class="overlayContainer">
    
-        <img id="videoFeed" class="videoFeed" src="http://127.0.0.1:8000/video_feed_for_curl" />
+        <img id="videoFeed" class="videoFeed" src={`http://127.0.0.1:8000/${path}`} />
    
         <div class="textInfo">
    

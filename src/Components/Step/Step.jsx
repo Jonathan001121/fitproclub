@@ -110,7 +110,7 @@ return (
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '20px', px: 2 }}>
+        <TimelineContent sx={{ py: '10px', px: 2 }}>
           <Typography variant="h6" component="span">
             Start
           </Typography>
@@ -133,9 +133,32 @@ return (
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '50px', px: 2 }}>
+        <TimelineContent sx={{ py: '10px', px: 2 }}>
           <Typography variant="h6" component="span">
             Middle
+          </Typography>
+          <Typography><img src={bicepCurlEnd} style={{"width":"30%", "height":"30%"}}/></Typography>
+        </TimelineContent>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="text.secondary"
+        >
+          Step3
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+          <FlagIcon  color={endColor}/>
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '10px', px: 2 }}>
+          <Typography variant="h6" component="span">
+            End
           </Typography>
           <Typography><img src={bicepCurlEnd} style={{"width":"30%", "height":"30%"}}/></Typography>
         </TimelineContent>
