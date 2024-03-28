@@ -34,7 +34,7 @@ const GameCard = () => {
         <Card sx={{ maxWidth: 350, maxHeight: 450 ,minHeight: 600}}>
 
             <CardMedia
-                sx={{ height: 400, maxwidth: 200 }}
+                sx={{ height: 300, maxwidth: 200 }}
                 image={homepage_model}
                 title="homepage_model"
             />
