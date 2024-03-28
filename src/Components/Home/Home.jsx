@@ -29,7 +29,7 @@ const Home = () => {
 
                <Canvas shadows camera={{ position: [0, 2, 4], fov: 50 }}>
                {/* <color attach="background" args={["#ececec"]} /> */}
-               <Exp avatarProp={"animations/row.fbx"}></Exp>
+               <Exp avatarProp={"animations/error.fbx"}></Exp>
             </Canvas>
             </div>
 
