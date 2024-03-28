@@ -50,12 +50,13 @@ const Navnode = () => {
             <RouteLink to="/MyCourse">
             <img src={dumbell} alt="dumbell" />
             </RouteLink>
-            <RouteLink to="/dashboard">
-              <img src={user} alt="user" />
-            </RouteLink>
             <RouteLink to="/gameDirectory">
               <img src={gaming} alt="gaming" />
             </RouteLink>
+            <RouteLink to="/dashboard">
+              <img src={user} alt="user" />
+            </RouteLink>
+           
           </nav>
         </motion.div>
       )}

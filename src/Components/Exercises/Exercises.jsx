@@ -3,6 +3,7 @@ import {exercisesDetail} from "../../data/exercisesDetail"
 import "./Exercises.css"
 import { useLocation } from 'react-router-dom';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
+import Navnode from '../Navnode/Navnode'; 
 const Exercises= () => {
 
     const location = useLocation();
@@ -13,6 +14,7 @@ const Exercises= () => {
 
     return (
         <div className="ExerciseDirectory">
+              <Navnode /> 
           <div className="exercise-header">
             <span>Exercises</span>
             <span className="stroke-text">Description</span>
