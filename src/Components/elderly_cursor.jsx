@@ -6,6 +6,7 @@ const useCursor = () => {
   const changePosition = (e) => {
     cursor.current.style.top = `${e.clientY}px`;
     cursor.current.style.left = `${e.clientX}px`;
+    cursor.current.style.zIndex = '9999'
   };
 
   return { cursor, changePosition };

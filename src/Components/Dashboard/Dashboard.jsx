@@ -13,6 +13,7 @@ import body_fat from  "../../assets/icons/body_fat.png"
 import bloodPressure from  "../../assets/icons/blood-pressure.png"
 import greenWifi from  "../../assets/icons/green_wifi.png"
 import blackWifi from  "../../assets/icons/black_wifi1.png"
+import blankUser from "../../assets/blankUser.png"
 // ----------------------------------------
 
 import React, { useState, useEffect } from 'react';
@@ -25,7 +26,7 @@ import axios from 'axios';
 import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
-import { color } from "framer-motion"
+import { color } from "framer-motion";
 
 
 
@@ -124,7 +125,10 @@ const Dashboard = () => {
           <div className="personal-info">
 
            <div className="icon-part">
-              <div className="icon"><img src={Xavier}></img> </div>
+              <div className="icon"><img src={blankUser}></img> </div>
+
+
+
               <div className="name&id">
               <div className="name" >
               {userInventory?.name || '---'} </div>

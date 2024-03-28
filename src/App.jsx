@@ -8,6 +8,8 @@ import Home from './Components/Home/Home';
 import Exercises from './Components/Exercises/Exercises';
 import MyCourse from './Components/MyCourse/MyCourse';
 import Mediapipe from './Components/Mediapipe/Mediapipe';
+import GameDirectory from './Components/GameDirectory/GameDirectory';
+import CardioGame from './Components/CardioGame/CardioGame';
 import './App.css';
 
 function App() {
@@ -16,7 +18,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<InfoPage />} />
-          <Route path="/mycourse" element={<MyCourse />} />
+          {/* <Route path="/mycourse" element={<MyCourse />} /> */}
           <Route path="/exercise1" element={<Exercises />} />
           <Route path="/exercise2" element={<Exercises />} />
           <Route path="/login" element={<Login />} />
@@ -24,7 +26,9 @@ function App() {
           <Route path="/MyCourse" element={<MyCourse />} />
           <Route path="/home" element={<Home />} />
           <Route path="/mediapipe" element={<Mediapipe/>} />
-          
+          <Route path="/gameDirectory" element={<GameDirectory/>} />
+          <Route path="/cardiogame" element={<CardioGame/>} />
+       
         </Routes>
       </div>
     </BrowserRouter>

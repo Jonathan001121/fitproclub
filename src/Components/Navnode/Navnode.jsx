@@ -8,6 +8,7 @@ import dumbell from "../../assets/icons/dumbell_icon.png";
 import user from "../../assets/icons/user.png";
 import left_arrow from "../../assets/icons/leftArrow.png";
 import glow_list from "../../assets/icons/glow_list.png";
+import gaming from  "../../assets/icons/gaming.png";
 
 const Navnode = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,9 @@ const Navnode = () => {
             </RouteLink>
             <RouteLink to="/dashboard">
               <img src={user} alt="user" />
+            </RouteLink>
+            <RouteLink to="/gameDirectory">
+              <img src={gaming} alt="gaming" />
             </RouteLink>
           </nav>
         </motion.div>
