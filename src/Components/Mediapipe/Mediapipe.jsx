@@ -17,24 +17,12 @@ const Mediapipe = () => {
   const exerciseName = location.state?.exerciseName;
   const [path, setPath] = useState('');
   const [zAxis, setZAxis] = useState(3);
-  const [camera, setCamera] = useState({ position: [0, 0, zAxis], fov: 45 });
-
-
-
-
-
-  // useEffect(() => {
-  //   // Update the camera prop with the new z-axis value
-  //   const updatedCamera = { position: [0, 0, zAxis], fov: 45 };
-  //   // Update the camera prop in the Canvas component
-  //   setCamera(updatedCamera);
-  //   console.log("Latest z-axis value:", zAxis);
-  // }, [zAxis]);
 
   useEffect(() => {
     // const path= exerciseName.toLowerCase().replace(/\s/g, '');
     setPath(exerciseName.toLowerCase().replace(/\s/g, ''));
   },[path]);
+
   return (
     <div className="MediaPipePage">
   
@@ -47,7 +35,7 @@ const Mediapipe = () => {
         <h1 className="Welcome">{exerciseName}</h1>
         <span className="stroke-text">MediaPipe Pose</span>
         <div className="canvas-container ">
-          <Canvas shadows camera={camera}>
+          <Canvas shadows camera={{ position: [0, 0, {zAxis}], fov: 45 }}>
             <Exp avatarProp={fbx}></Exp>
           </Canvas>
           <div className="character-control-panel">

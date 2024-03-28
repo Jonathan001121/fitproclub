@@ -1,0 +1,28 @@
+
+
+.CardioGame {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    font-family: Roboto, sans-serif; 
+    font-weight: lighter ;
+    min-Height: 100vh;
+    min-Width: 100vw;
+    background: linear-gradient(45deg, rgba(7, 186, 144, 0.752) 85%, transparent 25%) 0 0,
+                linear-gradient(-45deg,rgba(7, 186, 144, 0.752) 50%, transparent 25%) 0 0,
+                linear-gradient(45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0,
+                linear-gradient(-45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0;
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    animation: wave 2s linear infinite;
+  }
+  
+  @keyframes wave {
+    0% {
+        background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    }
+    100% {
+        background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
+    }
+}
