@@ -35,7 +35,7 @@ const Mediapipe = () => {
         <h1 className="Welcome">{exerciseName}</h1>
         <span className="stroke-text">MediaPipe Pose</span>
         <div className="canvas-container ">
-          <Canvas shadows camera={{ position: [0, 0, {zAxis}], fov: 45 }}>
+          <Canvas shadows camera={{ position: [0, 0, 3], fov: 45 }}>
             <Exp avatarProp={fbx}></Exp>
           </Canvas>
           <div className="character-control-panel">
