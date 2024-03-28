@@ -14,6 +14,7 @@
     background-size: 50px 50px;
     background-position: 0 0, 25px 25px, 0 0, 25px 25px;
     animation: wave 2s linear infinite;
+   
 }
 
 @keyframes wave {
@@ -30,14 +31,29 @@
     background-color: rgba(0,0,0,0.5);
     width: 400px;
     padding: 40px;
-    border: 1px solid #dbdbdb;
+    border: 3px solid #ff8d58;
     /* background-color: #fff; */
-    border: 2px solid var(--lightorange);
+    /* border: 2px solid var(--lightorange); */
     border-radius: 10px;
     perspective: 800px;
     position: relative;
     transition: transform 0.5s;
+    animation: glowing-border 2s infinite;
   }
+  @keyframes glowing-border {
+    0% {
+        border-color: var(--lightorange);
+        box-shadow: 0 0 5px var(--lightorange), 0 0 10px var(--lightorange), 0 0 15px var(--lightorange), 0 0 20px var(--lightorange);
+    }
+    50% {
+        border-color: #ffa07a; /* A lighter shade of orange for the glow effect */
+        box-shadow: 0 0 10px #ffa07a, 0 0 20px #ffa07a, 0 0 30px #ffa07a, 0 0 40px #ffa07a;
+    }
+    100% {
+        border-color: var(--lightorange);
+        box-shadow: 0 0 5px var(--lightorange), 0 0 10px var(--lightorange), 0 0 15px var(--lightorange), 0 0 20px var(--lightorange);
+    }
+}
   
   
   .flipped {
@@ -75,7 +91,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 20px;
-    background-color: #0dce8dbf;
+    background-color: #2dffb9d6;
     color: #fff;
     font-weight: bold;
     border: none;
@@ -87,7 +103,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 20px;
-    background-color: #05b4c4bf;
+    background-color: #3df0fabf;
     color: #fff;
     font-weight: bold;
     border: none;
