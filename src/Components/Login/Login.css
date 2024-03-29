@@ -26,12 +26,16 @@
     }
 }
 
-  
+.biggerForm.flipped{
+  width: 60%;
+  min-width: 700px;
+}
   .biggerForm {
-    background-color: rgba(0,0,0,0.5);
-    width: 400px;
+    background-color: rgba(0,0,0,0.4);
+    width: 30%;
+    min-width: 500px;
     padding: 40px;
-    border: 3px solid #ff8d58;
+    border: 1px solid #ff8d58;
     /* background-color: #fff; */
     /* border: 2px solid var(--lightorange); */
     border-radius: 10px;
@@ -47,7 +51,7 @@
     }
     50% {
         border-color: #ffa07a; /* A lighter shade of orange for the glow effect */
-        box-shadow: 0 0 10px #ffa07a, 0 0 20px #ffa07a, 0 0 30px #ffa07a, 0 0 40px #ffa07a;
+        box-shadow: 0 0 120px #ffa07a, 0 0 20px #ffa07a, 0 0 30px #ffa07a, 0 0 40px #ffa07a;
     }
     100% {
         border-color: var(--lightorange);
@@ -61,19 +65,79 @@
   }
   .register-form {
     transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
   }
-  /* .register-form{
-    transform: rotateY(180deg);
+
+  .regForm-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   
-  .login-form{
-    transform: rotateY(180deg);
-  } */
+  .regForm-left {
+    width: 50%;
+  }
+  .regForm-right {
+    width: 50%;
+    margin-left: 20px;
+  }
+  .regForm-left input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  .regForm-left input[type="text"]:focus,
+  .regForm-left input[type="password"]:focus,
+  .regForm-left input[type="number"]:focus {
+    outline: none;
+    background-color: #e6e6e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+  }
+  
+  .regForm-right .regForm-left input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .regForm-right input[type="text"]:focus,
+  .regForm-right input[type="password"]:focus,
+  .regForm-right input[type="number"]:focus {
+    outline: none;
+    background-color: #e6e6e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+  }
+
+.regForm-left label,
+.regForm-right label {
+
+  margin-bottom: 30px;
+  font-weight: lighter;
+  color: white;
+}
   .login-heading {
     font-size: 28px;
     margin-bottom: 20px;
     text-align: center;
     color: white;
+    font-style: italic;
+    font-weight: border;
   }
   
   .login-input {

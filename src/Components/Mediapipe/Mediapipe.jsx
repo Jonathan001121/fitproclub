@@ -8,9 +8,10 @@ import Slider from '@mui/material/Slider';
 import axios from 'axios';
 import { Alert, AlertTitle , Collapse} from '@mui/material';
 import ExerciseDialog from '../ExerciseDialog/ExerciseDialog';
-
+import useCursor from "../elderly_cursor";
 const Mediapipe = () => {
-
+     // cursor
+     const { cursor, changePosition } = useCursor();
 
   const location = useLocation();
   const fbx = location.state?.fbx;
@@ -24,8 +25,8 @@ const Mediapipe = () => {
   },[path]);
 
   return (
-    <div className="MediaPipePage">
-  
+    <div className="MediaPipePage" onMouseMove={changePosition}>
+    <div className="cursor-style" ref={cursor}></div>
      
       <div className="MppPageHeader">
       {/* <Alert style ={{"display": "block"}}severity='error'>

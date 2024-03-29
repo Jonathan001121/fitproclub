@@ -31,7 +31,7 @@ const GameCard = () => {
 
 
     return (
-        <Card sx={{ maxWidth: 350, maxHeight: 450 ,minHeight: 600}}>
+        <Card sx={{ minWidth:250, minHeight:450, maxHeight:500}}>
 
             <CardMedia
                 sx={{ height: 300, maxwidth: 200 }}

@@ -67,56 +67,180 @@ const Login = () => {
       <div className={`biggerForm ${flipped ? 'flipped' : ''}`}>
         {flipped ? 
           (
-            <div className='register-form'>
-              <h2 className="login-heading">Welcome to SILFIS</h2>
-              <form onSubmit={handleSubmit}>
-                <input
-                 type="text"
-                 name="username"
-                 placeholder="Username"
-                 className="login-input"
-                 value={formData.username}
-                 onChange={handleChange}
-                />
-                   <input
-                 type="text"
-                 name="password"
-                 placeholder="Password"
-                 className="login-input"
-                 value={formData.password}
-                 onChange={handleChange}
-                />
-               <label for="quantity">Quantity (between 1 and 5):</label>
-                <input type="number" id="quantity" name="quantity" min="1" max="5" />
-                
-                <input
-                 type="text"
-                 name="username"
-                 placeholder="Username"
-                 className="login-input"
-                 value={formData.username}
-                 onChange={handleChange}
-                />
-                   <input
-                 type="text"
-                 name="username"
-                 placeholder="Username"
-                 className="login-input"
-                 value={formData.username}
-                 onChange={handleChange}
-                />
-                   <input
-                 type="text"
-                 name="username"
-                 placeholder="Username"
-                 className="login-input"
-                 value={formData.username}
-                 onChange={handleChange}
-                />
-                {/* Add other input fields similarly */}
-                <button type="submit" className="register-button">Register</button>
-              </form>
+          <div className='register-form'>
+            <h2 className="login-heading">Join SILVIS Club</h2>
+            <form onSubmit={handleSubmit}>
+            <div className="regForm-row">
+  <div className="regForm-left">
+    <label htmlFor="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="Username"
+      className="login-input"
+      value={formData.username}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Password"
+      className="login-input"
+      value={formData.password}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="age">Age</label>
+    <input
+      type="number"
+      id="age"
+      name="age"
+      placeholder="Age"
+      className="login-input"
+      value={formData.age}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="gender">Gender</label>
+    <select
+      id="gender"
+      name="gender"
+      className="login-input"
+      value={formData.gender}
+      onChange={handleChange}
+    >
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <label htmlFor="city">City</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      placeholder="City"
+      className="login-input"
+      value={formData.city}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="country">Country</label>
+    <input
+      type="text"
+      id="country"
+      name="country"
+      placeholder="Country"
+      className="login-input"
+      value={formData.country}
+      onChange={handleChange}
+    />
+  </div>
+
+  <div className="regForm-right">
+    <label htmlFor="weight">Weight (kg)</label>
+    <input
+      type="number"
+      id="weight"
+      name="weight"
+      placeholder="Weight (kg)"
+      className="login-input"
+      value={formData.weight}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="height">Height (cm)</label>
+    <input
+      type="number"
+      id="height"
+      name="height"
+      placeholder="Height (cm)"
+      className="login-input"
+      value={formData.height}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="muscle_mass">Muscle Mass (kg)</label>
+    <input
+      type="number"
+      id="muscle_mass"
+      name="muscle_mass"
+      placeholder="Muscle Mass (kg)"
+      className="login-input"
+      value={formData.muscle_mass}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="body_fat_mass">Body Fat Mass (kg)</label>
+    <input
+      type="number"
+      id="body_fat_mass"
+      name="body_fat_mass"
+      placeholder="Body Fat Mass (kg)"
+      className="login-input"
+      value={formData.body_fat_mass}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="calories">Calories</label>
+    <input
+      type="number"
+      id="calories"
+      name="calories"
+      placeholder="Calories"
+      className="login-input"
+      value={formData.calories}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="heart_rate">Heart Rate</label>
+    <input
+      type="number"
+      id="heart_rate"
+      name="heart_rate"
+      placeholder="Heart Rate"
+      className="login-input"
+      value={formData.heart_rate}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="level">Level</label>
+    <input
+      type="text"
+      id="level"
+      name="level"
+      placeholder="Level"
+      className="login-input"
+      value={formData.level}
+      onChange={handleChange}
+    />
+
+    <label htmlFor="desired_body_part">Desired Body Part</label>
+    <input
+      type="text"
+      id="desired_body_part"
+      name="desired_body_part"
+      placeholder="Desired Body Part"
+      className="login-input"
+      value={formData.desired_body_part}
+      onChange={handleChange}
+    />
+  </div>
+</div>
+
+
+         
+     
+       
+              {/* Add other input fields or select options similarly */}
+              <button type="submit" className="register-button">Register</button>
+            </form>
             </div>
+        
           ) : 
           (
             <div className='login-form'>

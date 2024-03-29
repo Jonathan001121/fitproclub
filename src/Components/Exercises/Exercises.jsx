@@ -4,7 +4,15 @@ import "./Exercises.css"
 import { useLocation } from 'react-router-dom';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import Navnode from '../Navnode/Navnode'; 
+import useCursor from "../elderly_cursor";
 const Exercises= () => {
+
+
+
+    // cursor
+    const { cursor, changePosition } = useCursor();
+
+
 
     const location = useLocation();
     const exerciseId = location.pathname.split('/exercise').pop(); // Extract the exercise ID from the path
@@ -13,7 +21,8 @@ const Exercises= () => {
 
 
     return (
-        <div className="ExerciseDirectory">
+        <div className="ExerciseDirectory" onMouseMove={changePosition}>
+                <div className="cursor-style" ref={cursor}></div>
               <Navnode /> 
           <div className="exercise-header">
             <span>Exercises</span>
