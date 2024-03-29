@@ -29,18 +29,16 @@ const Mediapipe = () => {
     <div className="cursor-style" ref={cursor}></div>
      
       <div className="MppPageHeader">
-      {/* <Alert style ={{"display": "block"}}severity='error'>
-          <AlertTitle> Warning</AlertTitle>
-          This is the warning.
-        </Alert> */}
+
         <h1 className="Welcome">{exerciseName}</h1>
+
         <span className="stroke-text">MediaPipe Pose</span>
         <div className="canvas-container ">
           <Canvas shadows camera={{ position: [0, 0, 3], fov: 45 }}>
             <Exp avatarProp={fbx}></Exp>
           </Canvas>
           <div className="character-control-panel">
-          <ExerciseDialog />
+
           <Slider
             defaultValue={3}
             value={zAxis}
@@ -56,17 +54,33 @@ const Mediapipe = () => {
         </div>
       </div>
 
+      <Alert style ={{"position": "absolute", "margin-left":"20%","width":"50%", "padding":0}}severity='error'>
+
+          <AlertTitle > Alert</AlertTitle>
+        
+          <div style={{"display":"flex", "flex-direction":"row","justify-content":"space-between","width":"100%", "margin-left": "0"}}  > 
+          <p>  No Error Detected</p>
+       
+
+          <ExerciseDialog  />
+          </div>
+        
+        </Alert>
       <div class="overlayContainer">
    
         <img id="videoFeed" class="videoFeed" src={`http://127.0.0.1:8000/${path}`} />
    
         <div class="textInfo">
    
-          <Step />
+         
+        <Step />
+         
+     
   
-    
+          
 
         </div>
+       
    
     </div>
     </div>

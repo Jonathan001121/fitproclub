@@ -20,7 +20,7 @@ export default function ExerciseDialog() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} style={{"margin-left":"30em","margin-right":"0", "z-index": "999"}}>
         Open alert dialog
       </Button>
       <Dialog

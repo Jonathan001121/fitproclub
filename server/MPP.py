@@ -352,7 +352,7 @@ def gen(model):
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
                     # hip, knee(right), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    angle_text = str(round(r_hip_angles, 1))
+                    angle_text = str(round(r_knee_angles, 1))
                     x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
                     y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
                     
@@ -481,6 +481,62 @@ def gen(model):
                     #     print("Resetting flags")
 
 
+                #Standing Side Leg Raise 
+                elif (model==5):  
+                    # hip, knee(left), ankle
+                    l_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[28])
+                    angle_text = str(round(l_knee_angles, 1))
+                    x = int(result.pose_landmarks.landmark[26].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[26].y * img.shape[0])
+                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                       # hip, knee(left), ankle
+                    r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
+                    angle_text = str(round(r_knee_angles, 1))
+                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+
+                    hip_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[24])
+                    angle_text = str(round(hip_ppd_angle, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
+                
+                    #shoulder, hip, knee(right)
+                    r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    
+                    # Start position
+                    # if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start==False:
+                    #     start = True
+                    #     print("Start flag done")  
+                       
+
+
+                    # # Middle position
+                    # if l_elbow_angles > 150 and  r_elbow_angles >150  and l_shoulder_angles >140 and  r_shoulder_angles> 140 and start == True and middle == False:
+                    #     middle = True 
+                    #     print("MIddle flag done")
+
+
+                    # # End position
+                    # if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start == True and middle == True and end== False:
+                   
+                    #     end = True
+                    #     print("End flag done")
+                    #     count = count + 1
+                    #     start = False
+                    #     middle = False
+                    #     end = False
+                    #     print(count)
+
+                   
 
 
 
@@ -541,6 +597,13 @@ def video_feed_for_dumbbelloverheadpress():
     """Video streaming route. Put this in the src attribute of an img tag."""
     print("dumbbelloverheadpress is called ")
     return Response(gen(4),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/standingsideleglift')
+def video_feed_for_standingsideleglift():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    print("standingsideleglift is called ")
+    return Response(gen(5),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
