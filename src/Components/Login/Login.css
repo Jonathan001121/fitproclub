@@ -70,6 +70,7 @@
     justify-content: center;
     align-items: center;
     min-width: 100%;
+    color:white;
   }
 
   .regForm-row {
@@ -91,7 +92,7 @@
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    color: #333;
+  
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
   }
@@ -131,6 +132,25 @@
   font-weight: lighter;
   color: white;
 }
+
+/*  */
+.regForm-left input[type="text"]:-webkit-autofill:focus,
+.regForm-left input[type="password"]:-webkit-autofill:focus,
+.regForm-left input[type="number"]:-webkit-autofill:focus {
+  background-color: transparent;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.regForm-right input[type="text"]:-webkit-autofill:focus,
+.regForm-right input[type="password"]:-webkit-autofill:focus,
+.regForm-right input[type="number"]:-webkit-autofill:focus {
+  background-color: transparent;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+
   .login-heading {
     font-size: 28px;
     margin-bottom: 20px;
