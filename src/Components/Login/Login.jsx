@@ -439,7 +439,7 @@ const Login = () => {
                 <div className="login-line"></div>
               </div>
               <div className="login-options">
-                <button className="login-option">Log in with Facebook</button>
+              <Link to="/dashboard" style={{ textDecoration: 'none' }}>  <button className="login-option">Log in with Facebook</button></Link>
                 <button className="login-option">Forgot Password?</button>
               </div>
             </div>
@@ -449,7 +449,7 @@ const Login = () => {
       </div>
       <div className="login-signup">
         {flipped ? (
-          <>Already have an account? <a href="#" className="signup-link" onClick={flipForm}>Login</a></>
+          <>Already have an account? <a href="" className="signup-link" onClick={flipForm}>Login</a></>
         ) : (
           <>Don't have an account? <a href="#" className="signup-link" onClick={flipForm}>Register</a></>
         )}
