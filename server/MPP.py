@@ -491,7 +491,7 @@ def gen(model):
                     
                     cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
                     
-                       # hip, knee(left), ankle
+                    # hip, knee(left), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
                     angle_text = str(round(r_knee_angles, 1))
                     x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
@@ -511,32 +511,50 @@ def gen(model):
                     angle_text = str(round(r_hip_angles, 1))
                     x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
                     y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                
                     # Start position
-                    # if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start==False:
-                    #     start = True
-                    #     print("Start flag done")  
-                       
+                    if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start==False: 
+                        start = True
+                        print("Start flag done")  
+                    
+                    # Middle position
+                    if r_hip_angles < 135  and start==True and middle==False: 
+                        middle = True
+                        print("middle flag done")  
 
 
-                    # # Middle position
-                    # if l_elbow_angles > 150 and  r_elbow_angles >150  and l_shoulder_angles >140 and  r_shoulder_angles> 140 and start == True and middle == False:
-                    #     middle = True 
-                    #     print("MIddle flag done")
+                    # End position
+                    if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start == True and middle == True and end == False:
+                        end = True
+                        print("End flag done")
+                        count = count + 1
+                        start = False
+                        middle = False
+                        end = False
+                        print(count)
 
 
-                    # # End position
-                    # if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start == True and middle == True and end== False:
-                   
-                    #     end = True
-                    #     print("End flag done")
-                    #     count = count + 1
-                    #     start = False
-                    #     middle = False
-                    #     end = False
-                    #     print(count)
 
-                   
+                    if l_knee_angles < 140 :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Left Knee NOT STRAIGHT ")  
+
+                    if r_knee_angles < 140 :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Right Knee NOT STRAIGHT ")  
+                    
+                    if hip_ppd_angle > 130: 
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Torsor NOT STRAIGHT ")  
+
+
 
 
 
