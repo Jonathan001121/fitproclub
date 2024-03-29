@@ -94,18 +94,7 @@ const Login = () => {
     window.location.reload(); // Refresh the page
   };
 
-  const handleLoginDialogConfirm = () => {
-    // Check if the response was successful (status 200)
-    if (response.status === 200) {
-      // Redirect to '/dashboard'
-      
-      setDialogOpen(false); // Close the dialog
-      window.location.href = '/dashboard';
-    } else {
-      // Refresh the page
-      window.location.reload();
-    }
-  };
+ 
 
 
   const handleLogin = async (e) => {
@@ -372,7 +361,9 @@ const Login = () => {
               </Dialog>
             </div>
 
-          ) :
+          ) 
+          :
+
           (
             <div className='login-form'>
               <h2 className="login-heading">Welcome to SILFIS</h2>
@@ -433,6 +424,8 @@ const Login = () => {
             )}
           </DialogActions>
               </Dialog>
+
+
               <div className="login-or">
                 <div className="login-line"></div>
                 <div className="login-or-text">OR</div>
@@ -449,9 +442,9 @@ const Login = () => {
       </div>
       <div className="login-signup">
         {flipped ? (
-          <>Already have an account? <a href="" className="signup-link" onClick={flipForm}>Login</a></>
+          <>Already have an account? <a className="signup-link" onClick={flipForm}>Login</a></>
         ) : (
-          <>Don't have an account? <a href="#" className="signup-link" onClick={flipForm}>Register</a></>
+          <>Don't have an account? <a className="signup-link" onClick={flipForm}>Register</a></>
         )}
       </div>
     </div>
