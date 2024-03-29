@@ -10,11 +10,19 @@ const Login = () => {
   const [flipped, setFlipped] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+
   const flipForm = () => {
     setFlipped(!flipped);
   };
 
-  // Define formData state
+  // Define username and password state for register
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Define formData state for register
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,18 +49,15 @@ const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const requiredFields = ['username', 'password', 'age', 'gender', 'email', 'height', 'level']; // Add the names of all required fields
+    const missingFields = requiredFields.filter(field => !formData[field]);
 
- 
-  const requiredFields = ['username','password','age', 'gender', 'email', 'height','level']; // Add the names of all required fields
-  const missingFields = requiredFields.filter(field => !formData[field]);
-
-  if (missingFields.length > 0) {
-    const missingFieldsMessage = `Missing input on required fields: ${missingFields.join(', ')}. Please fill in all required fields.`;
-    setDialogOpen(true); 
-    setResponseMessage(missingFieldsMessage); 
-    return; 
-  }
-
+    if (missingFields.length > 0) {
+      const missingFieldsMessage = `Missing input on required fields: ${missingFields.join(', ')}. Please fill in all required fields.`;
+      setDialogOpen(true);
+      setResponseMessage(missingFieldsMessage);
+      return;
+    }
 
     try {
       const response = await fetch('http://127.0.0.1:9000/register', {
@@ -81,13 +86,59 @@ const Login = () => {
       // Handle errors, e.g., show an error message
     }
   };
+
+
+
   const handleDialogConfirm = () => {
     setDialogOpen(false); // Close the dialog
     window.location.reload(); // Refresh the page
   };
 
+  const handleLoginDialogConfirm = () => {
+    // Check if the response was successful (status 200)
+    if (response.status === 200) {
+      // Redirect to '/dashboard'
+      
+      setDialogOpen(false); // Close the dialog
+      window.location.href = '/dashboard';
+    } else {
+      // Refresh the page
+      window.location.reload();
+    }
+  };
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://127.0.0.1:9000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+        const data = await response.json();
+        setResponseMessage(data.message);
+        setDialogOpen(true);
+      } else {
+        setIsLoggedIn(false);
+        throw new Error('Login Failed');
+      }
+    } catch (error) {
+      setIsLoggedIn(false);
+      setResponseMessage(error.message);
+      setDialogOpen(true);
+    }
+  };
+
+
   return (
-    <div className="login-container" onMouseMove={changePosition}>
+    <div className="loginRegisterPage" onMouseMove={changePosition}>
       <div className="cursor-style" ref={cursor}> </div>
 
 
@@ -305,7 +356,7 @@ const Login = () => {
                   },
                 }}
               >
-                <DialogTitle sx={{fontWeight: 'bolder' }}>Response Message</DialogTitle>
+                <DialogTitle sx={{ fontWeight: 'bolder' }}>Response Message</DialogTitle>
                 <DialogContent>
                   {typeof responseMessage === 'string' ? (
                     <p>{responseMessage}</p>
@@ -314,7 +365,7 @@ const Login = () => {
                   )}
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleDialogConfirm} variant="contained" color="primary"sx={{ background: 'none', color: '#42cffe' }}>
+                  <Button onClick={handleDialogConfirm} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
                     Confirm
                   </Button>
                 </DialogActions>
@@ -325,13 +376,63 @@ const Login = () => {
           (
             <div className='login-form'>
               <h2 className="login-heading">Welcome to SILFIS</h2>
-              <form>
-                <input type="text" placeholder="Username" className="login-input" />
-                <input type="password" placeholder="Password" className="login-input" />
-                <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-                  <button type="submit" className="login-button">Log In</button>
-                </Link>
+              <form onSubmit={handleLogin}>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  className="login-input"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="login-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button type="submit" className="login-button">Log In</button>
               </form>
+              <Dialog
+                open={dialogOpen}
+                onClose={() => setDialogOpen(false)}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: 'rgba(10, 10, 10, 0.8)',
+                    color: 'white',
+                    fontWeight: 'lighter'
+                  },
+                }}
+              >
+                <DialogTitle sx={{ fontWeight: 'bolder' }}>Login</DialogTitle>
+                <DialogContent>
+                  {typeof responseMessage === 'string' ? (
+                    <p>{responseMessage}</p>
+                  ) : (
+                    <p>An error occurred. Please try again.</p>
+                  )}
+                </DialogContent>
+             <DialogActions>
+            {isLoggedIn ? (
+              <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                <Button variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
+                  Confirm
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                onClick={handleDialogConfirm}
+                variant="contained"
+                color="primary"
+                sx={{ background: 'none', color: '#42cffe' }}
+              >
+                Confirm
+              </Button>
+            )}
+          </DialogActions>
+              </Dialog>
               <div className="login-or">
                 <div className="login-line"></div>
                 <div className="login-or-text">OR</div>
@@ -342,6 +443,7 @@ const Login = () => {
                 <button className="login-option">Forgot Password?</button>
               </div>
             </div>
+
           )
         }
       </div>

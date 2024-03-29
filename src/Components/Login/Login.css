@@ -1,5 +1,5 @@
 
-.login-container {
+.loginRegisterPage {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,7 +134,7 @@
 }
 
 /*  */
-.regForm-left input[type="text"]:-webkit-autofill:focus,
+/* .regForm-left input[type="text"]:-webkit-autofill:focus,
 .regForm-left input[type="password"]:-webkit-autofill:focus,
 .regForm-left input[type="number"]:-webkit-autofill:focus {
   background-color: transparent;
@@ -145,10 +145,10 @@
 .regForm-right input[type="text"]:-webkit-autofill:focus,
 .regForm-right input[type="password"]:-webkit-autofill:focus,
 .regForm-right input[type="number"]:-webkit-autofill:focus {
-  background-color: transparent;
+  background-color: transparent !important;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, box-shadow 0.3s;
-}
+} */
 
 
   .login-heading {
@@ -168,7 +168,17 @@
     color: white;
     border-radius: 4px;
     font-size: 16px;
-     background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .login-input:focus{
+    /* background-color: rgb(255, 255, 255); */
+    color:rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255) !important;
+  }
+  .login-input:-webkit-autofill:focus{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color:black;
   }
   
   .login-button {
