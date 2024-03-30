@@ -22,7 +22,7 @@ const Mediapipe = () => {
     
     setTimeout(() => {
       setShowImage(true);
-    }, 1000);
+    }, 10000);
 
   };
   const handleStart = () => {
@@ -117,7 +117,7 @@ const renderTime = ({ remainingTime }) => {
                 isPlaying={isStart}
                 duration={select}
                 colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
-                onComplete={() => [false, 10000]}
+                onComplete={() => [false, 1000]}
                 size={380}
                 className="countdownTimer"
               >
