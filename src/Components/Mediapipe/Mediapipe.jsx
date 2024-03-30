@@ -11,14 +11,15 @@ import ExerciseDialog from '../ExerciseDialog/ExerciseDialog';
 import useCursor from "../elderly_cursor";
 const Mediapipe = () => {
      // cursor
-     const { cursor, changePosition } = useCursor();
-
+  const { cursor, changePosition } = useCursor();
+   
   const location = useLocation();
   const fbx = location.state?.fbx;
   const exerciseName = location.state?.exerciseName;
   const [path, setPath] = useState('');
   const [zAxis, setZAxis] = useState(3);
-
+  const num = location.state?.num;
+  console.log(num);
   useEffect(() => {
     // const path= exerciseName.toLowerCase().replace(/\s/g, '');
     setPath(exerciseName.toLowerCase().replace(/\s/g, ''));
@@ -62,7 +63,7 @@ const Mediapipe = () => {
           <p>  No Error Detected</p>
        
 
-          <ExerciseDialog  />
+          <ExerciseDialog num={num} />
           </div>
         
         </Alert>

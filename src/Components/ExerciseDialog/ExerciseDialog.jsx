@@ -6,11 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import img from '../../assets/12.png';
-
-export default function ExerciseDialog() {
+import ErrorCard from '../ErrorCard/ErrorCard';
+export default function ExerciseDialog(props) {
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
+  console.log(props.num)
+  const handleClickOpen = (props) => {
     setOpen(true);
   };
 
@@ -31,18 +31,15 @@ export default function ExerciseDialog() {
         fullWidth="xl"
         maxWidth="xl"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Exercise Key Points"}
-        </DialogTitle>
-        <DialogContent>
 
-            <img src={img} alt="exercise key points" />
+        <DialogContent>
+          <ErrorCard num={props.num}/>
           <DialogContentText id="alert-dialog-description">
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            Got it!
           </Button>
         </DialogActions>
       </Dialog>

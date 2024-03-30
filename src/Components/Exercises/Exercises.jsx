@@ -38,7 +38,7 @@ const Exercises= () => {
                 return (
                     <div className="AnExerciseCard">
                     <ExerciseCard
-                        num={num}
+                        num={exercise.number}
                         exercise={exercise.exersise}
                         category={exercise.category}
                         Instruction={exercise.Instruction}
