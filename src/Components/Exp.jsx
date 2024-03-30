@@ -6,7 +6,7 @@ export const Exp = (props) => {
 
   return (
     <>
-      <OrbitControls enablePan={true} enableZoom={false} enableRotate={true} />
+      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       <group position-y={0}>
     
       <Avatar avatarProp={avatarProp} />

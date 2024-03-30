@@ -273,7 +273,7 @@ const Login = () => {
                       onChange={handleChange}
                     />
 
-                    <label htmlFor="calories">Calories (kcal)</label>
+                    {/* <label htmlFor="calories">Calories (kcal)</label>
                     <input
                       type="number"
                       id="calories"
@@ -293,7 +293,7 @@ const Login = () => {
                       className="login-input"
                       value={formData.heart_rate}
                       onChange={handleChange}
-                    />
+                    /> */}
 
                     <label htmlFor="level">Level  *</label>
 
@@ -331,8 +331,8 @@ const Login = () => {
                   checked={formData.consentCheckbox || false}
                   onChange={handleChange}
                 />
-                <label htmlFor="consentCheckbox" style={{ "font-weight": "lighter" }}>I consent to receiving announcement emails</label>
-                <button type="submit" className="register-button">Register</button>
+                <label htmlFor="consentCheckbox" style={{ "font-weight": "lighter" ,"font-size":"12px", "margin" :"0px"}}>I consent to receiving announcement emails</label>
+                <button type="submit" className="register-button" style={{ "margin" :"0px"}}>Register</button>
               </form>
               <Dialog
                 open={dialogOpen}
