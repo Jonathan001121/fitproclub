@@ -126,6 +126,7 @@
 .large {
   width:     100%;
   height:    100%;
+  
 }
 
 .medium {
@@ -170,15 +171,10 @@
     justify-content: space-between;
 }
 
-.personal-info{
+.profile{
   display: flex;
   flex-direction: column;
-  align-items: start ;
-}
-.info img {
-  width:  20px;
-  height: 20px;
-  margin: 3px ;
+  align-items: flex-start;
 }
 
 .icon-part{
@@ -207,13 +203,19 @@
   display: flex;
   flex-direction: row;
   /* font-size: 13px; */
-  font-size:  max(0.8vw, 13px);
+  font-size:  max(0.7vw, 12px);
   align-items: center;
   padding: 2px;
-  margin-left: 30px;
+  margin-left: 40px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
+.info img {
+  width:  20px;
+  height: 20px;
+  margin: 3px ;
+}
+
 .info p {
   margin-left: 10px;
 }

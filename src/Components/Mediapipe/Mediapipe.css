@@ -4,7 +4,7 @@
   justify-content: space-between;
   flex-direction: row;
   height: 100vh;
-  font-family: Roboto, sans-serif; 
+  font-family: Roboto;
   font-weight: lighter ;
   min-Height: 100vh;
   min-Width: 100vw;
@@ -16,37 +16,102 @@
   background-position: 0 0, 25px 25px, 0 0, 25px 25px;
   animation: wave 2s linear infinite;
 }
+.MppPageLeft{
+  width:20%;
+}
+
+.MppPageMiddle{
+  width:65%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+  
+
 .overlayContainer {
     display: flex;
     height: 100vh;
-    z-index: 999;
+    /* z-index: 999; */
     margin:10px;
-    flex-direction: row;
-  }
-  .MppPageStructure{
-    display: flex;
     flex-direction: column;
-  }
-  .MppPageHeader{
-    width:20%;
-  }
-  
-  .textInfo {
-    width: 90%;
-    height: 90%;
+    width :15%;
+    height:90%;
+
 
     background-color: white;
-    color: black;
-    font-size: 16px;
-
     border-radius: 10px;
-
   }
 
-  .videoFeed{
-    margin-top:100px;
-    width:70%;
-    height: 80%;
+ 
+  
+  .textInfo{
+    height:80%;
+    color: black;
+    font-size: 16px;
+ 
+  }
+  .countDownField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    width: 800px;
+    height: 800px;
+    width :100%;
+
+      position: relative;
+
+  }
+  .countdownTimer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .startButton {
+    border-radius: 10px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    z-index: 999;
+  }
+  .startButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .startButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .startButton:hover span {
+    padding-right: 25px;
+  }
+  
+  .startButton:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .countDownField .react-countdown-circle-timer {
+    width: 200px; /* Adjust the width as needed */
+    height: 600px; /* Adjust the height as needed */
   }
   .canvas-container{
     height:70%
@@ -68,17 +133,6 @@
 
   }
 
-
-
-
-
-
-
-  h1 {
-    font-family: "Roboto";
-    text-align: center;
-    margin-bottom: 40px;
-  }
   
   .timer-wrapper {
     display: flex;
@@ -102,15 +156,20 @@
     font-size: 40px;
   }
   
-  .info {
+  /* .info {
     max-width: 360px;
     margin: 40px auto 0;
     text-align: center;
     font-size: 16px;
-  }
+  } */
   
   .button-wrapper {
     text-align: center;
     margin-top: 40px;
   }
-  
+
+  #videoFeed{
+    width:100%;
+    height: 100%;
+    margin-top: 50px;
+  }

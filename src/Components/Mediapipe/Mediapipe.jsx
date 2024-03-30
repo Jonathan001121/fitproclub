@@ -16,11 +16,13 @@ const Mediapipe = () => {
   const [showImage, setShowImage] = useState(false);
   const [select, setSelect] = useState(10);
   const [isStart,setisStart]=useState(false);
+  const [timer, setTimer] = React.useState(0);
+
   const startTimer = () => {
     
     setTimeout(() => {
       setShowImage(true);
-    }, 10000);
+    }, 1000);
 
   };
   const handleStart = () => {
@@ -61,7 +63,7 @@ const renderTime = ({ remainingTime }) => {
     <div className="MediaPipePage" onMouseMove={changePosition}>
     <div className="cursor-style" ref={cursor}></div>
      
-      <div className="MppPageHeader">
+      <div className="MppPageLeft">
 
         <h1 className="Welcome">{exerciseName}</h1>
 
@@ -87,52 +89,63 @@ const renderTime = ({ remainingTime }) => {
         </div>
       </div>
 
-      <Alert style ={{"position": "absolute", "margin-left":"20%","width":"50%", "padding":0}}severity='error'>
 
-          <AlertTitle > Alert</AlertTitle>
 
-        
-          <div style={{"display":"flex", "flex-direction":"row","justify-content":"space-between","width":"100%", "margin-left": "0"}}  > 
-          <p>  No Error Detected</p>
-       
+      <div className="MppPageMiddle">
+        <div className="alertPanel">
+          <Alert severity='error'>
+              <AlertTitle > Alert</AlertTitle>
+              <div style={{"display":"flex", "flex-direction":"row","justify-content":"space-between","width":"100%", "margin-left": "0"}}  > 
+              <p>  No Error Detected</p>
+              <ExerciseDialog num={num} />
+              </div>
+          </Alert>
+        </div>
+    {
+      console.log(isStart)
+    }
+        <div className="MainPartMMP">
+          {showImage ? (
+            <div className="videoFeed">
+              <img id="videoFeed" src={`http://127.0.0.1:8000/${path}`} />
+            </div>
+          ) : (
+            <div className="countDownField">
+            {isStart ? (
+              <CountdownCircleTimer
+                key={timer}
+                isPlaying={isStart}
+                duration={select}
+                colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
+                onComplete={() => [false, 1000]}
+                size={380}
+                className="countdownTimer"
+              >
+                {renderTime}
+              </CountdownCircleTimer>
+            ) : (
 
-          <ExerciseDialog num={num} />
+              <button className="startButton" onClick={handleStart}>
+            <span>Start  </span>
+              </button>
+            )}
           </div>
-        
-        </Alert>
-      <div class="overlayContainer">
-  
-   
-      {showImage ? (
-        <img id="videoFeed" className="videoFeed" src={`http://127.0.0.1:8000/${path}`} />
-      ) : (
-        <div className="videoFeed" >
-          <Button variant="contained" onClick={handleStart}>Start</Button>
-          <CountdownCircleTimer
-            isPlaying={isStart}
-            duration={select}
-            colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
-            onComplete={() => [false, 1000]}
-          >
-            {renderTime}
-          </CountdownCircleTimer>
-        </div>
-      )}
-        
-
-        <div class="textInfo">
-   
-         
-        <Step />
-         
-     
-  
           
+          )}
+        </div>
+      </div>
+        
 
+   
+   
+        <div class="overlayContainer">
+        <div class="textInfo">
+        <Step />
+        </div>
         </div>
        
    
-    </div>
+
     </div>
   );
 };
