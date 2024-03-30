@@ -117,7 +117,7 @@ const renderTime = ({ remainingTime }) => {
                 isPlaying={isStart}
                 duration={select}
                 colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
-                onComplete={() => [false, 1000]}
+                onComplete={() => [false, 10000]}
                 size={380}
                 className="countdownTimer"
               >
