@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-
+import CancelIcon from '@mui/icons-material/Cancel';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,8 +22,12 @@ const ErrorCard = (props) => {
 
 
     <div className="CourseCard">
+       <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <CancelIcon style={{ fontSize: 50, color: 'red'}}/>
+      </div>
+
              <div className="course-header">
-            <span>Common Error</span>
+              <span>Common Error </span>
         </div>
     <div className="Courses">
     {errorDetail.map((error)=>{
