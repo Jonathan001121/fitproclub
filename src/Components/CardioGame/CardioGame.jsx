@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Unity, useUnityContext } from "react-unity-webgl";
-
+import "./CardioGame.css"
 const CardioGame = () => {
   function unityShowBanner(msg, type) {
     const warningBanner = document.querySelector("#unity-warning");
@@ -33,42 +33,7 @@ const CardioGame = () => {
   const fullscreenButton = document.querySelector("#unity-fullscreen-button");
   const moveButton = document.querySelector("#move");
   const jumpButton = document.querySelector("#jump");
-  
-  // if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-  //   const meta = document.createElement('meta');
-  //   meta.name = 'viewport';
-  //   meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-  //   document.getElementsByTagName('head')[0].appendChild(meta);
-  //   container.className = "unity-mobile";
-  //   canvas.className = "unity-mobile";
-  // } else {
-  //   canvas.style.width = "960px";
-  //   canvas.style.height = "600px";
-  // }
-
-  // const script = document.createElement("script");
-  // const loaderUrl = "/src/Components/CardioGame/Build/webgl.loader.js";
-  // script.src = loaderUrl;
  
-  // script.onload = () => {
-  //   createUnityInstance(canvas, config, (progress) => {
-  //     progressBarFull.style.width = 100 * progress + "%";
-  //   }).then((unityInstance) => {
-  //     loadingBar.style.display = "none";
-  //     fullscreenButton.onclick = () => {
-  //       unityInstance.SetFullscreen(1);
-  //     };
-  //     moveButton.onclick = () => {
-  //       unityInstance.SendMessage("Player", "MoveForward");
-  //     };
-  //     jumpButton.onclick = () => {
-  //       unityInstance.SendMessage("Player", "Jump");
-  //     };
-  //   }).catch((message) => {
-  //     alert(message);
-  //   });
-  // };
-
 
   const buildUrl = "/src/Components/CardioGame/Build";
   const { unityProvider } = useUnityContext({
@@ -82,16 +47,93 @@ const CardioGame = () => {
     productVersion: "0.1",
     showBanner: unityShowBanner,
   });
+  const config = {
+    dataUrl: buildUrl + "/webgl.data",
+    frameworkUrl: buildUrl + "/webgl.framework.js",
+    codeUrl: buildUrl + "/webgl.wasm",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "Web_Game",
+    productVersion: "0.1",
+    showBanner: unityShowBanner,
+  };
 
+  const loaderUrl = buildUrl + "/webgl.loader.js";
   useEffect(() => {
     const scriptElement = document.createElement('script');
     scriptElement.src = './script.js';
     scriptElement.async = true;
   
     document.body.appendChild(scriptElement);
+
+    const loaderScript = document.createElement('script');
+    loaderScript.src = loaderUrl;
+    loaderScript.async = true;
+    
+    loaderScript.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+              loadingBar.style.display = "none";
+              fullscreenButton.onclick = () => {
+
+                // use unityInstance to call functions in unity
+                unityInstance.SetFullscreen(1);
+
+              };
+              moveButton.onclick = () => {
+                  unityInstance.SendMessage("Player", "MoveForward");
+                };
+
+                jumpButton.onclick = () => {
+                  unityInstance.SendMessage("Player", "Jump");
+                };
+
+            }).catch((message) => {
+              alert(message);
+            });
+          };
+    document.body.appendChild(loaderScript);
   
     return () => {
       document.body.removeChild(scriptElement);
+    };
+  }, []);
+
+
+
+  useEffect(() => {
+    const loaderScript = document.createElement('script');
+    loaderScript.src = loaderUrl;
+    loaderScript.async = true;
+    
+    loaderScript.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+              loadingBar.style.display = "none";
+              fullscreenButton.onclick = () => {
+
+                // use unityInstance to call functions in unity
+                unityInstance.SetFullscreen(1);
+
+              };
+              moveButton.onclick = () => {
+                  unityInstance.SendMessage("Player", "MoveForward");
+                };
+
+                jumpButton.onclick = () => {
+                  unityInstance.SendMessage("Player", "Jump");
+                };
+
+            }).catch((message) => {
+              alert(message);
+            });
+          };
+    document.body.appendChild(loaderScript);
+  
+    return () => {
+      document.body.removeChild(loaderScript);
     };
   }, []);
 
@@ -104,7 +146,7 @@ const CardioGame = () => {
         <span className="stroke-text">Game</span>
       </div>
       <div id="unity-container" className="unity-desktop">
-      <Unity unityProvider={unityProvider} />
+      {/* <Unity unityProvider={unityProvider} /> */}
         <canvas id="unity-canvas" width="960" height="600" tabIndex="-1"></canvas>
         <div id="unity-loading-bar">
           <div id="unity-logo"></div>
