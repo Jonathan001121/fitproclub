@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 
 import { Unity, useUnityContext } from "react-unity-webgl";
 import "./CardioGame.css"
 const CardioGame = () => {
   function unityShowBanner(msg, type) {
     const warningBanner = document.querySelector("#unity-warning");
-    
+ 
     function updateBannerVisibility() {
       warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
     }
@@ -36,6 +36,7 @@ const CardioGame = () => {
  
 
   const buildUrl = "/src/Components/CardioGame/Build";
+  const loaderUrl = buildUrl + "/webgl.loader.js";
   const { unityProvider } = useUnityContext({
     loaderUrl:buildUrl + "/webgl.loader.js",
     dataUrl: buildUrl + "/webgl.data",
@@ -47,6 +48,9 @@ const CardioGame = () => {
     productVersion: "0.1",
     showBanner: unityShowBanner,
   });
+ 
+  const [refreshKey, setRefreshKey] = useState(0); 
+
   const config = {
     dataUrl: buildUrl + "/webgl.data",
     frameworkUrl: buildUrl + "/webgl.framework.js",
@@ -57,20 +61,20 @@ const CardioGame = () => {
     productVersion: "0.1",
     showBanner: unityShowBanner,
   };
-
-  const loaderUrl = buildUrl + "/webgl.loader.js";
   useEffect(() => {
-    const scriptElement = document.createElement('script');
-    scriptElement.src = './script.js';
-    scriptElement.async = true;
+    // const scriptElement = document.createElement('script');
+    // scriptElement.src = './script.js';
+    // scriptElement.async = true;
   
-    document.body.appendChild(scriptElement);
+    // // document.body.appendChild(scriptElement);
 
-    const loaderScript = document.createElement('script');
-    loaderScript.src = loaderUrl;
-    loaderScript.async = true;
+    // const loaderScript = document.createElement('script');
+    // loaderScript.src = loaderUrl;
+    // loaderScript.async = true;
+    // document.body.appendChild(loaderScript);
+    // document.body.appendChild(scriptElement);
     
-    loaderScript.onload = () => {
+  const createUnityInstanceAndSetupButtons= () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
             }).then((unityInstance) => {
@@ -93,49 +97,26 @@ const CardioGame = () => {
               alert(message);
             });
           };
-    document.body.appendChild(loaderScript);
-  
+          const scriptElement = document.createElement("script");
+          scriptElement.src = "./script.js";
+          scriptElement.async = true;
+          document.body.appendChild(scriptElement);
+      
+          const loaderScript = document.createElement("script");
+          loaderScript.src = loaderUrl;
+          loaderScript.async = true;
+          document.body.appendChild(loaderScript);
+          loaderScript.onload = createUnityInstanceAndSetupButtons;
+         
     return () => {
+      // document.body.removeChild(scriptElement);
+      document.body.removeChild(loaderScript);
       document.body.removeChild(scriptElement);
     };
-  }, []);
-
-
-
-  useEffect(() => {
-    const loaderScript = document.createElement('script');
-    loaderScript.src = loaderUrl;
-    loaderScript.async = true;
-    
-    loaderScript.onload = () => {
-      createUnityInstance(canvas, config, (progress) => {
-        progressBarFull.style.width = 100 * progress + "%";
-            }).then((unityInstance) => {
-              loadingBar.style.display = "none";
-              fullscreenButton.onclick = () => {
-
-                // use unityInstance to call functions in unity
-                unityInstance.SetFullscreen(1);
-
-              };
-              moveButton.onclick = () => {
-                  unityInstance.SendMessage("Player", "MoveForward");
-                };
-
-                jumpButton.onclick = () => {
-                  unityInstance.SendMessage("Player", "Jump");
-                };
-
-            }).catch((message) => {
-              alert(message);
-            });
-          };
-    document.body.appendChild(loaderScript);
-  
-    return () => {
-      document.body.removeChild(loaderScript);
-    };
-  }, []);
+  }, [refreshKey]);
+  const refreshEffect = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+ };
 
   return (
     
@@ -146,8 +127,8 @@ const CardioGame = () => {
         <span className="stroke-text">Game</span>
       </div>
       <div id="unity-container" className="unity-desktop">
-      {/* <Unity unityProvider={unityProvider} /> */}
-        <canvas id="unity-canvas" width="960" height="600" tabIndex="-1"></canvas>
+      {/* <Unity  style={{ width:"960px",height:"600px" }}unityProvider={unityProvider} /> */}
+        <canvas id="unity-canvas" style={{ width:"960px",height:"600px" }} tabIndex="-1"></canvas>
         <div id="unity-loading-bar">
           <div id="unity-logo"></div>
           <div id="unity-progress-bar-empty">
@@ -166,6 +147,7 @@ const CardioGame = () => {
         <div className="buttons">
           <button id="move">Move one step</button>
           <button id="jump">Jump</button>
+          <button id="start" onClick={refreshEffect}>Start</button>
         </div>
       </div>
     </div>
