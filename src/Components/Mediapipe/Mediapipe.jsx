@@ -52,6 +52,9 @@ const renderTime = ({ remainingTime }) => {
   const location = useLocation();
   const fbx = location.state?.fbx;
   const exerciseName = location.state?.exerciseName;
+  const startIllustration = location.state?.startIllustration;
+  const middleIllustration = location.state?.middleIllustration;
+
   const [path, setPath] = useState('');
   const [zAxis, setZAxis] = useState(3);
   const num = location.state?.num;
@@ -113,7 +116,7 @@ const renderTime = ({ remainingTime }) => {
             </div>
           ) : (
             <div className="countDownField">
-            {isStart && <h1>GET READY !</h1>}
+            {isStart && <h1 className="ready-prompt">GET READY !</h1>}
             {isStart ? (
           
               <CountdownCircleTimer
@@ -149,7 +152,8 @@ const renderTime = ({ remainingTime }) => {
    
         <div class="overlayContainer">
         <div class="textInfo">
-        <Step />
+        <Step startIllustration={startIllustration} middleIllustration={middleIllustration}  />
+    
         </div>
         </div>
        

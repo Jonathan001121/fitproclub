@@ -8,6 +8,10 @@ import lowerbackextension from "../assets/lowerbackextension_noBg.png"
 import lyinglegraise from "../assets/lyinglegraise_noBg.png"
 import bentoverrow from "../assets/bentoverrow_noBg.png"
 import plank from "../assets/plank_noBg.png"
+import bicepCurlStart from '../assets/illustrations/bicepCurlStart.jpg';
+import bicepCurlEnd from '../assets/illustrations/bicepCurlEnd.jpg';
+import shoulderPressStart from '../assets/illustrations/shoulderPressStart.png';
+import shoulderPressMiddle from '../assets/illustrations/shoulderPressMiddle.png';
 
 export const exercisesDetail = [
 {   
@@ -31,6 +35,8 @@ export const exercisesDetail = [
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
     setandrep: "3 sets of 8-12 reps",
     Instruction: "Sit on a bench with back support and hold a dumbbell in each hand at shoulder height. Press the weights upward until your arms are fully extended. Slowly lower the weights back to the starting position.",
+    startIllustration : shoulderPressStart,
+    middleIllustration : shoulderPressMiddle,
 },
 { 
     number: "2",
@@ -42,6 +48,8 @@ export const exercisesDetail = [
     targetmuscle: "Deltoids, Triceps, and Upper Trapezius",
     setandrep: "3 sets of 8-12 reps",
     Instruction: "Sit on a bench with back support and hold a dumbbell in each hand at shoulder height. Press the weights upward until your arms are fully extended. Slowly lower the weights back to the starting position.",
+    startIllustration : shoulderPressStart,
+    middleIllustration : shoulderPressMiddle,
 },
 { 
     number: "3",
@@ -53,6 +61,8 @@ export const exercisesDetail = [
     targetmuscle: "Biceps",
     setandrep: "3 sets of 8-12 reps",
     Instruction: "Stand with your feet shoulder-width apart and hold a dumbbell in each hand. Keep your elbows close to your body and curl the weights toward your shoulders. Slowly lower the weights back to the starting position.",
+    startIllustration : bicepCurlStart,
+    middleIllustration : bicepCurlEnd,
 },
 { 
     number: "3",
@@ -64,6 +74,8 @@ export const exercisesDetail = [
     targetmuscle: "Biceps",
     setandrep: "3 sets of 8-12 reps",
     Instruction: "Stand with your feet shoulder-width apart and hold a dumbbell in each hand. Keep your elbows close to your body and curl the weights toward your shoulders. Slowly lower the weights back to the starting position.",
+    startIllustration : bicepCurlStart,
+    middleIllustration : bicepCurlEnd,
 },
 { 
     number: "4",

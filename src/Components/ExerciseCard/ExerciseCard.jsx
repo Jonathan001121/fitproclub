@@ -19,10 +19,16 @@ const ExerciseCard= (props) => {
         setOpen(!open);
     };
    
+    console.log(props.middleIllustration)
     const navigate = useNavigate();
-  
+    // console.log(props.startIllustration)
     const handleStartNow = (exercisePath) => {
-      navigate(exercisePath ,{ state: { num: props.num,fbx: props.fbx , exerciseName: props.exercise} });
+      navigate(exercisePath ,{ state: { 
+        num: props.num,
+         fbx: props.fbx ,
+          exerciseName: props.exercise,
+           startIllustration: props.startIllustration, 
+           middleIllustration: props.middleIllustration} });
     };
 
 

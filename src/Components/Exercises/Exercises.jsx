@@ -18,7 +18,7 @@ const Exercises= () => {
     const exerciseId = location.pathname.split('/exercise').pop(); // Extract the exercise ID from the path
     let num=0;
  
-
+   
 
     return (
         <div className="ExerciseDirectory" onMouseMove={changePosition}>
@@ -34,17 +34,20 @@ const Exercises= () => {
             {exercisesDetail.map((exercise) => {
               if (exercise.cid == exerciseId) {
                 num= num+1;
-              
+               
                 return (
                     <div className="AnExerciseCard">
+                 
                     <ExerciseCard
                         num={exercise.number}
                         exercise={exercise.exersise}
                         category={exercise.category}
                         Instruction={exercise.Instruction}
+                      
                         fbx={exercise.fbx}
                         image={exercise.image}
-                 
+                        startIllustration={exercise.startIllustration}
+                        middleIllustration={exercise.middleIllustration}
                     /> 
                     </div>
                 );

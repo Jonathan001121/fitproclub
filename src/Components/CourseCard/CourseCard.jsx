@@ -49,8 +49,7 @@ const CourseCard = () => {
     <CardActions>
 
     <Button size="small" onClick={() => handleStartNow(`/exercise${course.id}`)}>
-        Start Now  
-                           </Button>
+        Start Now   </Button>
 
 
 

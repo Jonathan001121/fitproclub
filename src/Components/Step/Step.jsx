@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import image from '../../assets/bicepCurl.jpeg';
-import bicepCurlStart from '../../assets/bicepCurlStart.jpg';
-import bicepCurlEnd from '../../assets/bicepCurlEnd.jpg';
+import bicepCurlStart from '../../assets/illustrations/bicepCurlStart.jpg';
+import bicepCurlEnd from '../../assets/illustrations/bicepCurlEnd.jpg';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -17,7 +17,10 @@ import CircleIcon from '@mui/icons-material/Circle';
 import axios from 'axios';
 
 
-const Step= () => {
+const Step= (props) => {
+  const  startIllustration  = props.startIllustration;
+  const  middleIllustration  = props.middleIllustration;
+
   const [count, setCount] = useState(0);
   const [start, setStart] = useState(false);
   const [middle, setMiddle] = useState(false);
@@ -114,7 +117,7 @@ return (
           <Typography variant="h6" component="span">
             Start
           </Typography>
-          <Typography><img src={bicepCurlStart} style={{"width":"30%", "height":"30%"}}/></Typography>
+          <Typography><img src={startIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -137,7 +140,7 @@ return (
           <Typography variant="h6" component="span">
             Middle
           </Typography>
-          <Typography><img src={bicepCurlEnd} style={{"width":"30%", "height":"30%"}}/></Typography>
+          <Typography><img src={middleIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -160,13 +163,16 @@ return (
           <Typography variant="h6" component="span">
             End
           </Typography>
-          <Typography><img src={bicepCurlEnd} style={{"width":"30%", "height":"30%"}}/></Typography>
+          <Typography><img src={startIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <Typography variant="h6" component="span">
       Count: 
-      <div className="count-container">        <p style={{"margin-left": "6px" , "color":"rgb(64, 240, 74)"}}>  {count} </p>  &nbsp; /12</div>
-          </Typography>
+      <div className="rep-count-container">       
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
+       <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
+      </div>
+      </Typography>
      
  
  
