@@ -237,6 +237,7 @@ const Dashboard = () => {
                   ) : (
                     <p>An error occurred. Please try again.</p>
                   )}
+                  
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={() => setDialogOpen(false)} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
