@@ -144,6 +144,34 @@ const Dashboard = () => {
     fetchRegisterCourses();
   }, []);
 
+  useEffect(() => {
+    const fetchCalories = async () => {
+      try {
+        const username = sessionStorage.getItem('username')
+        if(username){
+          const response = await fetch('http://localhost:9000/getDailyCaloriesBurnt', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username }) // Replace 'your-username' with the actual username
+          });
+        }
+       
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+        const data = await response.json();
+        const caloriesBurntToday = data.calories_burnt_today;
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCalories();
+  }, []);
+
   const handleLogout = () => {
     // Clear the username from session storage
     sessionStorage.removeItem('username');
@@ -276,7 +304,7 @@ const Dashboard = () => {
                 fill: '#52b202',
               },
             }}
-            text={({ value }) => `${value.toFixed(2)}  / 2500`}
+            text={({ value }) => `${value}  / 2500`}
           />
 
           </div>

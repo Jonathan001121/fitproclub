@@ -19,6 +19,7 @@ def calculate_calories_burned_weight(weight, duration, gender):
         return "Invalid gender specified. Please reenter correct information."
 
     calories_burned = calories_per_minute * duration
+    calories_burned = round(calories_burned,2)
     return calories_burned
 
 
