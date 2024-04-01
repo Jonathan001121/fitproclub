@@ -94,6 +94,34 @@ def calculate_2d_angle(a,b,c):
         angle = 360-angle
         
     return angle
+def calculate_imaginary_2d_angle(a,b,c):
+    ay= b.y - 1000
+    a = np.array([a.x, ay, a.z]) # First
+    b = np.array([b.x, b.y, b.z]) # Mid
+    c = np.array([c.x, c.y, c.z]) # End
+    
+    radians = np.arctan2(c[1]-b[1], c[0]-b[0]) - np.arctan2(a[1]-b[1], a[0]-b[0])
+    angle = np.abs(radians*180.0/np.pi)
+    
+    if angle >180.0:
+        angle = 360-angle
+        
+    return angle
+
+def calculate_imaginary_2d_angle_x(a,b,c):
+    ax= b.x - 1000
+    a = np.array([ax, a.y, a.z]) # First
+    b = np.array([b.x, b.y, b.z]) # Mid
+    c = np.array([c.x, c.y, c.z]) # End
+    
+    radians = np.arctan2(c[1]-b[1], c[0]-b[0]) - np.arctan2(a[1]-b[1], a[0]-b[0])
+    angle = np.abs(radians*180.0/np.pi)
+    
+    if angle >180.0:
+        angle = 360-angle
+        
+    return angle
+
 def calculate_torsor_angle_mediapipe(a, b, c ): 
     # [11][11][12]
     # make a point upper than 11
@@ -166,6 +194,7 @@ def gen(model):
     middle = False
     end = False
     count=0
+    errorMessages=''
     while True:
         success, img = cap.read()
         img = cv2.flip(img,1)
@@ -570,9 +599,333 @@ def gen(model):
                         middle = False
                         end  = False
                         print("Torsor NOT STRAIGHT ")  
+                # lying leg raise
+                elif (model==6):  
+
+                    # hip, knee(left), ankle
+                    r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
+                    angle_text = str(round(r_knee_angles, 1))
+                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    #shoulder, hip, knee(right)
+                    r_hip_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+                    
+                    neck_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[7])
+                    angle_text = str(round(neck_angles, 1))
+                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
 
 
+                    # Start position
+                    if r_hip_angles > 150  and start==False: 
+                        start = True
+                        print("Start flag done")  
+                    
+                    # Middle position
+                    if r_hip_angles < 135  and start==True and middle==False: 
+                        middle = True
+                        print("middle flag done")  
 
+
+                    # End position
+                    if r_hip_angles > 150 and start == True and middle == True and end == False:
+                        end = True
+                        print("End flag done")
+                        count = count + 1
+                        start = False
+                        middle = False
+                        end = False
+                        print(count)
+
+                    if r_knee_angles < 110 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "knee not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+
+                    if neck_angles < 150 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "neck not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+                    
+                # Squad front view
+                elif (model==7):  
+                    # # hip, knee(left), ankle
+                    # l_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[28])
+                    # angle_text = str(round(l_knee_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[26].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[26].y * img.shape[0])
+                    
+                    # # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    # # hip, knee(left), ankle
+                    # r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
+                    # angle_text = str(round(r_knee_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    
+                    # # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                
+                    #    # hip, knee(left), ankle
+                    # l_knee_angles_imga = calculate_imaginary_2d_angle_x(result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[24])
+                    # angle_text = str(round(l_knee_angles_imga, 1))
+                    # x = int(result.pose_landmarks.landmark[26].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[26].y * img.shape[0])
+                    
+                    # cv2.putText(img, angle_text, (x+500, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    # # hip, knee(left), ankle
+                    # r_knee_angles_imga = calculate_imaginary_2d_angle_x(result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[23])
+                    # angle_text = str(round(r_knee_angles_imga, 1))
+                    # x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    
+                    # cv2.putText(img, angle_text, (x+500, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                
+                    #     #shoulder, hip, knee(right)
+                    # r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    # angle_text = str(round(r_hip_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    
+                    # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    # #shoulder, hip, knee(left)
+                    # l_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26])
+                    # angle_text = str(round(l_hip_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[24].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[24].y * img.shape[0])
+                
+                    # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+
+                    # #ankle, heel, foot index(right)
+                    # r_heel_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[27],result.pose_world_landmarks.landmark[29],result.pose_world_landmarks.landmark[31] )
+                    # angle_text = str(round(r_heel_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[29].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[29].y * img.shape[0])
+                
+                    # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+
+                    
+                    # #ankle, heel, foot index(left)
+                    # l_heel_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[28],result.pose_world_landmarks.landmark[30],result.pose_world_landmarks.landmark[32] )
+                    # angle_text = str(round(l_heel_angles, 1))
+                    # x = int(result.pose_landmarks.landmark[30].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[30].y * img.shape[0])
+                
+                    # cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+
+                    # hip_distance = result.pose_world_landmarks.landmark[23].x - result.pose_world_landmarks.landmark[24].x
+                    # hip_distance = hip_distance + 3
+                    # x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[23].y * img.shape[1])
+                    # cv2.putText(img, angle_text, (x, y-100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)  # for angle in angles:
+                   
+                    # knee_distance = result.pose_world_landmarks.landmark[25].x - result.pose_world_landmarks.landmark[26].x
+                    # x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    # y = int(result.pose_landmarks.landmark[25].y * img.shape[1])
+                    # cv2.putText(img, angle_text, (x, y-100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)  # for angle in angles:
+
+
+                    #     # Start position
+                    # if l_knee_angles > 155 and r_knee_angles > 155 and l_hip_angles >160 and r_hip_angles >160  and start==False: 
+                    #     start = True
+                    #     print("Start flag done")  
+                    
+                    # # Middle position
+                    # if l_knee_angles < 110 and r_knee_angles < 110 and l_hip_angles < 100 and r_hip_angles < 100  and start==True and middle==False: 
+                    #     middle = True
+                    #     print("middle flag done")  
+
+
+                    # # End position
+                    # if l_knee_angles > 155 and r_knee_angles > 155 and l_hip_angles >160 and r_hip_angles >160 and start==True and middle==True and end ==False:
+                    #     end = True
+                    #     print("End flag done")
+                    #     count = count + 1
+                    #     start = False
+                    #     middle = False
+                    #     end = False
+                    #     print(count)
+                    
+                    # if r_heel_angles >160 or l_heel_angles > 160  and isTimerStart == False:
+                    #     start = False
+                    #     middle = False
+                    #     end  = False
+                    #     print("Resetting flags")
+                    #     errorMessages = "heel too inward"
+                    #     countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                    #     countdown_Thread.start()
+                   
+                    
+                    # if knee_distance < hip_distance and isTimerStart == False :
+                    #     start = False
+                    #     middle = False
+                    #     end  = False
+                    #     print("Resetting flags")
+                    #     errorMessages = "knee inward lah diu"
+                    #     countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                    #     countdown_Thread.start()    
+
+
+                # ===========================     Squat (Profile View)  =================================
+                #    shoulder, hip, knee(right)
+                    r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    neck_angles =  calculate_imaginary_2d_angle_x(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[7])
+                    angle_text = str(round(neck_angles, 1))
+                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+                    # hip, knee(left), ankle
+                    r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
+                    angle_text = str(round(r_knee_angles, 1))
+                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+
+                    imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
+                    angle_text = str(round(imaginary_hip_angle, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x+60, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    # Start position
+                    if r_hip_angles > 160 and r_knee_angles > 150 and start==False: 
+                        start = True
+                        print("Start flag done")  
+                    
+                    # # Middle position
+                    if  r_knee_angles < 80 and r_hip_angles < 80  and start==True and middle==False: 
+                        middle = True
+                        print("middle flag done")  
+
+
+                    # # End position
+                    if  r_knee_angles > 150 and r_hip_angles >160 and start==True and middle==True and end ==False:
+                        end = True
+                        print("End flag done")
+                        count = count + 1
+                        start = False
+                        middle = False
+                        end = False
+                        print(count)  
+
+                    if imaginary_hip_angle >50 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "lean too forward"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+
+                    
+                    if neck_angles < 43 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "neck not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+                elif (model==8):     
+                    r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+                    angle_text = str(round(r_hip_angles, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                   
+                    # hip, knee(left), ankle
+                    r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
+                    angle_text = str(round(r_knee_angles, 1))
+                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+
+                    imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
+                    angle_text = str(round(imaginary_hip_angle, 1))
+                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x+60, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+                    
+                    neck_angles =  calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[7])
+                    neck_angles=imaginary_hip_angle-neck_angles
+                    angle_text = str(round(neck_angles, 1))
+                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
+                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
+                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
+
+                    # Start position
+                    if r_hip_angles > 160 and r_knee_angles > 150 and start==False: 
+                        start = True
+                        print("Start flag done")  
+                    
+                    # # Middle position
+                    if  r_knee_angles < 120 and r_hip_angles < 71  and start==True and middle==False: 
+                        middle = True
+                        print("middle flag done")  
+
+
+                    # # End position
+                    if  r_knee_angles > 150 and r_hip_angles >160 and start==True and middle==True and end ==False:
+                        end = True
+                        print("End flag done")
+                        count = count + 1
+                        start = False
+                        middle = False
+                        end = False
+                        print(count)  
+
+                    if imaginary_hip_angle >75 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "lean too forward"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+
+                    
+                    if neck_angles <-8 and isTimerStart == False :
+                        start = False
+                        middle = False
+                        end  = False
+                        print("Resetting flags")
+                        errorMessages = "neck not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+
+        
+                    
 
 
         current_time = time.time()
@@ -642,6 +995,26 @@ def video_feed_for_standingsideleglift():
     print("standingsideleglift is called ")
     return Response(gen(5),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/lyinglegraise')
+def video_feed_for_lyinglegraise():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    print("lyinglegraise is called ")
+    return Response(gen(6),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/squat')
+def video_feed_for_squat():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    print("squat is called ")
+    return Response(gen(7),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/deadliftwithdumbbell')
+def video_feed_for_deadliftwithdumbbell():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    print("deadliftwithdumbbell is called ")
+    return Response(gen(8),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 
 
 
