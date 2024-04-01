@@ -67,7 +67,7 @@
   
   .screen {
     position: relative;
-    background: var(--planCard);
+    background: #cbf5e4;
     border-radius: 15px;
   }
   

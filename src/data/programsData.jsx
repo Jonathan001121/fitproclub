@@ -16,13 +16,13 @@ export const programsData = [
     ),
     heading: "Age: 45 to 65",
     details:
-      "In this program, you are trained to improve your strength through many exercises.",
-    exersise:["Low Back Extension",
-    "Squat with weight",
-    "Row with resistance band",
-    "Dumbell OverHead Press",
-    "Dumbell Bicep Curl",
-    "Standing Side Leg Lift "]
+      "In this program, selected exercise required little bit more technique.",
+    exersise:["Dumbbell OverheadPress",
+    "Dumbbell Bicep Curl",
+    "Squat",
+    "Deadlift with Dumbbell",
+    "Lying Leg Raise",
+    "Plank"]
   },
   {
     image:       <svg
@@ -39,13 +39,13 @@ export const programsData = [
   </svg>,
     heading: "Age: 65 Above",
     details:
-      "In this program, you are trained to do sequential moves in range of 20 until 30 minutes.",
-      exersise:["Low Back Extension",
-      "Squat with weight",
-      "Row with resistance band",
-      "Dumbell OverHead Press",
-      "Dumbell Bicep Curl",
-      "Standing Side Leg Lift "]
+      "In this program, selected exercise are more safer and lower risk.",
+      exersise:["Row with Resistance Band",
+      "Dumbbell OverheadPress",
+      "Dumbbell Bicep Curl",
+      "Squat",
+      "Standing Side Leg Lift",
+      "Lying Leg Raise"]
   }
 ];
 
