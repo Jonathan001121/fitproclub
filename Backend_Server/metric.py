@@ -50,7 +50,7 @@ def calories_goal_recommendation(weight, height, age, gender, activity_level):
     # default get 1.2
     activity_multiplier = level_index.get(activity_level.lower(), 1.2) 
     calories_goal = bmr * activity_multiplier 
-    calories_goal = round(calories_goal, 2)  #
+    calories_goal = round(calories_goal, 2)  -  bmr
     return calories_goal
 
 
