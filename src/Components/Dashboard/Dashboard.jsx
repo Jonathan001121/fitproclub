@@ -14,9 +14,12 @@ import bloodPressure from "../../assets/icons/blood-pressure.png"
 import greenWifi from "../../assets/icons/green_wifi.png"
 import blackWifi from "../../assets/icons/black_wifi1.png"
 import blankUser from "../../assets/blankUser.png"
+import LogoutIcon from '@mui/icons-material/Logout';
+
 // ----------------------------------------
 
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 import './Dashboard.css';
 import 'charts.css'
@@ -58,10 +61,28 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserInventory = async () => {
       try {
-        const response = await axios.post('http://127.0.0.1:9000/getInventory', {
-          username: 'topadmin' // Replace with the login username later
-        });
-        setUserInventory(response.data);
+        const username = sessionStorage.getItem('username')
+        if (username) {
+          const response = await axios.post('http://127.0.0.1:9000/getInventory', {
+            username: username
+          });
+          setUserInventory(response.data);
+        } else {
+          setUserInventory({
+            "age": "00000",
+            "body_fat_mass": "00000",
+            "calories": "00000",
+            "city": "Manchester",
+            "country": "England",
+            "gender": "Non-Binary",
+            "heart_rate": "00000",
+            "height": "00000",
+            "muscle_mass": "00000",
+            "name": "displayUserName",
+            "username": "displayUserName",
+            "weight": "00000"
+          });
+        }
       } catch (error) {
         console.log(error);
         setUserInventory({
@@ -88,15 +109,32 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchRegisterCourses = async () => {
       try {
+        const username = sessionStorage.getItem('username')
+        if (username) {
         const response = await axios.post('http://localhost:9000/getRegisteredCourses', {
-          username: 'topadmin' // Replace with the login username later
+          username: username // Replace with the login username later
         });
         setRegisterCourses(response.data);
+       }
+        else {
+          setRegisterCourses({
+            "Best_Program_for_Elderly": {
+              "overall": 0.0
+            },
+            "Fitness_101": {
+              "overall": 0.0
+            }
+          })
+        }
       } catch (error) {
         console.log(error);
         setRegisterCourses({
-          "Best_Program_for_Elderly": 0.0,
-          "Fitness_101": 0.0
+          "Best_Program_for_Elderly": {
+            "overall": 0.0
+          },
+          "Fitness_101": {
+            "overall": 0.0
+          }
         })
       }
     };
@@ -104,6 +142,10 @@ const Dashboard = () => {
     fetchRegisterCourses();
   }, []);
 
+  const handleLogout = () => {
+    // Clear the username from session storage
+    sessionStorage.removeItem('username');
+  };
 
   return (
     <div className="dashboard" onMouseMove={changePosition}>
@@ -111,6 +153,7 @@ const Dashboard = () => {
       <Navnode />
       <div className="left">
         <div className="container large">
+          <div className="row-1">
           <div className="connection" >
             {isConnected ? (
               <div className="connected-text" >
@@ -122,6 +165,12 @@ const Dashboard = () => {
                 <p> Disconnected</p></div>
             )}
           </div>
+          <div style={{  "margin-left": 'auto' }}>
+              <Link to="/login" onClick={handleLogout}>
+              <LogoutIcon style={{ color: 'white' , "width" :"100%"}} />
+              </Link>
+            </div>
+            </div>
           <div className="profile">
 
             <div className="icon-part">
@@ -175,6 +224,8 @@ const Dashboard = () => {
               </span>
               <p>{userInventory ? userInventory.city : '---'}, {userInventory ? userInventory.country : '---'}</p>
             </div>
+
+            
           </div>
         </div>
       </div>
@@ -332,12 +383,12 @@ const Dashboard = () => {
 
             <div className='program-progress'>
               <div className='its-program'>  Fitness 101 </div>
-              <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101 : 0.0} /> </div>
+              <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101.overall : 0.0} /> </div>
             </div>
 
             <div className='program-progress'>
               <div className='its-program'>  Best Program for Elderly </div>
-              <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly : 0.0} /> </div>
+              <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div>
             </div>
 
 
@@ -349,12 +400,12 @@ const Dashboard = () => {
 
             <div className='program-progress'>
               <div className='its-program'>  Fitness 101 </div>
-              <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101 : 0.0} /> </div>
+              <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101.overall : 0.0} /> </div>
             </div>
 
             <div className='program-progress'>
               <div className='its-program'>  Best Program for Elderly </div>
-              <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly : 0.0} /> </div>
+              <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div>
             </div>
 
 

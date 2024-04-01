@@ -114,6 +114,8 @@ const Login = () => {
         const data = await response.json();
         setResponseMessage(data.message);
         setDialogOpen(true);
+       // Set the username in session storage
+       sessionStorage.setItem('username', username);
       } else {
         setIsLoggedIn(false);
         throw new Error('Login Failed');

@@ -140,6 +140,40 @@ def register():
         }
         
     )
+    db['User_Program_Data'].insert_one(
+        {
+            "username": username,
+            "registered_course" : {
+                "Fitness_101" : {
+                    "overall" : 0,
+                    "sub_progress":{
+                        "shoulder_press" : 0,
+                        "dumbbell_bicepcurl" : 0,
+                        "squat" : 0,
+                        "deadlift_with_dumbbell" : 0,
+                        "lying_leg_raise" : 0,
+                        "plank" :0 
+                    }
+                  
+                },
+                "Best_Program_for_Elderly" : {
+                    "overall" : 0,
+                    "sub_progress":{
+                        "row_with_resistance_band" : 0,
+                        "shoulder_press" : 0,
+                        "dumbbell_bicepcurl" : 0,
+                        "squat" : 0,
+                        "standing_side_leg_lift" : 0,
+                        "lying_leg_raise" :0 
+                    }
+                  
+                }
+
+            }
+           
+        }
+        
+    )
     userObjectsList.append(UserInventoryIOModel(username, name, age, weight, height, muscle_mass, body_fat_mass, calories, gender, heart_rate, city, country,email, level, desired_body_part))
     print(userObjectsList[len(userObjectsList)-1].username)
 
@@ -182,7 +216,6 @@ def get_inventory():
     db = common.mongodb_connect()
     
     result = db['User_Inventory'].find_one({'username': username}, {'_id': 0})
-    result['username'] = username
     if result == None:
         return jsonify({"error": "username is not exist in the inventory"}), 400
     
@@ -207,17 +240,21 @@ def admin_get_registered_courses(username):
 @app.route('/getRegisteredCourses', methods=['POST'])
 def get_registered_courses():
     data = request.get_json(force=True)
-    username =data.get("username")
+    username = data.get("username")
     db = common.mongodb_connect()
 
     record = db['User_Program_Data'].find_one({'username': username})
 
-
+    if record == None:
+        return jsonify({"error": "username is not exist in the course directories"}), 400
+    
     if record:
         registered_courses = record.get('registered_course', {})
         return registered_courses
-    else:
-        return {}
+    
+   
+    
+
     
 
 
