@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import common
+import metric
 from UserInventoryIOModel import UserInventoryIOModel
 import pymongo
 from pymongo import MongoClient
@@ -90,7 +91,7 @@ def register():
     username = data['username']
     password = data['password']
     name = data['name']
-    age = data['age']
+    age = int(data['age'])
     gender = data["gender"]
     city =  data['city']
     country= data['country']
@@ -102,12 +103,12 @@ def register():
 
 
     # Metrics
-    weight = data['weight']
-    height = data['height']
+    weight = float(data['weight'])
+    height = float(data['height'])
     heart_rate = 120
     calories = 0
-    muscle_mass = data['muscle_mass']
-    body_fat_mass =  data["body_fat_mass"]
+    muscle_mass = float(data['muscle_mass'])
+    body_fat_mass =  float(data["body_fat_mass"])
 
 
 
@@ -252,8 +253,33 @@ def get_registered_courses():
         registered_courses = record.get('registered_course', {})
         return registered_courses
     
-   
+
+@app.route('/getDailyCaloriesBurnt', methods=['POST'])
+def get_daily_calories_burnt():
+    data = request.get_json(force=True)
+    username = data.get("username")
+
+    db = common.mongodb_connect()
+    personal_inventory = db['User_Inventory'].find_one({'username': username}, {'_id': 0})
+    gender = personal_inventory.get('gender')
+    weight = personal_inventory.get('weight')
+ 
+
+    program_record = db['User_Program_Data'].find_one({'username': username}, {'_id': 0})
+    minutes_total = 0
+
+    for course in program_record['registered_course'].values():
+        minutes_total += sum(course['sub_progress'].values())
     
+    calories_burnt_today = metric.calculate_calories_burned_weight(weight,minutes_total,gender)
+
+     # Update calories_burnt_today in db['User_Inventory']
+    db['User_Inventory'].update_one({'username': username}, {'$set': {'calories': calories_burnt_today}})
+
+
+    return jsonify({"calories_burnt_today": calories_burnt_today}), 200
+
+
 
     
 

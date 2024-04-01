@@ -168,7 +168,7 @@ return (
         </TimelineContent>
       </TimelineItem>
       <Typography variant="h6" component="span">
-      Count: 
+      Rep Count: 
       <div className="rep-count-container">       
        <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
@@ -176,7 +176,7 @@ return (
       </Typography>
 
       <Typography variant="h6" component="span">
-      Rep: 
+      Set: 
       <div className="rep-count-container">       
        <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>

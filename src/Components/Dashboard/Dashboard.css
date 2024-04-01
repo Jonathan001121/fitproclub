@@ -118,6 +118,11 @@
   height: 20px;
   margin: 0px;
 }
+
+.css-uw80gi-MuiGauge-container text{
+  fill: white;
+}
+
 .right .container {
   margin-right:  15px;
   font-size:     13px;
@@ -193,6 +198,7 @@
 .name{
 
 }
+
 
 .userId{
   color:#f59425;

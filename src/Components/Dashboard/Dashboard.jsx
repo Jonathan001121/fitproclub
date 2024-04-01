@@ -41,6 +41,8 @@ const Dashboard = () => {
 
 
 
+
+
   useEffect(() => {
     const checkConnection = async () => {
       try {
@@ -178,7 +180,7 @@ const Dashboard = () => {
 
               <div className="name&id">
                 <div className="name" >
-                  {userInventory?.name || '---'} </div>
+                  {userInventory?.username || '---'} </div>
                 <br></br>
                 {/* <div className="userId">topadmin</div> */}
                 <div className="userId" style={{ color: userInventory ? '#f59425' : 'gray' }}>
@@ -250,35 +252,32 @@ const Dashboard = () => {
 
             <div className="metric-text">
               <img src={calories}></img>
-              <p className="bmi-label">Calories Burnt</p>
+              <p className="bmi-label">Calories Burnt Today</p>
               <div className="bmi-value">
                 {/* <img src={increase}></img> */}
               </div>
             </div>
 
             <Gauge
-              value={75}
-              startAngle={-110}
-              endAngle={110}
-              fill="white"
-
-              sx={{
-                [`& .${gaugeClasses.valueText}`]: {
-                  fontSize: 10,
-                  transform: 'translate(0px, 0px)',
-                  fill: 'white', // Explicitly set fill color
-
-                },
-
-                [`& .${gaugeClasses.valueArc}`]: {
-                  fill: '#52b202',
-                },
-              }}
-              text={
-                ({ value }) => `${value} / 40000`
-              }
-
-            />
+            value={userInventory ? userInventory.calories : 0}
+            startAngle={-110}
+            endAngle={110}
+            fill="white"
+            sx={{
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 10,
+                transform: 'translate(0px, 0px)',
+                fill: 'white',
+              },
+              [`&  .${gaugeClasses.valueText} text`]: {
+                fill: 'white', // Set the color for .css-168bhqd-MuiGauge-container text
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: '#52b202',
+              },
+            }}
+            text={({ value }) => `${value.toFixed(2)}  / 2500`}
+          />
 
           </div>
 
