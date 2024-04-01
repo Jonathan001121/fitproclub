@@ -119,6 +119,9 @@
     opacity: 1;
     right: 0;
   }
+  .disabledButton {
+    background-color: #675f5d;
+  }
   
   .countDownField .react-countdown-circle-timer {
     width: 200px; /* Adjust the width as needed */

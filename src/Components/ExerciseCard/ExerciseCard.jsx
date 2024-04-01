@@ -19,7 +19,7 @@ const ExerciseCard= (props) => {
         setOpen(!open);
     };
    
-    console.log(props.middleIllustration)
+ 
     const navigate = useNavigate();
     // console.log(props.startIllustration)
     const handleStartNow = (exercisePath) => {

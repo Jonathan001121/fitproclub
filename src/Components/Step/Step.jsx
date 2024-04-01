@@ -12,6 +12,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import FlagIcon from '@mui/icons-material/Flag';
 import Typography from '@mui/material/Typography';
 import CircleIcon from '@mui/icons-material/Circle';
+import "../Mediapipe/Mediapipe.css"
 
 // import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -20,7 +21,7 @@ import axios from 'axios';
 const Step= (props) => {
   const  startIllustration  = props.startIllustration;
   const  middleIllustration  = props.middleIllustration;
-
+  
   const [count, setCount] = useState(0);
   const [start, setStart] = useState(false);
   const [middle, setMiddle] = useState(false);
@@ -173,6 +174,22 @@ return (
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
       </Typography>
+
+      <Typography variant="h6" component="span">
+      Rep: 
+      <div className="rep-count-container">       
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
+       <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
+      </div>
+      </Typography>
+
+      <button
+        className="startButton"
+        style={{ fontSize: "12px", width: "80%" , backgroundColor: count !== 12 ? 'gray' : 'inherit',
+        cursor: count !== 12 ? 'not-allowed' : 'pointer',}}
+        disabled={count !== 12} // Disable the button if count is not equal to 12
+      >
+           <span>Next Set </span> </button>
      
  
  
