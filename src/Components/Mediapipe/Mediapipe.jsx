@@ -28,6 +28,7 @@ const Mediapipe = () => {
   const handleStart = () => {
     setisStart(true);
     startTimer();
+
   }
 const renderTime = ({ remainingTime }) => {
 
@@ -37,10 +38,11 @@ const renderTime = ({ remainingTime }) => {
   }
 
   return (
-    <div className="timer">
-      <div className="text">Remaining</div>
-      <div className="value">{remainingTime}</div>
-      <div className="text">seconds</div>
+
+    <div className="timer-info">
+      <div className="timer-text">Remaining</div>
+      <div className="timer-value">{remainingTime}</div>
+      <div className="timer-text">seconds</div>
     </div>
   );
 };
@@ -111,15 +113,22 @@ const renderTime = ({ remainingTime }) => {
             </div>
           ) : (
             <div className="countDownField">
+            {isStart && <h1>GET READY !</h1>}
             {isStart ? (
+          
               <CountdownCircleTimer
-                key={timer}
+                // key={timer}
                 isPlaying={isStart}
                 duration={select}
-                colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
+                trailColor={[["#dbdbdb"]]}
+                colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                colorsTime={[7, 5, 2, 0]}
                 onComplete={() => [false, 1000]}
                 size={380}
+                strokeWidth = {50}
+                trailStrokeWidth={50}
                 className="countdownTimer"
+                sx={{"color": "white"}}
               >
                 {renderTime}
               </CountdownCircleTimer>
