@@ -15,6 +15,7 @@ import greenWifi from "../../assets/icons/green_wifi.png"
 import blackWifi from "../../assets/icons/black_wifi1.png"
 import blankUser from "../../assets/blankUser.png"
 import LogoutIcon from '@mui/icons-material/Logout';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 // ----------------------------------------
 
@@ -30,6 +31,7 @@ import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import { color } from "framer-motion";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 
 
@@ -39,7 +41,8 @@ const Dashboard = () => {
   const [isConnected, setIsConnected] = useState(false);
   const { cursor, changePosition } = useCursor();
 
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [responseMessage, setResponseMessage] = useState('');
 
 
 
@@ -70,10 +73,11 @@ const Dashboard = () => {
           });
           setUserInventory(response.data);
         } else {
+          // username not here
           setUserInventory({
             "age": "00000",
             "body_fat_mass": "00000",
-            "calories": "00000",
+            "calories": "000",
             "city": "Manchester",
             "country": "England",
             "gender": "Non-Binary",
@@ -86,11 +90,12 @@ const Dashboard = () => {
           });
         }
       } catch (error) {
+        // can't get Inventory
         console.log(error);
         setUserInventory({
           "age": "00000",
           "body_fat_mass": "00000",
-          "calories": "00000",
+          "calories": "000",
           "city": "Manchester",
           "country": "England",
           "gender": "Non-Binary",
@@ -176,6 +181,21 @@ const Dashboard = () => {
     // Clear the username from session storage
     sessionStorage.removeItem('username');
   };
+  const handleEdit = () => {
+    const editPrompt = "Select the field you want to select and confirm."
+    setDialogOpen(true);
+    setResponseMessage(editPrompt);
+  };
+
+  // const editConfirm = ()=>{
+  //   setDialogOpen(false);
+  //   setResponseMessage(editPrompt);
+  // }
+  // const handleDialogCloseandRefresh= () => {
+  //   setDialogOpen(false); // Close the dialog
+  // };
+
+ 
 
   return (
     <div className="dashboard" onMouseMove={changePosition}>
@@ -195,11 +215,41 @@ const Dashboard = () => {
                 <p> Disconnected</p></div>
             )}
           </div>
+          <div style={{ marginLeft: 'auto', marginRight: '20px' }}>
+          <EditNoteIcon style={{ color: 'white', width: '130%' }} onClick={handleEdit} />
+        </div>
+
+        <Dialog
+                open={dialogOpen}
+                onClose={() => setDialogOpen(false)}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: 'rgba(10, 10, 10, 0.8)',
+                    color: 'white',
+                    fontWeight: 'lighter'
+                  },
+                }}
+              >
+                <DialogTitle sx={{ fontWeight: 'bolder' }}>Response Message</DialogTitle>
+                <DialogContent>
+                  {typeof responseMessage === 'string' ? (
+                    <p>{responseMessage}</p>
+                  ) : (
+                    <p>An error occurred. Please try again.</p>
+                  )}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setDialogOpen(false)} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
+                    Confirm
+                  </Button>
+                </DialogActions>
+              </Dialog>
+
           <div style={{  "margin-left": 'auto' }}>
               <Link to="/login" onClick={handleLogout}>
               <LogoutIcon style={{ color: 'white' , "width" :"100%"}} />
               </Link>
-            </div>
+          </div>
             </div>
           <div className="profile">
 
@@ -280,7 +330,7 @@ const Dashboard = () => {
 
             <div className="metric-text">
               <img src={calories}></img>
-              <p className="bmi-label">Calories Burnt Today</p>
+              <p className="bmi-label">Calories Burnt Today (kcal)</p>
               <div className="bmi-value">
                 {/* <img src={increase}></img> */}
               </div>
@@ -298,15 +348,16 @@ const Dashboard = () => {
                 fill: 'white',
               },
               [`&  .${gaugeClasses.valueText} text`]: {
-                fill: 'white', // Set the color for .css-168bhqd-MuiGauge-container text
+                fill:'#52b202', // Set the color for .css-168bhqd-MuiGauge-container text
               },
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: '#52b202',
               },
+        
             }}
-            text={({ value }) => `${value}  / 2500`}
+            text={({ value }) => `${value}` + "/ 2500" } 
           />
-
+         
           </div>
 
           <div className="container small">
@@ -322,6 +373,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
           <div className="container small">
             <img src={body_fat}></img>
             <div className="metric-text">

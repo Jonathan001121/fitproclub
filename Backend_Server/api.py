@@ -272,7 +272,8 @@ def get_daily_calories_burnt():
         minutes_total += sum(course['sub_progress'].values())
     
     calories_burnt_today = metric.calculate_calories_burned_weight(weight,minutes_total,gender)
-
+    
+   
      # Update calories_burnt_today in db['User_Inventory']
     db['User_Inventory'].update_one({'username': username}, {'$set': {'calories': calories_burnt_today}})
 
