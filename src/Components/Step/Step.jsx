@@ -22,59 +22,33 @@ const Step= (props) => {
   const  startIllustration  = props.startIllustration;
   const  middleIllustration  = props.middleIllustration;
   
-  const [count, setCount] = useState(0);
-  const [start, setStart] = useState(false);
-  const [middle, setMiddle] = useState(false);
-  const [end, setEnd] = useState(false);
+
   const [startColor, setStartColor] = useState('');
   const [middleColor, setMiddleColor] = useState('');
   const [endColor, setEndColor] = useState('');
 
 
+useEffect(() => {
+  if (props.start == true){
+    setStartColor('success')
+  }
+  else{
+    setStartColor('')
+  }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/data');
-        const { count, start, middle, end } = response.data;
-        console.log(response.data)
-        setCount(count);
-        setStart(start);
-        setMiddle(middle);
-        setEnd(end);
-
-        if (start == true){
-          setStartColor('success')
-        }
-        else{
-          setStartColor('')
-        }
-
-        if (middle == true){
-          setMiddleColor('success');
-        }
-        else{
-          setMiddleColor('');
-        }
-        if (end == true){
-          setEndColor('success');
-        }
-        else{
-          setEndColor('');
-        }
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const interval = setInterval(fetchData, 500); // FPS on frontend
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
+  if (props.middle == true){
+    setMiddleColor('success');
+  }
+  else{
+    setMiddleColor('');
+  }
+  if (props.end == true){
+    setEndColor('success');
+  }
+  else{
+    setEndColor('');
+  }
+}, [props.start, props.middle, props.end]);
 
 
 
@@ -170,7 +144,7 @@ return (
       <Typography variant="h6" component="span">
       Rep Count: 
       <div className="rep-count-container">       
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
       </Typography>
@@ -178,16 +152,16 @@ return (
       <Typography variant="h6" component="span">
       Set: 
       <div className="rep-count-container">       
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {count}      </p> 
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>
       </Typography>
 
       <button
         className="startButton"
-        style={{ fontSize: "12px", width: "80%" , backgroundColor: count !== 12 ? 'gray' : 'inherit',
-        cursor: count !== 12 ? 'not-allowed' : 'pointer',}}
-        disabled={count !== 12} // Disable the button if count is not equal to 12
+        style={{ fontSize: "12px", width: "80%" , backgroundColor: props.count < 12 ? 'gray' : 'orange',
+        cursor: props.count < 12 ? 'not-allowed' : 'pointer',}}
+        disabled={props.count <12} // Disable the button if count is not equal to 12
       >
            <span>Next Set </span> </button>
      

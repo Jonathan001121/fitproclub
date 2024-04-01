@@ -5,8 +5,8 @@ import mediapipe as mp
 import numpy as np
 from flask_cors import CORS
 import math
-
-
+import time
+import threading
 
 
 
@@ -137,6 +137,16 @@ start = False
 middle = False
 end = False
 count=0
+isTimerStart = False
+errorMessages = ""
+def countdown(seconds):
+    global isTimerStart
+    isTimerStart = True
+    while seconds > 0:
+        print(seconds)
+        time.sleep(1)
+        seconds -= 1
+    isTimerStart = False
 
 def gen(model):
     
@@ -151,7 +161,7 @@ def gen(model):
     prev_keypoints = None
     
    
-    global count, start, middle, end
+    global count, start, middle, end, isTimerStart, errorMessages
     start = False
     middle = False
     end = False
@@ -234,18 +244,18 @@ def gen(model):
                     
                     
                     # Start position
-                    if l_elbow_angles > 140 and  r_elbow_angles > 140 and start==False:
+                    if   r_elbow_angles > 140 and start==False:
                         start = True
                         print("Start flag done")  
                        
 
 
-                    if l_elbow_angles < 80 and  r_elbow_angles < 80 and start == True and middle == False:
+                    if   r_elbow_angles < 80 and start == True and middle == False:
                         middle = True 
                         print("MIddle flag done")
 
 
-                    if l_elbow_angles > 140 and  r_elbow_angles > 140 and start == True and middle == True and end== False:
+                    if   r_elbow_angles > 140 and start == True and middle == True and end== False:
                    
                         end = True
                         print("End flag done")
@@ -256,17 +266,24 @@ def gen(model):
                         print(count)
 
 
-                    if  r_shoulder_angles >40 :
+                    if  r_shoulder_angles >40 and isTimerStart == False:
                         start = False
                         middle = False
                         end = False
                         print("Resetting flags")
+                        errorMessages = "shoulder not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
+
                     
-                    if  r_hip_angles < 155:
+                    if  r_hip_angles < 155 and isTimerStart == False:
                         start = False
                         middle = False
                         end = False
                         print("Resetting flags")
+                        errorMessages = "on9 not straight"
+                        countdown_Thread=threading.Thread(target=countdown, args=(4,))
+                        countdown_Thread.start()
                     
                 # row with resistance band
                 elif(model==2):
@@ -579,7 +596,9 @@ def get_data():
         'count': count,
         'start': start,
         'middle': middle,
-        'end': end
+        'end': end,
+        'errorMessages': errorMessages
+        
     }
     return jsonify(data)
 

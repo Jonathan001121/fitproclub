@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./Mediapipe.css"
 import { Canvas } from "@react-three/fiber";
 import { Exp } from "../Exp";
@@ -12,7 +12,66 @@ import useCursor from "../elderly_cursor";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Margin } from '@mui/icons-material';
 import Button from '@mui/material/Button';
+import Speech from 'react-speech';
+import { useSpeech } from "react-text-to-speech";
 const Mediapipe = () => {
+  const [count, setCount] = useState(0);
+  const [startf, setStart] = useState(false);
+  const [middle, setMiddle] = useState(false);
+  const [end, setEnd] = useState(false);
+  const [errorMessages, setErrorMessages] = useState("");
+  const speechButtonRef = useRef(null);
+  const {
+    Text, // Component that returns the modified text property
+    speechStatus, // String that stores current speech status
+    isInQueue, // Boolean that stores whether a speech utterance is either being spoken or present in queue
+    pause, // Function to pause the speech
+    stop, // Function to stop the speech or remove it from queue
+    start
+  } = useSpeech({ text: errorMessages });
+
+  useEffect(() => {
+    if (errorMessages !== '') {
+
+      if (speechButtonRef.current) {
+        speechButtonRef.current.click();
+        console.log("clicked")
+      }
+    }
+  }, [errorMessages]); 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/data');
+        const { count, start, middle, end, errorMessages} = response.data;
+        console.log(response.data)
+        setCount(count);
+        setStart(start);
+        setMiddle(middle);
+        setEnd(end);
+        setErrorMessages(errorMessages);
+
+       
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const interval = setInterval(fetchData, 500); // FPS on frontend
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+
+
+
+
+
+
   const [showImage, setShowImage] = useState(false);
   const [select, setSelect] = useState(10);
   const [isStart,setisStart]=useState(false);
@@ -101,7 +160,8 @@ const renderTime = ({ remainingTime }) => {
           <Alert severity='error'>
               <AlertTitle > Alert</AlertTitle>
               <div style={{"display":"flex", "flex-direction":"row","justify-content":"space-between","width":"100%", "margin-left": "0"}}  > 
-              <p>  No Error Detected</p>
+              <p>  {errorMessages}</p>
+              <button ref={speechButtonRef} onClick={start}/>
               <ExerciseDialog num={num} />
               </div>
           </Alert>
@@ -152,7 +212,7 @@ const renderTime = ({ remainingTime }) => {
    
         <div class="overlayContainer">
         <div class="textInfo">
-        <Step startIllustration={startIllustration} middleIllustration={middleIllustration}  />
+        <Step count={count} start={startf} middle={middle} end={end} startIllustration={startIllustration} middleIllustration={middleIllustration}  />
     
         </div>
         </div>
