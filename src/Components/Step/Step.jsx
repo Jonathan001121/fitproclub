@@ -92,7 +92,7 @@ return (
           <Typography variant="h6" component="span">
             Start
           </Typography>
-          <Typography><img src={startIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
+          <Typography><img src={startIllustration} style={{"width":"50%", "height":"50%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -138,13 +138,17 @@ return (
           <Typography variant="h6" component="span">
             End
           </Typography>
-          <Typography><img src={startIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
+          <Typography><img src={startIllustration} style={{"width":"50%", "height":"80%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
       <Typography variant="h6" component="span">
       Rep Count: 
       <div className="rep-count-container">       
+<<<<<<< HEAD
        <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+=======
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"31px"}}>  {count}      </p> 
+>>>>>>> f717ba84e11c398340e019db60934668b4fccae0
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
       </Typography>
@@ -152,7 +156,11 @@ return (
       <Typography variant="h6" component="span">
       Set: 
       <div className="rep-count-container">       
+<<<<<<< HEAD
        <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+=======
+       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"31px"}}>  {count}      </p> 
+>>>>>>> f717ba84e11c398340e019db60934668b4fccae0
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>
       </Typography>
