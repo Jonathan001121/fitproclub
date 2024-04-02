@@ -21,7 +21,7 @@ export const errorDetail = [
 {   
     eid: "1",
     image: rowError,
-    errorTitle: "Elbow, Shoulder, Head are not at the right position",
+    errorTitle: "Elbow and Head are not at the right position",
     errorDescription: "Should pull the ",
 },
 {   
