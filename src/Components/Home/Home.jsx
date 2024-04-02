@@ -3,8 +3,10 @@ import React from 'react';
 import Xavier from "../../assets/Xavier.jpeg"
 import bmi from  "../../assets/icons/bmi.png"
 import increase from  "../../assets/icons/increase.png"
+import customAvatar from  "../../assets/icons/customAvatar.png";
 import 'charts.css'
 import "./Home.css"
+import { Link as RouteLink } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { Exp } from "../Exp";
 
@@ -32,9 +34,14 @@ const Home = () => {
                <Exp avatarProp={"animations/error.fbx"}></Exp>
             </Canvas>
             </div>
-
-
+          
+            <div className="openCustomAvatar">
+                  <RouteLink to="/customavatar">
+                     <img src={customAvatar} alt="customAvatar" />
+                  </RouteLink>
+            </div>
  <Navnode />
+ 
     </div>
 
     );

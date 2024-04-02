@@ -1,0 +1,79 @@
+
+.customAvatarPage {
+    display: flex;
+    /* justify-content: space-between; */
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+
+    min-Height: 100vh;
+    min-Width: 100vw;
+    background: linear-gradient(45deg, rgba(7, 186, 144, 0.752) 85%, transparent 25%) 0 0,
+                linear-gradient(-45deg,rgba(7, 186, 144, 0.752) 50%, transparent 25%) 0 0,
+                linear-gradient(45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0,
+                linear-gradient(-45deg, transparent 85%,  rgba(7, 186, 144, 0.752) 75%) 0 0;
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    animation: wave 2s linear infinite;
+  }
+  
+  @keyframes wave {
+    0% {
+        background-position: 0 0, 25px 25px, 0 0, 25px 25px;
+    }
+    100% {
+        background-position: 50px 50px, 75px 75px, 50px 50px, 75px 75px;
+    }
+  }
+  .customAvatarTitle{
+    padding: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: lighter;
+ 
+  }
+  
+  
+  .customAvatarInstruction {
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-weight: lighter ;
+    width: 80%;
+ 
+  }
+
+  
+  
+  
+  .customAvatarPage .warning {
+    color: red;
+  }
+  
+  .customAvatarPage button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #00ffd5ba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .customAvatarPage button:hover {
+    background-color: #0089b3;
+  }
+  
+  .customAvatarPage #avatarUrl {
+    margin-top: 10px;
+  }
+  .avatarCreatorFrame{
+    width:80%;
+    height: 65%;
+    border-radius: 20px;
+    border: 0px;
+  }

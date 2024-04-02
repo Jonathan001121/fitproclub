@@ -10,6 +10,7 @@ import MyCourse from './Components/MyCourse/MyCourse';
 import Mediapipe from './Components/Mediapipe/Mediapipe';
 import GameDirectory from './Components/GameDirectory/GameDirectory';
 import CardioGame from './Components/CardioGame/CardioGame';
+import CustomAvatar from './Components/CustomAvatar/CustomAvatar';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/mediapipe" element={<Mediapipe/>} />
           <Route path="/gameDirectory" element={<GameDirectory/>} />
           <Route path="/cardiogame" element={<CardioGame/>} />
+          <Route path="/customavatar" element={<CustomAvatar/>} />
        
         </Routes>
       </div>
