@@ -1,4 +1,6 @@
-import rowError from "../assets/error_pose/Resistence_band_row_albow_error.png"
+import rowError from "../assets/error_pose/row_shoulder.png"
+import rowError2 from "../assets/error_pose/row_elbow.png"
+import rowError3 from "../assets/error_pose/row_neck.png"
 import shoulderError from "../assets/error_pose/shoulder_overhead_press_torsor.png"
 import shoulderError2 from "../assets/error_pose/shoulder_press_forearm_straight_error_2.png"
 import shoulderError3 from "../assets/error_pose/shoulder_press_forearm_straight_error.png"
@@ -21,7 +23,19 @@ export const errorDetail = [
 {   
     eid: "1",
     image: rowError,
-    errorTitle: "Elbow and Head are not at the right position",
+    errorTitle: "Shoulder are not at the right position",
+    errorDescription: "Should pull the ",
+},
+{   
+    eid: "1",
+    image: rowError2,
+    errorTitle: "Elbow are not at the right position",
+    errorDescription: "Should pull the ",
+},
+{   
+    eid: "1",
+    image: rowError3,
+    errorTitle: "Neck are not at the right position",
     errorDescription: "Should pull the ",
 },
 {   
