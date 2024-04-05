@@ -356,7 +356,7 @@ const Dashboard = () => {
               },
         
             }}
-            text={({ value }) => `${value}` + "/ 2500" } 
+            text={({ value }) => `${value}` + "/ 500" } 
           />
          
           </div>
@@ -479,13 +479,15 @@ const Dashboard = () => {
             <h3>Recommended Courses for You </h3>
 
             <div className='program-progress'>
+              <p> 1. </p>
               <div className='its-program'>  Fitness 101 </div>
-              <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101.overall : 0.0} /> </div>
+              {/* <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101.overall : 0.0} /> </div> */}
             </div>
 
             <div className='program-progress'>
+            <p> 2. </p>
               <div className='its-program'>  Best Program for Elderly </div>
-              <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div>
+              {/* <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div> */}
             </div>
 
 
