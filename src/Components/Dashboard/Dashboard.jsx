@@ -31,7 +31,7 @@ import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import { color } from "framer-motion";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Box} from '@mui/material';
 
 
 
@@ -239,6 +239,57 @@ const Dashboard = () => {
                   )}
                   
                 </DialogContent>
+                <Box
+                  noValidate
+                  component="form"
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    m: 'auto',
+                    width: 'fit-content',
+                  }}
+                >
+            <FormControl sx={{ mt: 2, minWidth: 120 }}>
+              <InputLabel htmlFor="max-width">Field</InputLabel>
+              <Select
+                autoFocus
+                value={1}
+                // onChange={handleMaxWidthChange}
+                label="maxWidth"
+                inputProps={{
+                  name: 'max-width',
+                  id: 'max-width',
+                }}
+              >
+                <MenuItem value={false}>false</MenuItem>
+                <MenuItem value="xs">xs</MenuItem>
+                <MenuItem value="sm">sm</MenuItem>
+                <MenuItem value="md">md</MenuItem>
+                <MenuItem value="lg">lg</MenuItem>
+                <MenuItem value="xl">xl</MenuItem>
+              </Select>
+            </FormControl>
+            
+            {/* <FormControlLabel
+              sx={{ mt: 1 }}
+              control={
+                <Switch checked={fullWidth} onChange={handleFullWidthChange} />
+              }
+              label="Full width"
+            /> */} 
+        <TextField
+            
+            required
+            margin="dense"
+            id="newValue"
+            name="newValue"
+            label="New Value"
+            type="text"
+            fullWidth
+            variant="standard"
+            sx={{ mt: 2, borderColor: 'rgba(0, 0, 0, 0.5)', borderWidth: '2px' }}
+          />
+            </Box> 
                 <DialogActions>
                   <Button onClick={() => setDialogOpen(false)} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
                     Confirm

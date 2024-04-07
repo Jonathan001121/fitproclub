@@ -28,8 +28,10 @@
 
 .left {
   flex: 1;
-  margin: 10px;
-  height: 90%;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 95%;
 
 }
 
