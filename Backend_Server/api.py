@@ -181,7 +181,26 @@ def register():
     # display the person object as a dictionary
     return jsonify({'message': f'Successfully registered with {username}'}), 200
 
-
+@app.route('/updateInventoryAttr', methods=['POST'])
+def updateInventoryAttr():
+    data = request.get_json(force=True)
+    username = data['username']
+    
+    # Check if the user exists
+    db = common.mongodb_connect()
+    user = db["User_Inventory"].find_one({"username": username})
+    if user is None:
+        return jsonify({'message': f'User {username} does not exist'}), 500
+    
+    # Update the attribute with the new value
+    for key, value in data.items():
+        print (key , key not in db["User_Inventory"].find_one({"username": username}))
+        if key != 'username':
+            if key not in db["User_Inventory"].find_one({"username": username}):
+                 return jsonify({'message': f'Inventory {key} is not in the {username} User Inventory '}), 500
+            db["User_Inventory"].update_one({"username": username}, {"$set": {key: value}})
+    
+    return jsonify({'message': f'Inventory {key} updated successfully for user {username}'}), 200
 
 
 @app.route('/collectionRename', methods=['POST'])

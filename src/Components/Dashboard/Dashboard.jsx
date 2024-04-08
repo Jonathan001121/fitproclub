@@ -31,7 +31,7 @@ import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import { color } from "framer-motion";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Box} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Box } from '@mui/material';
 
 
 
@@ -43,6 +43,8 @@ const Dashboard = () => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+  const [fieldToUpdate, setFieldToUpdate] = useState('');
+  const [newFieldValue, setNewFieldValue] = useState('');
 
 
 
@@ -86,7 +88,11 @@ const Dashboard = () => {
             "muscle_mass": "00000",
             "name": "displayUserName",
             "username": "displayUserName",
-            "weight": "00000"
+            "weight": "00000",
+            "desired_body_part" : "NONE",
+            "email" : "NONE",
+            "level" : "NONE"
+
           });
         }
       } catch (error) {
@@ -104,7 +110,10 @@ const Dashboard = () => {
           "muscle_mass": "00000",
           "name": "displayUserName",
           "username": "displayUserName",
-          "weight": "00000"
+          "weight": "00000",
+          "desired_body_part" : "NONE",
+          "email" : "NONE",
+          "level" : "NONE"
         })
       }
     };
@@ -118,11 +127,11 @@ const Dashboard = () => {
       try {
         const username = sessionStorage.getItem('username')
         if (username) {
-        const response = await axios.post('http://localhost:9000/getRegisteredCourses', {
-          username: username // Replace with the login username later
-        });
-        setRegisterCourses(response.data);
-       }
+          const response = await axios.post('http://localhost:9000/getRegisteredCourses', {
+            username: username // Replace with the login username later
+          });
+          setRegisterCourses(response.data);
+        }
         else {
           setRegisterCourses({
             "Best_Program_for_Elderly": {
@@ -153,7 +162,7 @@ const Dashboard = () => {
     const fetchCalories = async () => {
       try {
         const username = sessionStorage.getItem('username')
-        if(username){
+        if (username) {
           const response = await fetch('http://localhost:9000/getDailyCaloriesBurnt', {
             method: 'POST',
             headers: {
@@ -162,7 +171,7 @@ const Dashboard = () => {
             body: JSON.stringify({ username: username }) // Replace 'your-username' with the actual username
           });
         }
-       
+
         if (!response.ok) {
           throw new Error('Request failed');
         }
@@ -187,15 +196,31 @@ const Dashboard = () => {
     setResponseMessage(editPrompt);
   };
 
-  // const editConfirm = ()=>{
-  //   setDialogOpen(false);
-  //   setResponseMessage(editPrompt);
-  // }
-  // const handleDialogCloseandRefresh= () => {
-  //   setDialogOpen(false); // Close the dialog
-  // };
+  const handleEditConfirm = ()=>{
+    const username = sessionStorage.getItem('username')
+   // Prepare the data to be sent in the request body
+   const data = {
+    username: username, // Replace with the actual username
+    [fieldToUpdate]: newFieldValue
+  };
 
- 
+  // Send a POST request to the API endpoint
+  axios.post('http://127.0.0.1:9000/updateInventoryAttr', data)
+    .then(response => {
+      // Handle the successful response
+      setDialogOpen(true);
+      setResponseMessage(response.data.message);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error(error);
+      setDialogOpen(true);
+      setResponseMessage('An error occurred. Please try again.');
+    });
+
+  };
+
+
 
   return (
     <div className="dashboard" onMouseMove={changePosition}>
@@ -204,105 +229,196 @@ const Dashboard = () => {
       <div className="left">
         <div className="container large">
           <div className="row-1">
-          <div className="connection" >
-            {isConnected ? (
-              <div className="connected-text" >
-                <img src={greenWifi}></img>
-                <p> Connected</p>
-              </div>
-            ) : (
-              <div className="disconnected-text" >    <img src={blackWifi}></img>
-                <p> Disconnected</p></div>
-            )}
-          </div>
-          <div style={{ marginLeft: 'auto', marginRight: '20px' }}>
-          <EditNoteIcon style={{ color: 'white', width: '130%' }} onClick={handleEdit} />
-        </div>
+            <div className="connection" >
+              {isConnected ? (
+                <div className="connected-text" >
+                  <img src={greenWifi}></img>
+                  <p> Connected</p>
+                </div>
+              ) : (
+                <div className="disconnected-text" >    <img src={blackWifi}></img>
+                  <p> Disconnected</p></div>
+              )}
+            </div>
+            <div style={{ marginLeft: 'auto', marginRight: '20px' }}>
+              <EditNoteIcon style={{ color: 'white', width: '130%' }} onClick={handleEdit} />
+            </div>
 
-        <Dialog
-                open={dialogOpen}
-                onClose={() => setDialogOpen(false)}
-                PaperProps={{
-                  sx: {
-                    backgroundColor: 'rgba(10, 10, 10, 0.8)',
-                    color: 'white',
-                    fontWeight: 'lighter'
-                  },
+            <Dialog
+              open={dialogOpen}
+              onClose={() => setDialogOpen(false)}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(10, 10, 10, 0.8)',
+                  color: 'white',
+                  fontWeight: 'lighter'
+                },
+              }}
+            >
+              <DialogTitle sx={{ fontWeight: 'bolder' }}>Update Profile</DialogTitle>
+              <DialogContent>
+                {typeof responseMessage === 'string' ? (
+                  <p>{responseMessage}</p>
+                ) : (
+                  <p>An error occurred. Please try again.</p>
+                )}
+
+              </DialogContent>
+              <Box
+                noValidate
+                component="form"
+                onSubmit={handleEditConfirm}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  m: 'auto',
+                  width: 'fit-content',
                 }}
               >
-                <DialogTitle sx={{ fontWeight: 'bolder' }}>Response Message</DialogTitle>
-                <DialogContent>
-                  {typeof responseMessage === 'string' ? (
-                    <p>{responseMessage}</p>
-                  ) : (
-                    <p>An error occurred. Please try again.</p>
-                  )}
-                  
-                </DialogContent>
-                <Box
-                  noValidate
-                  component="form"
+                <FormControl
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    m: 'auto',
-                    width: 'fit-content',
+                    mt: 2,
+                    minWidth: 120,
+                    borderColor: 'rgba(19, 146, 209, 0.8)', // Add custom styling for the border
+                    borderWidth: '2px', // Add custom styling for the border
+                    borderStyle: 'solid', // Add custom styling for the border
+                    borderRadius: '4px', // Add custom styling for the border
+                    // backgroundColor: 'white', // Set the background color to white
                   }}
                 >
-            <FormControl sx={{ mt: 2, minWidth: 120 }}>
-              <InputLabel htmlFor="max-width">Field</InputLabel>
-              <Select
-                autoFocus
-                value={1}
-                // onChange={handleMaxWidthChange}
-                label="maxWidth"
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
+                  <InputLabel htmlFor="max-width" sx={{ 
+                    color: 'gray' ,
+                    fontWeight: 'lighter',
+                    fontSize : '14px',
+                    paddingTop: '0px',
+                    
+                    // after clicked on the Select Box , the Input label style: 
+                    '&.Mui-focused': {  
+                      color: 'white',
             
-            {/* <FormControlLabel
+                    },
+                
+                    }}>Field to be updated
+                    </InputLabel>
+                  <Select
+                    autoFocus
+                    onChange={(event) => setFieldToUpdate(event.target.value)}
+                    label="fieldToUpdate"
+                    inputProps={{
+                      name: 'field-to-update',
+                      id: 'field-to-update',
+               
+                    }}
+                    value={fieldToUpdate}
+                   
+                    sx={{
+                      '&:focus': {
+                        backgroundColor: 'transparent', // Override the focus background color
+                  
+                      },
+                      '& .MuiSelect-icon': {
+                        color: 'white', // Set the color of the select icon
+                      },
+                      '& .MuiSelect-select': {
+                    
+                        color: 'gray', // Set the text color for the selected option
+                      },
+                      '& .MuiSelect-select:focus': {
+                        backgroundColor: 'transparent', // Override the focus background color for the selected option
+                        color: 'white', // Set the text color for the selected option
+                      },
+                    }}
+                    MenuProps={{
+                  
+                      getContentAnchorEl: null,
+                      // The menu style after expand: 
+                      PaperProps: {
+                        style: {
+                          backgroundColor: 'rgba(10, 10, 10, 0.8)',
+                          color: 'white',
+                          fontWeight: 'lighter',
+                        },
+                      },
+                    }}
+                  >
+                  <MenuItem value="age">Age</MenuItem>
+                  <MenuItem value="muscle_mass">Muscle Mass</MenuItem>
+                  <MenuItem value="body_fat_mass">Body Fat Mass</MenuItem>
+                  <MenuItem value="height">Height</MenuItem>
+                  <MenuItem value="weight">Weight</MenuItem>
+                  <MenuItem value="email">Email Address</MenuItem>
+                  <MenuItem value="country">Country</MenuItem>
+                  <MenuItem value="city">City</MenuItem>
+                  {/* <MenuItem value="desired_body_part">Body Part</MenuItem> */}
+
+
+                  </Select>
+                </FormControl>
+
+                {/* <FormControlLabel
               sx={{ mt: 1 }}
               control={
                 <Switch checked={fullWidth} onChange={handleFullWidthChange} />
               }
               label="Full width"
-            /> */} 
-        <TextField
-            
-            required
-            margin="dense"
-            id="newValue"
-            name="newValue"
-            label="New Value"
-            type="text"
-            fullWidth
-            variant="standard"
-            sx={{ mt: 2, borderColor: 'rgba(0, 0, 0, 0.5)', borderWidth: '2px' }}
-          />
-            </Box> 
-                <DialogActions>
-                  <Button onClick={() => setDialogOpen(false)} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
-                    Confirm
-                  </Button>
-                </DialogActions>
-              </Dialog>
+            /> */}
 
-          <div style={{  "margin-left": 'auto' }}>
+                <TextField
+                  required
+                  margin="dense"
+                  id="newFieldValue"
+                  name="newFieldValue"
+                  label="New Field Value"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value ={newFieldValue}
+                  onChange={(event) => setNewFieldValue(event.target.value)}
+                  sx={{
+                    mt: 2,
+                    minWidth: 120,
+                    borderColor: 'rgba(19, 146, 209, 0.8)',
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderRadius: '4px',
+
+                  }}
+                  InputLabelProps={{
+                    sx: {
+                      color: 'rgba(255, 255, 255, 0.8)', // Set the color to match the border color
+                      paddingLeft: '10px',
+                      fontSize : '12px'
+                    },
+                  }}
+                  InputProps={{
+                    sx: {
+                      color: 'white', // Set the text color to white
+                      paddingLeft: '10px',
+                    },
+                  }}
+                />
+                 
+              <Button 
+                type="submit"
+                onClick={() => setDialogOpen(false)} 
+                variant="contained" 
+                color="primary" 
+                sx={{ background: 'none', color: '#42cffe' }}>
+                  Confirm
+                </Button>
+   
+              </Box>
+      
+             
+         
+            </Dialog>
+
+            <div style={{ "margin-left": 'auto' }}>
               <Link to="/login" onClick={handleLogout}>
-              <LogoutIcon style={{ color: 'white' , "width" :"100%"}} />
+                <LogoutIcon style={{ color: 'white', "width": "100%" }} />
               </Link>
-          </div>
             </div>
+          </div>
           <div className="profile">
 
             <div className="icon-part">
@@ -357,7 +473,7 @@ const Dashboard = () => {
               <p>{userInventory ? userInventory.city : '---'}, {userInventory ? userInventory.country : '---'}</p>
             </div>
 
-            
+
           </div>
         </div>
       </div>
@@ -389,27 +505,27 @@ const Dashboard = () => {
             </div>
 
             <Gauge
-            value={userInventory ? userInventory.calories : 0}
-            startAngle={-110}
-            endAngle={110}
-            fill="white"
-            sx={{
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 10,
-                transform: 'translate(0px, 0px)',
-                fill: 'white',
-              },
-              [`&  .${gaugeClasses.valueText} text`]: {
-                fill:'#52b202', // Set the color for .css-168bhqd-MuiGauge-container text
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill: '#52b202',
-              },
-        
-            }}
-            text={({ value }) => `${value}` + "/ 500" } 
-          />
-         
+              value={userInventory ? userInventory.calories : 0}
+              startAngle={-110}
+              endAngle={110}
+              fill="white"
+              sx={{
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 10,
+                  transform: 'translate(0px, 0px)',
+                  fill: 'white',
+                },
+                [`&  .${gaugeClasses.valueText} text`]: {
+                  fill: '#52b202', // Set the color for .css-168bhqd-MuiGauge-container text
+                },
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: '#52b202',
+                },
+
+              }}
+              text={({ value }) => `${value}` + "/ 500"}
+            />
+
           </div>
 
           <div className="container small">
@@ -536,7 +652,7 @@ const Dashboard = () => {
             </div>
 
             <div className='program-progress'>
-            <p> 2. </p>
+              <p> 2. </p>
               <div className='its-program'>  Best Program for Elderly </div>
               {/* <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div> */}
             </div>
