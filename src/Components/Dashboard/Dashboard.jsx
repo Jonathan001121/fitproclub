@@ -6,6 +6,7 @@ import increase from "../../assets/icons/increase.png"
 import user from "../../assets/icons/user.png"
 import age from "../../assets/icons/age.png"
 import location from "../../assets/icons/location.png"
+import email from "../../assets/icons/email.png"
 import muscle from "../../assets/icons/muscle.png"
 import weight from "../../assets/icons/weight.png"
 import coin from "../../assets/icons/coin.png"
@@ -471,6 +472,12 @@ const Dashboard = () => {
                 <img src={location}></img>
               </span>
               <p>{userInventory ? userInventory.city : '---'}, {userInventory ? userInventory.country : '---'}</p>
+            </div>
+            <div className="info">
+              <span width="1.5rem" className="sc-kFCroH keqUiL">
+                <img src={email}></img>
+              </span>
+              <p>{userInventory ? userInventory.email : '---'}</p>
             </div>
 
 
