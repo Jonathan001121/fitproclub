@@ -56,6 +56,10 @@ const CustomAvatar = () => {
     document.getElementById('frame').hidden = false;
   }
 
+  function displayUploadContainer() {
+    document.getElementById('uploadContainer').hidden = false;
+  }
+
   return (
     <div className='customAvatarPage'>
       <div className="customAvatarTitle">
@@ -79,10 +83,20 @@ const CustomAvatar = () => {
         If you have a subdomain, replace the 'demo' subdomain in the iframe source URL with yours.
       </p> */}
 
-      <button type="button" onClick={displayIframe}>CREATE NOW</button>
+      <button type="button"  className="createIFrameButton" onClick={displayIframe}>CREATE NOW</button>
+      <button type="button" className="uploadPhotoButton"  onClick={displayUploadContainer}>Upload Photo</button>
       <p id="avatarUrl">Avatar URL:</p>
 
       <iframe id="frame" className="avatarCreatorFrame" allow="camera *; microphone *; clipboard-write" hidden></iframe>
+      
+      
+      
+      
+      <div className="uploadContainer" allow="camera *; microphone *; clipboard-write" hidden>
+        <button type="button"  className="createIFrameButton" onClick={displayIframe}>CREATE NOW</button>
+     
+      </div>
+     
     </div>
   );
 };

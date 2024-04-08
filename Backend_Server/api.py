@@ -214,7 +214,7 @@ def register():
         }
     )
     userObjectsList.append(UserInventoryIOModel(username, name, age, weight, height, muscle_mass, body_fat_mass, calories, gender, heart_rate, city, country,email, level, desired_body_part))
-    print(userObjectsList[len(userObjectsList)-1].username)
+    # print(userObjectsList[len(userObjectsList)-1].username)
 
     # display the person object as a dictionary
     return jsonify({'message': f'Successfully registered with {username}'}), 200
@@ -232,7 +232,7 @@ def updateInventoryAttr():
     
     # Update the attribute with the new value
     for key, value in data.items():
-        print (key , key not in db["User_Inventory"].find_one({"username": username}))
+  
         if key != 'username':
             if key not in db["User_Inventory"].find_one({"username": username}):
                  return jsonify({'message': f'Inventory {key} is not in the {username} User Inventory '}), 500
@@ -286,7 +286,7 @@ def admin_get_registered_courses(username):
     db = common.mongodb_connect()
 
     record = db['User_Program_Data'].find_one({'username': username})
-    print(record)
+
 
     if record:
         registered_courses = record.get('registered_course', {})

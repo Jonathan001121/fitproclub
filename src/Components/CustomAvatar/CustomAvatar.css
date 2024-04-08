@@ -16,6 +16,7 @@
     background-size: 50px 50px;
     background-position: 0 0, 25px 25px, 0 0, 25px 25px;
     animation: wave 2s linear infinite;
+    overflow: auto ;
   }
   
   @keyframes wave {
@@ -53,19 +54,28 @@
   .customAvatarPage .warning {
     color: red;
   }
-  
+  .createIFrameButton{
+    background-color: #00ffd5ba;
+    color: white;
+  }
   .customAvatarPage button {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #00ffd5ba;
-    color: white;
+  
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
   
-  .customAvatarPage button:hover {
+  .createIFrameButton:hover {
     background-color: #0089b3;
+  }
+  .uploadPhotoButton{
+    background-color : #fe6016f3;
+    color: white;
+  }
+  .uploadPhotoButton:hover{
+    background-color: rgb(123, 67, 18);
   }
   
   .customAvatarPage #avatarUrl {
@@ -76,4 +86,9 @@
     height: 65%;
     border-radius: 20px;
     border: 0px;
+  }
+  .uploadContainer{
+    background-color: white;
+    width: 60%;
+    height: 50%;
   }
