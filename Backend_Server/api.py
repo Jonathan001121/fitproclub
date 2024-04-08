@@ -175,6 +175,44 @@ def register():
         }
         
     )
+    db['User_Metric_Archive'].insert_one(
+        {
+             "username": username,
+            "calories": {
+                "1st": 0,
+                "2nd": 0,
+                "3rd": 0,
+                "4th": 0,
+                "5th": 0,
+                "6th": 0,
+                "7th": 0,
+                "8th": 0,
+                "9th": 0,
+                "10th": 0,
+                "11th": 0,
+                "12th": 0,
+                "13th": 0,
+                "14th": 0,
+                "15th": 0,
+                "16th": 0,
+                "17th": 0,
+                "18th": 0,
+                "19th": 0,
+                "20th": 0,
+                "21st": 0,
+                "22nd": 0,
+                "23rd": 0,
+                "24th": 0,
+                "25th": 0,
+                "26th": 0,
+                "27th": 0,
+                "28th": 0,
+                "29th": 0,
+                "30th": 0,
+                "31st": 0
+                }
+        }
+    )
     userObjectsList.append(UserInventoryIOModel(username, name, age, weight, height, muscle_mass, body_fat_mass, calories, gender, heart_rate, city, country,email, level, desired_body_part))
     print(userObjectsList[len(userObjectsList)-1].username)
 
