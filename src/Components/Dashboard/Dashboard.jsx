@@ -47,7 +47,7 @@ const Dashboard = () => {
   const [fieldToUpdate, setFieldToUpdate] = useState('');
   const [newFieldValue, setNewFieldValue] = useState('');
 
-
+  const [showResponseDialog, setShowResponseDialog] = useState(false);
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -197,30 +197,25 @@ const Dashboard = () => {
     setResponseMessage(editPrompt);
   };
 
-  const handleEditConfirm = ()=>{
-    const username = sessionStorage.getItem('username')
-   // Prepare the data to be sent in the request body
-   const data = {
-    username: username, // Replace with the actual username
-    [fieldToUpdate]: newFieldValue
+  const handleEditConfirm = (event) => {
+    event.preventDefault();
+    const username = sessionStorage.getItem('username');
+    const data = {
+      username: username,
+      [fieldToUpdate]: newFieldValue
+    };
+  
+    axios.post('http://127.0.0.1:9000/updateInventoryAttr', data)
+      .then(response => {
+        setResponseMessage(response.data.message);
+        setShowResponseDialog(true);
+      })
+      .catch(error => {
+        console.error(error);
+        setResponseMessage('An error occurred. Please try again.');
+        setShowResponseDialog(true);
+      });
   };
-
-  // Send a POST request to the API endpoint
-  axios.post('http://127.0.0.1:9000/updateInventoryAttr', data)
-    .then(response => {
-      // Handle the successful response
-      setDialogOpen(true);
-      setResponseMessage(response.data.message);
-    })
-    .catch(error => {
-      // Handle the error
-      console.error(error);
-      setDialogOpen(true);
-      setResponseMessage('An error occurred. Please try again.');
-    });
-
-  };
-
 
 
   return (
@@ -413,6 +408,34 @@ const Dashboard = () => {
              
          
             </Dialog>
+            <Dialog
+              open={showResponseDialog}
+              onClose={() => {
+                setShowResponseDialog(false);
+                location.reload(); // Reload the page after closing the dialog
+              }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(10, 10, 10, 0.8)',
+                  color: 'white',
+                  fontWeight: 'lighter'
+                },
+              }}
+            >
+              <DialogTitle sx={{ fontWeight: 'bolder' }}>Response</DialogTitle>
+              <DialogContent>
+                <p>{responseMessage}</p>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => {
+                  setShowResponseDialog(false);
+                  window.location.reload(); // Reload the page after closing the dialog
+                }}>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+            
 
             <div style={{ "margin-left": 'auto' }}>
               <Link to="/login" onClick={handleLogout}>
