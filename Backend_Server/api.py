@@ -299,7 +299,19 @@ def get_daily_calories_burnt():
 
     return jsonify({"calories_burnt_today": calories_burnt_today}), 200
 
+@app.route('/getCaloriesArchive', methods=['POST'])
+def get_calories_archive():
+    data = request.get_json(force=True)
+    username = data.get("username")
+    db = common.mongodb_connect()
+    record = db['User_Metric_Archive'].find_one({"username": username})
+    
+    if record is None:
+        return jsonify({"error": "User not found in the Metric Directory"}), 404
 
+    calories = record.get("calories",{})
+
+    return jsonify(calories), 200
 
     
 

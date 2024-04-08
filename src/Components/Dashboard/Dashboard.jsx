@@ -32,7 +32,7 @@ import useCursor from "../elderly_cursor";
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import { color } from "framer-motion";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Box } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField,Tooltip, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, Box } from '@mui/material';
 
 
 
@@ -48,6 +48,8 @@ const Dashboard = () => {
   const [newFieldValue, setNewFieldValue] = useState('');
 
   const [showResponseDialog, setShowResponseDialog] = useState(false);
+
+  const [caloriesArchive, setCaloriesArchive] = useState({});
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -132,6 +134,7 @@ const Dashboard = () => {
             username: username // Replace with the login username later
           });
           setRegisterCourses(response.data);
+       
         }
         else {
           setRegisterCourses({
@@ -180,11 +183,109 @@ const Dashboard = () => {
         const caloriesBurntToday = data.calories_burnt_today;
 
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
     fetchCalories();
+  }, []);
+
+  useEffect(() => {
+    const fetchCaloriesArchive = async () => {
+      try {
+        const username = sessionStorage.getItem('username')
+        console.log('username is ' + username)
+       console.log(JSON.stringify({ username: username }))
+        if (username) {
+          const response = await fetch('http://localhost:9000/getCaloriesArchive', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username }) // Replace 'your-username' with the actual username
+          });
+          if (!response.ok) {
+            throw new Error('Request failed');
+          }
+          
+          const data = await response.json();
+          setCaloriesArchive(data);
+          console.log(caloriesArchive)
+        }
+           else {
+            setCaloriesArchive({
+              "10th": 0,
+              "11th": 0,
+              "12th": 0,
+              "13th": 0,
+              "14th": 0,
+              "15th": 0,
+              "16th": 0,
+              "17th": 0,
+              "18th": 0,
+              "19th": 0,
+              "1st": 0,
+              "20th": 0,
+              "21st": 0,
+              "22nd": 0,
+              "23rd": 0,
+              "24th": 0,
+              "25th": 0,
+              "26th": 0,
+              "27th": 0,
+              "28th": 0,
+              "29th": 0,
+              "2nd": 0,
+              "30th": 0,
+              "31st": 0,
+              "3rd": 0,
+              "4th": 0,
+              "5th": 0,
+              "6th": 0,
+              "7th": 0,
+              "8th": 0,
+              "9th": 0
+          })
+        }
+      } catch (error) {
+        console.log('Error:', error);
+          setCaloriesArchive({
+            "10th": 0,
+            "11th": 0,
+            "12th": 0,
+            "13th": 0,
+            "14th": 0,
+            "15th": 0,
+            "16th": 0,
+            "17th": 0,
+            "18th": 0,
+            "19th": 0,
+            "1st": 0,
+            "20th": 0,
+            "21st": 0,
+            "22nd": 0,
+            "23rd": 0,
+            "24th": 0,
+            "25th": 0,
+            "26th": 0,
+            "27th": 0,
+            "28th": 0,
+            "29th": 0,
+            "2nd": 0,
+            "30th": 0,
+            "31st": 0,
+            "3rd": 0,
+            "4th": 0,
+            "5th": 0,
+            "6th": 0,
+            "7th": 0,
+            "8th": 0,
+            "9th": 0
+        })
+      }
+    };
+
+    fetchCaloriesArchive();
   }, []);
 
   const handleLogout = () => {
@@ -726,6 +827,23 @@ const Dashboard = () => {
               <table className="charts-css column data-spacing-2">
                 <caption> Progress </caption>
                 <tbody>
+                {/* <Tooltip title={'1st : 80kcal'} >
+                  <tr><td style={{ "--size": 0.084 }}></td></tr>
+                  </Tooltip>
+                
+                  <Tooltip title={'2nd : 80kcal'} >
+                  <tr><td style={{ "--size": 0.084 }}></td></tr>
+                  </Tooltip>
+                 */}
+               {/* <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.9 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+
                   <tr><td style={{ "--size": 0.9 }}></td></tr>
                   <tr><td style={{ "--size": 0.6 }}></td></tr>
                   <tr><td style={{ "--size": 0.6 }}></td></tr>
@@ -746,22 +864,34 @@ const Dashboard = () => {
                   <tr><td style={{ "--size": 0.6 }}></td></tr>
                   <tr><td style={{ "--size": 0.6 }}></td></tr>
                   <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+                  <tr><td style={{ "--size": 0.6 }}></td></tr>  */}
 
                   {/* The 31st day */}
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
+                 {/* <tr><td style={{ "--size": 0.9 }}></td></tr>  */}
 
+
+
+                    {/* {[...Array(30)].map((_, index) => (
+                  <Tooltip key={index} title={`Tooltip ${index + 2}`} followCursor>
+                    <tr>
+                      <td style={{ "--size": 0.6 }}></td>
+                    </tr>
+                  </Tooltip>
+                     ))} */}
+            
+            {caloriesArchive && Object.entries(caloriesArchive)
+            .sort(([dayA], [dayB]) => {
+              const dayNumA = parseInt(dayA);
+              const dayNumB = parseInt(dayB);
+              return dayNumA - dayNumB;
+            })
+            .map(([day, value], index) => (
+              <Tooltip key={index} title={`${day} : ${value}kcal`}>
+                <tr>
+                  <td style={{ "--size": value / 100 }}></td>
+                </tr>
+              </Tooltip>
+            ))}
                 </tbody>
               </table>
               <div className="primary-axis">Exercises Time Duration </div>
