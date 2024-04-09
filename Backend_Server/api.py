@@ -309,7 +309,43 @@ def get_registered_courses():
     if record:
         registered_courses = record.get('registered_course', {})
         return registered_courses
-    
+
+@app.route('/update_progress', methods=['POST'])
+def update_progress():
+    data = request.get_json(force=True)
+
+    username = data.get("username")
+    program = data.get("program")
+    exercise_progress = {k: v for k, v in data.items() if k not in ["username", "program"]}
+
+    db = common.mongodb_connect()
+
+    # Find the user's record in the User_Program_Data collection
+    record = db['User_Program_Data'].find_one({'username': username})
+    registered_courses = record.get('registered_course', {})
+    print(registered_courses)
+
+    if registered_courses is None:
+        return jsonify({"error": "Username does not exist in the course directories"}), 400
+
+    # Update the exercise progress for the specified program and user
+    if program in registered_courses:
+        print(program)
+        print(exercise_progress)
+        registered_courses[program]["sub_progress"].update(exercise_progress)
+
+        # Calculate the overall progress based on the updated sub-progress
+        overall_progress = sum(registered_courses[program]["sub_progress"].values()) / len(registered_courses[program]["sub_progress"])
+        registered_courses[program]["overall"] = overall_progress
+
+        # Save the updated record back to the collection
+        db['User_Program_Data'].update_one({'username': username}, {'$set': {'registered_course': registered_courses}})
+        record = db['User_Program_Data'].find_one({'username': username})
+        print(record)
+    else:
+        return jsonify({"error": "Program does not exist in the User_Program_Data"}), 400
+
+    return jsonify({"message": "Exercise progress updated successfully."})
 
 @app.route('/getDailyCaloriesBurnt', methods=['POST'])
 def get_daily_calories_burnt():

@@ -261,3 +261,51 @@
     color: #0041e6;
     text-decoration: none;
   }
+
+  .questionnaireContainer {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+
+    transform: translate(-20%, -6%);
+    padding: 0px;
+    width: 150%;
+    height: 120%;
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black background */
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    z-index: 9999; /* Ensure the overlay appears on top of other elements */
+    animation: fadeIn 0.3s ease-in-out;
+    text-align: left;
+  }
+.questionCheckbox{
+  margin-left: auto;
+
+}
+
+
+  /* Optional: Add animation for the overlay appearance */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+ 
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .crossIcon {
+    font-size: 20px;
+    color: white;
+  }

@@ -22,10 +22,12 @@ const ExerciseCard= (props) => {
  
     const navigate = useNavigate();
     // console.log(props.startIllustration)
+   
     const handleStartNow = (exercisePath) => {
       navigate(exercisePath ,{ state: { 
         num: props.num,
          fbx: props.fbx ,
+         cid: props.cid,
           exerciseName: props.exercise,
            startIllustration: props.startIllustration, 
            middleIllustration: props.middleIllustration} });

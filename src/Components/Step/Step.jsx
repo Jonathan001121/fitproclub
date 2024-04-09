@@ -21,11 +21,68 @@ import axios from 'axios';
 const Step= (props) => {
   const  startIllustration  = props.startIllustration;
   const  middleIllustration  = props.middleIllustration;
+  const exerciseName = props.exerciseName;
+  const exerciseNameFix = exerciseName.replace(/\s+/g, '_').toLowerCase();
+  console.log(exerciseNameFix)
+  const cid = props.cid ;
   
 
   const [startColor, setStartColor] = useState('');
   const [middleColor, setMiddleColor] = useState('');
   const [endColor, setEndColor] = useState('');
+
+
+  const [repValue, setRepValue] = useState(props.count);
+  const [setValue, setSetValue] = useState(0);
+
+
+  const postSet = async () => {
+    const username = sessionStorage.getItem('username');
+    setSetValue(setValue + 1)
+    let program;
+
+    switch (cid) {
+      case 1:
+        program = "Fitness_101";
+        break;
+      case 2:
+        program = "Best_Program_for_Elderly";
+        break;
+      default:
+        program = "";
+        break;
+    }
+    try{
+    if (username) {
+      const requestBody = {
+        username: username,
+        program: program,
+        [exerciseNameFix]: setValue
+      };
+      console.log(requestBody)
+      const response = await axios.post('http://127.0.0.1:9000/update_progress', requestBody);
+   
+      // console.log('Response:', response.data);
+    }
+    else {
+      console.log('Please Login');
+    }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+  useEffect(()=>{
+    setRepValue(props.count % 12);
+  },[props.count])
+
+
+  useEffect(() => {
+    if (props.count % 12 === 0 && props.count !== 0) {
+      // setSetValue((prevSetValue) => prevSetValue + 1);
+    }
+  }, [props.count]);
+
 
 
 useEffect(() => {
@@ -142,10 +199,10 @@ return (
         </TimelineContent>
       </TimelineItem>
       <Typography variant="h6" component="span">
-      Rep Count: 
+    Rep Count: 
       <div className="rep-count-container">       
 
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+       <p id="repValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {repValue}     </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
@@ -155,7 +212,7 @@ return (
       Set: 
       <div className="rep-count-container">       
 
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+       <p id="setValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>     {setValue}    </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>
@@ -166,6 +223,7 @@ return (
         style={{ fontSize: "12px", width: "80%" , backgroundColor: props.count < 12 ? 'gray' : 'orange',
         cursor: props.count < 12 ? 'not-allowed' : 'pointer',}}
         disabled={props.count <12} // Disable the button if count is not equal to 12
+        onClick={postSet}
       >
            <span>Next Set </span> </button>
      
