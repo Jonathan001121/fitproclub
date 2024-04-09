@@ -28,6 +28,23 @@ const Step= (props) => {
   const [endColor, setEndColor] = useState('');
 
 
+  const [repValue, setRepValue] = useState(props.count);
+  const [setValue, setSetValue] = useState(0);
+
+
+  useEffect(()=>{
+    setRepValue(props.count % 12);
+  },[props.count])
+
+
+  useEffect(() => {
+    if (props.count % 12 === 0 && props.count !== 0) {
+      setSetValue((prevSetValue) => prevSetValue + 1);
+    }
+  }, [props.count]);
+
+
+
 useEffect(() => {
   if (props.start == true){
     setStartColor('success')
@@ -142,10 +159,10 @@ return (
         </TimelineContent>
       </TimelineItem>
       <Typography variant="h6" component="span">
-      Rep Count: 
+    Rep Count: 
       <div className="rep-count-container">       
 
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+       <p id="repValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {repValue}     </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
@@ -155,7 +172,7 @@ return (
       Set: 
       <div className="rep-count-container">       
 
-       <p style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {props.count}      </p> 
+       <p id="setValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>     {setValue}    </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>
