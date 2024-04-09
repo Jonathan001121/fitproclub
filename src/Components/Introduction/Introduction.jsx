@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Introduction.css"
-import mediapipe from '../../assets/mediapipe.gif'
+import mediapipe from '../../assets/mediapipe.png'
 import { Link as Route} from "react-router-dom";
 
 const Introduction= (prop) => {
