@@ -10,6 +10,47 @@ const Login = () => {
   const [flipped, setFlipped] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+  const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+
+
+  const handleOpenQuestion = (e) => {
+    e.preventDefault();
+    setIsQuestionOpen(true);
+  };
+  const handleClose = (e) => {
+    e.preventDefault();
+    // Code to close the questionnaire container
+    setIsQuestionOpen(false);
+  };
+  const [questionmArray, setQuestionmArray] = useState([]);
+
+
+  const handleQuestionForm = (e) => {
+    e.preventDefault();
+    const formValues = [
+      !!formData.q1Checkbox, // Convert null to false and 'on' to true
+      !!formData.q2Checkbox,
+      !!formData.q3Checkbox,
+      !!formData.q4Checkbox,
+      !!formData.q5Checkbox,
+      !!formData.q6Checkbox,
+      !!formData.q7Checkbox,
+      !!formData.q8Checkbox,
+      !!formData.q9Checkbox,
+      !!formData.q10Checkbox,
+      !!formData.q11Checkbox,
+      !!formData.q12Checkbox,
+    ];
+  
+    setQuestionmArray(formValues);
+    console.log(formValues);
+  };
+
+
+
+
+
+
 
   const flipForm = () => {
     setFlipped(!flipped);
@@ -41,6 +82,7 @@ const Login = () => {
   });
 
   const handleChange = (e) => {
+    e.preventDefault();
     const { name, value, checked } = e.target;
     setFormData({
       ...formData,
@@ -94,7 +136,7 @@ const Login = () => {
     window.location.reload(); // Refresh the page
   };
 
- 
+
 
 
   const handleLogin = async (e) => {
@@ -114,8 +156,8 @@ const Login = () => {
         const data = await response.json();
         setResponseMessage(data.message);
         setDialogOpen(true);
-       // Set the username in session storage
-       sessionStorage.setItem('username', username);
+        // Set the username in session storage
+        sessionStorage.setItem('username', username);
       } else {
         setIsLoggedIn(false);
         throw new Error('Login Failed');
@@ -323,6 +365,179 @@ const Login = () => {
                       value={formData.desired_body_part}
                       onChange={handleChange}
                     />
+                    <button onClick={handleOpenQuestion} onChange={handleChange}>Answer Risk Evaluation Form</button>
+
+                    {isQuestionOpen && (
+                      <form className="questionnaireContainer"onSubmit={(e) => e.preventDefault()} >
+                        <button className="closeButton" onClick={handleClose}>
+                          <span className="crossIcon">&#10005;</span>
+                        </button>
+                        <div >
+                          <p>Please Complete the below Risk Assessment form. We will evaluate your health condition to provide you the suitable approach to the app.</p>
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 1: Has your doctor ever said that you have a heart condition and that you should only do physical activity</label>
+                          <Checkbox
+                            id="q1Checkbox"
+                            name="q1Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 2: Do you feel pain in your chest when you do physical activity?</label>
+                          <Checkbox
+                            id="q1Checkbox"
+                            name="q1Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="q2Checkbox" style={{ fontWeight: "lighter", fontSize: "12px", margin: "0px" }}>Question 2: Do you feel pain in your chest when you do physical activity?</label>
+                          <Checkbox
+                            id="q2Checkbox"
+                            name="q2Checkbox"
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+
+
+                        <div>
+                          <label htmlFor="q3Checkbox" style={{ fontWeight: "lighter", fontSize: "12px", margin: "0px" }}>Question 3: In the past month, have you had chest pain when you were not doing physical activity?</label>
+                          <Checkbox
+                            id="q3Checkbox"
+                            name="q3Checkbox"
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="q4Checkbox" style={{ fontWeight: "lighter", fontSize: "12px", margin: "0px" }}>Question 4: Do you lose balance because of dizziness or do you ever lose consciousness?</label>
+                          <Checkbox
+                            id="q4Checkbox"
+                            name="q4Checkbox"
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 5: Do you have a bone or joint problem (for example, back, knee or hip) that could be made worse by a
+                            change in your physical activity?</label>
+                          <Checkbox
+                            id="q5Checkbox"
+                            name="q5Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 6: Is your doctor currently prescribing drugs (for example, water pills) for your blood pressure or heart condition? </label>
+                          <Checkbox
+                            id="q6Checkbox"
+                            name="q6Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 7: Do you know of any other reason why you should not do physical activity? </label>
+                          <Checkbox
+                            id="q7Checkbox"
+                            name="q7Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 8: Have you ever injured your lower back? </label>
+                          <Checkbox
+                            id="q8Checkbox"
+                            name="q8Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 9: Do you have a sedentary lifestyle? </label>
+                          <Checkbox
+                            id="q9Checkbox"
+                            name="q9Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 10: Have you ever trained with a certified fitness instructor? </label>
+                          <Checkbox
+                            id="q10Checkbox"
+                            name="q10Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 11: Have you ever experienced any injuries or discomfort specifically related to your neck? </label>
+                          <Checkbox
+                            id="q12Checkbox"
+                            name="q12Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                        </div>
+                        <div  >
+
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 12:Do you have any concerns or limitations with regards to walking, specifically related to your knees or ankles? Please answer with a simple 'yes' or 'no' </label>
+                          <Checkbox
+                            id="q1Checkbox"
+                            name="q1Checkbox"
+                            // checked={formData.consentCheckbox || false}
+                            onChange={handleChange}
+                            className="questionCheckbox"
+                            style={{ color: "white" }}
+                          />
+                          <Button
+                            type="submit"
+                            onClick={handleQuestionForm}
+                            variant="contained"
+                            color="primary"
+                            sx={{ background: 'none', color: '#42cffe' }}
+                          >
+                            Save form
+                          </Button>
+                        </div>
+                      </form>
+
+                    )}
                   </div>
                 </div>
 
@@ -333,8 +548,8 @@ const Login = () => {
                   checked={formData.consentCheckbox || false}
                   onChange={handleChange}
                 />
-                <label htmlFor="consentCheckbox" style={{ "font-weight": "lighter" ,"font-size":"12px", "margin" :"0px"}}>I consent to receiving announcement emails</label>
-                <button type="submit" className="register-button" style={{ "margin" :"0px"}}>Register</button>
+                <label htmlFor="consentCheckbox" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>I consent to receiving announcement emails</label>
+                <button type="submit" className="register-button" style={{ "margin": "0px" }}>Register</button>
               </form>
               <Dialog
                 open={dialogOpen}
@@ -363,7 +578,7 @@ const Login = () => {
               </Dialog>
             </div>
 
-          ) 
+          )
           :
 
           (
@@ -407,24 +622,24 @@ const Login = () => {
                     <p>An error occurred. Please try again.</p>
                   )}
                 </DialogContent>
-             <DialogActions>
-            {isLoggedIn ? (
-              <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-                <Button variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
-                  Confirm
-                </Button>
-              </Link>
-            ) : (
-              <Button
-                onClick={handleDialogConfirm}
-                variant="contained"
-                color="primary"
-                sx={{ background: 'none', color: '#42cffe' }}
-              >
-                Confirm
-              </Button>
-            )}
-          </DialogActions>
+                <DialogActions>
+                  {isLoggedIn ? (
+                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                      <Button variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
+                        Confirm
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button
+                      onClick={handleDialogConfirm}
+                      variant="contained"
+                      color="primary"
+                      sx={{ background: 'none', color: '#42cffe' }}
+                    >
+                      Confirm
+                    </Button>
+                  )}
+                </DialogActions>
               </Dialog>
 
 
@@ -434,7 +649,7 @@ const Login = () => {
                 <div className="login-line"></div>
               </div>
               <div className="login-options">
-              <Link to="/dashboard" style={{ textDecoration: 'none' }}>  <button className="login-option">Log in with Facebook</button></Link>
+                <Link to="/dashboard" style={{ textDecoration: 'none' }}>  <button className="login-option">Log in with Facebook</button></Link>
                 <button className="login-option">Forgot Password?</button>
               </div>
             </div>
