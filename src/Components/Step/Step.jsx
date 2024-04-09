@@ -20,7 +20,7 @@ import axios from 'axios';
 
 
 const Step= (props) => {
-  const [select, setSelect] = useState(3);
+  const [select, setSelect] = useState(30);
   const [isStart,setisStart]=useState(false);
   const [isTimerEnd, setIsTimerEnd] = useState(false);
   const handleStart = () => {
@@ -282,7 +282,8 @@ return (
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
       </Typography>
-      ):(      
+      ):(   
+        <div className='countdownplace' style={{ 'font-size': '8px'}}> 
         <CountdownCircleTimer
         // key={timer}
         isPlaying={isStart}
@@ -291,14 +292,15 @@ return (
         colors={['#004777', '#F7B801', '#A30000', '#A30000']}
         colorsTime={[7, 5, 2, 0]}
         onComplete={() => [false, 1000]}
-        size={380}
+        size={200}
         strokeWidth = {50}
         trailStrokeWidth={50}
         className="countdownTimer"
         sx={{"color": "white"}}
       >
         {renderTime}
-      </CountdownCircleTimer>)}
+      </CountdownCircleTimer>
+      </div>  )}
 
 
 

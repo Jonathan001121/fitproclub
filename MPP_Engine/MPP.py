@@ -371,6 +371,9 @@ def gen(model):
                 elif(model==3):
                     #hip, hip, knee(right)
                     r_hiptoknee_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
+
+                    # r_shoulderhipknee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[2])
+                    
                     #hip, hip, shoulder(right)
                     r_hiptoshoulder_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
                     # hip, knee(right), ankle
@@ -390,7 +393,7 @@ def gen(model):
                             landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
                             connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
                         ) 
-                    if  r_hiptoknee_angles >95 and isTimerStart == False  :
+                    if  r_hiptoknee_angles <100 and isTimerStart == False  :
                         errorMessages = "hip too low"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start() 
@@ -398,7 +401,7 @@ def gen(model):
                         errorMessages = "hip too high"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start() 
-                    if  r_hiptoknee_angles <95 or r_hiptoshoulder_angles >100:
+                    if  r_hiptoknee_angles <100 or r_hiptoshoulder_angles >100:
                         start = False
                         mpDraw.draw_landmarks(
                             image=img,
