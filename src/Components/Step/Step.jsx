@@ -35,7 +35,32 @@ const Step= (props) => {
   const [repValue, setRepValue] = useState(props.count);
   const [setValue, setSetValue] = useState(0);
 
+  useEffect(() => {
+    const fetchSetValue = async () => {
+      try {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+          const requestBody = {
+            username: username
+          };
+          const response = await axios.post('http://127.0.0.1:9000/getRegisteredCourses', requestBody);
+          
+          if (response.data && response.data[program] && response.data[program].sub_progress && response.data[program].sub_progress[exerciseNameFix]) {
+            console.log(response.data[program].sub_progress[exerciseNameFix]);
+            setSetValue(response.data[program].sub_progress[exerciseNameFix]);
+          }
+        } else {
+          console.log('Please Login');
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    };
+  
+    fetchSetValue();
+  }, []);
 
+  
   const postSet = async () => {
     const username = sessionStorage.getItem('username');
     setSetValue(setValue + 1)
@@ -77,13 +102,7 @@ const Step= (props) => {
   },[props.count])
 
 
-  useEffect(() => {
-    if (props.count % 12 === 0 && props.count !== 0) {
-      // setSetValue((prevSetValue) => prevSetValue + 1);
-    }
-  }, [props.count]);
-
-
+ 
 
 useEffect(() => {
   if (props.start == true){
@@ -234,17 +253,6 @@ return (
     </Timeline>
 
    
-
-
-
-
-
-
-
-
-
-
-
 
 
 
