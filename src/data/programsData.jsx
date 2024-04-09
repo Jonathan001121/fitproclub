@@ -14,9 +14,9 @@ export const programsData = [
         />
       </svg>
     ),
-    heading: "Age: 45 to 65",
+    heading: "Fitness 101 (Age: 45 to 65)",
     details:
-      "In this program, selected exercise required little bit more technique.",
+      "Exercises included in this program are meant to increase general fitness. and adjusted based on the requirements of individuals between the ages of 45 and 65.",
     exersise:["Dumbbell OverheadPress",
     "Dumbbell Bicep Curl",
     "Squat",
@@ -37,9 +37,9 @@ export const programsData = [
       
     />
   </svg>,
-    heading: "Age: 65 Above",
+    heading: "Best Program for Elderly (Age: 65 Above)",
     details:
-      "In this program, selected exercise are more safer and lower risk.",
+      "Selected exercises in this program are safer and have a lower risk of injury. It is intended for senior individual 65 years of age and older.",
       exersise:["Row with Resistance Band",
       "Dumbbell OverheadPress",
       "Dumbbell Bicep Curl",

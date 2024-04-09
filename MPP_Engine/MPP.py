@@ -7,6 +7,7 @@ from flask_cors import CORS
 import math
 import time
 import threading
+from mediapipe.framework.formats import landmark_pb2
 
 
 
@@ -195,14 +196,12 @@ def gen(model):
     previous_time = 0
     mpDraw = mp.solutions.drawing_utils
     my_pose = mp.solutions.pose
-    pose = my_pose.Pose(min_detection_confidence=0.1,
-                        min_tracking_confidence=0.1)
+    pose = my_pose.Pose(min_detection_confidence=0.5,
+                        min_tracking_confidence=0.5)
     connections = list(my_pose.POSE_CONNECTIONS)
+    print(connections)
 
     cap = cv2.VideoCapture(0)
-    prev_keypoints = None
-    
-   
     global count, start, middle, end, isTimerStart, errorMessages
     start = False
     middle = False
@@ -213,94 +212,70 @@ def gen(model):
         success, img = cap.read()
         img = cv2.flip(img,1)
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
         result = pose.process(imgRGB)
 
 
         if result.pose_world_landmarks:
-                
-                if prev_keypoints is not None:
-                    result_pose_world_landmarks = list(result.pose_world_landmarks)  # Convert to list
-                    for i, (prev_kp, kp) in enumerate(zip(prev_keypoints, result.pose_world_landmarks)):
-                        smoothed_kp_x = 0.5 * prev_kp.x + 0.5 * kp.x
-                        smoothed_kp_y = 0.5 * prev_kp.y + 0.5 * kp.y
-                        smoothed_kp_z = 0.5 * prev_kp.z + 0.5 * kp.z
-                        result.pose_world_landmarks[i].x = smoothed_kp_x
-                        result.pose_world_landmarks[i].y = smoothed_kp_y
-                        result.pose_world_landmarks[i].z = smoothed_kp_z
-                    prev_keypoints = result.pose_world_landmarks
-                mpDraw.draw_landmarks(img, result.pose_landmarks, connections)
-                
-              
+                mpDraw.draw_landmarks(
+                    image=img,
+                    landmark_list=result.pose_landmarks,
+                    connections=connections,
+                    landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0), thickness=10),
+                )
+
                 
                 # bicep curl
                 if(model==1):
+
                     # wrist,elbow, shoulder(right)
                     r_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(r_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                   
-
                     #hip shoulder, elbow(right)
                     r_shoulder_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13])
-                    angle_text = str(round(r_shoulder_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
-
-
                     #shoulder, hip, knee(right)
                     r_hip_angles = calculate_torsor_angle_mediapipe(result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[23],result.pose_landmarks.landmark[11])
-                    angle_text = str(round(r_hip_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
-
-
-        
-                    
                     # Start position
                     if   r_elbow_angles > 140 and start==False:
                         start = True
-                        print("Start flag done")  
-                       
-
-
                     if   r_elbow_angles < 80 and start == True and middle == False:
                         middle = True 
-                        print("MIddle flag done")
-
-
                     if   r_elbow_angles > 140 and start == True and middle == True and end== False:
-                   
                         end = True
-                        print("End flag done")
                         count = count + 1
                         start = False
                         middle = False
                         end = False
                         print(count)
-
-
-                    if  r_shoulder_angles >40 and isTimerStart == False:
+                    if  r_shoulder_angles >40:
                         start = False
                         middle = False
                         end = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,13]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        ) 
+                    if  r_shoulder_angles >40 and isTimerStart == False:
                         errorMessages = "Elbow not in line"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    
-                    if  r_hip_angles > 10 and isTimerStart == False:
+                    if  r_hip_angles > 10:
                         start = False
                         middle = False
                         end = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[23,11]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+
+             
+
+                        
+                    if  r_hip_angles > 10 and isTimerStart == False:
                         errorMessages = "Upper body leaning forward"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
@@ -308,216 +283,151 @@ def gen(model):
                 # row with resistance band
                 elif(model==2):
                     
-                     # wrist,elbow, shoulder(right)
+                    # wrist,elbow, shoulder(right)
                     r_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(r_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                   
-                    
                     #hip shoulder, elbow(right)
                     r_shoulder_angles = calculate_imaginary_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13])
-                    angle_text = str(round(r_shoulder_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
-                    
                     #shoulder, hip, knee(right)
                     r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-                    angle_text = str(round(r_hip_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
-                    angle_text = str(round(imaginary_hip_angle, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+60, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     neck_angles =  calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[7])
                     neck_angles=imaginary_hip_angle-neck_angles
-                    angle_text = str(round(neck_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
-
-
-                      # Start position
+                    # Start position
                     if r_elbow_angles > 140 and  r_shoulder_angles > 135 and start==False:
                         start = True
-                        print("Start flag done")  
-                       
-
-
                     if r_shoulder_angles < 90 and  r_elbow_angles < 110 and start == True and middle == False:
                         middle = True 
-                        print("MIddle flag done")
-
-
                     if r_elbow_angles > 140 and  r_shoulder_angles > 135 and start == True and middle == True and end== False:
-                   
                         end = True
-                        print("End flag done")
                         count = count + 1
                         start = False
                         middle = False
                         end = False
-                        print(count)
+
+
+
+                    # if neck_angles <-4:
+                    #     mpDraw.draw_landmarks(
+                    #         image=img,
+                    #         landmark_list=result.pose_landmarks,
+                    #         connections=[[11,13]],
+                    #         landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                    #         connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                    #     ) 
                     if neck_angles <-4 and isTimerStart == False :
-                        start = False
-                        middle = False
-                        end  = False
-                        print("Resetting flags")
                         errorMessages = "head not facing forward"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    if r_elbow_angles <75 and isTimerStart == False :
+                    if neck_angles <-4  :
                         start = False
                         middle = False
                         end  = False
-                        print("Resetting flags")
+                        mpDraw.draw_landmarks(
+                        image=img,
+                        landmark_list=result.pose_landmarks,
+                        connections=[[7,11],[8,12]],
+                        landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                        connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if neck_angles <-4 :
+                        start = False
+                        middle = False
+                        end  = False
+                        
+                    if r_elbow_angles <75:
+                        start = False
+                        middle = False
+                        end  = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[13,15]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        ) 
+                    if r_elbow_angles <75 and isTimerStart == False :
                         errorMessages = "Arm bending too much"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-                    
-                    if r_shoulder_angles <65 and isTimerStart == False :
+                    if r_shoulder_angles <65:
                         start = False
                         middle = False
                         end  = False
-                        print("Resetting flags")
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,13]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        ) 
+                    if r_shoulder_angles <65 and isTimerStart == False :
                         errorMessages = "pulling back too far"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
 
                 # plank
                 elif(model==3):
                     #hip, hip, knee(right)
                     r_hiptoknee_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-                    angle_text = str(round(r_hiptoknee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
                     #hip, hip, shoulder(right)
                     r_hiptoshoulder_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
-                    angle_text = str(round(r_hiptoshoulder_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y-100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
                     # hip, knee(right), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    angle_text = str(round(r_knee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     if  r_hiptoknee_angles >95 and  r_knee_angles > 155 and start==False:
-                        start = True
-                        print("Start flag done")  
+                        start = True 
                     if  r_knee_angles < 155 and isTimerStart == False  :
-                        start = False
                         errorMessages = "knee not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start() 
-
-                    if  r_hiptoknee_angles <95 and isTimerStart == False  :
+                    if  r_knee_angles < 155:
                         start = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[23,25]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        ) 
+                    if  r_hiptoknee_angles <95 and isTimerStart == False  :
                         errorMessages = "hip too low"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start() 
                     if  r_hiptoshoulder_angles >100 and isTimerStart == False  :
-                        start = False
                         errorMessages = "hip too high"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start() 
+                    if  r_hiptoknee_angles <95 or r_hiptoshoulder_angles >100:
+                        start = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[23,11]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+
                
                #Dumbell Overhead Press
                 elif (model==4):
-                   
                     # # wrist,elbow, shoulder(right)
                     r_ppd_elbow_angles = calculate_imaginary_joint_angle_mediapipe(result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(r_ppd_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                   
-
                     l_ppd_elbow_angles = calculate_imaginary_joint_angle_mediapipe(result.pose_world_landmarks.landmark[14],result.pose_world_landmarks.landmark[14],result.pose_world_landmarks.landmark[16])
-                    angle_text = str(round(l_ppd_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                   
-                   
-
-
-
                     hip_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[24])
-                    angle_text = str(round(hip_ppd_angle, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                   
-
                     shoudler_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[12])
-                    angle_text = str(round(shoudler_ppd_angle, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                   
-
-                       # wrist,elbow, shoulder(right)
+                    # wrist,elbow, shoulder(right)
                     r_elbow_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(r_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                   
                     # wrist,elbow, shoulder(left)
                     l_elbow_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14],result.pose_world_landmarks.landmark[16])
-                    angle_text = str(round(l_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[14].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[14].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
                     #hip shoulder, elbow(right)
                     r_shoulder_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13])
-                    angle_text = str(round(r_shoulder_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1]+20)
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0]+20)
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
                     #hip shoulder, elbow(left)
                     l_shoulder_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[12],result.pose_world_landmarks.landmark[14])
-                    angle_text = str(round(l_shoulder_angles, 1))
-                    x = int(result.pose_landmarks.landmark[12].x * img.shape[1]+20)
-                    y = int(result.pose_landmarks.landmark[12].y * img.shape[0]+20)
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
                     # Start position
                     if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start==False:
                         start = True
-                         
-                       
-
-
                     # Middle position
                     if l_elbow_angles > 150 and  r_elbow_angles >150  and l_shoulder_angles >140 and  r_shoulder_angles> 140 and start == True and middle == False:
                         middle = True 
-                        
-
-
                     # End position
                     if l_elbow_angles < 70 and  r_elbow_angles < 70 and l_shoulder_angles < 70 and  r_shoulder_angles< 70 and start == True and middle == True and end== False:
                         end = True
@@ -525,197 +435,177 @@ def gen(model):
                         start = False
                         middle = False
                         end = False
-                        print(count)
-
-
                     if  (r_ppd_elbow_angles >110 or r_ppd_elbow_angles <70)  and isTimerStart == False  :
-                        start = False
-                        middle = False
-                        end = False
                         errorMessages = "Right forearm not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-                    
-
-                    if  (l_ppd_elbow_angles >110 or l_ppd_elbow_angles <70)  and isTimerStart == False  :
+                    if  (r_ppd_elbow_angles >110 or r_ppd_elbow_angles <70):
                         start = False
                         middle = False
                         end = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[13,15]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if  (l_ppd_elbow_angles >110 or l_ppd_elbow_angles <70)  and isTimerStart == False  :
                         errorMessages = "Left forearm not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    if  (shoudler_ppd_angle >100 or shoudler_ppd_angle <80 or hip_ppd_angle <80  or  hip_ppd_angle >100) and isTimerStart == False :
+                    if  (l_ppd_elbow_angles >110 or l_ppd_elbow_angles <70):
                         start = False
                         middle = False
                         end = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[14,16]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+
+                    if  (shoudler_ppd_angle >100 or shoudler_ppd_angle <80 or hip_ppd_angle <80  or  hip_ppd_angle >100) and isTimerStart == False :
                         errorMessages = "Torso not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                        
-                    
-
-
+                    if  (shoudler_ppd_angle >100 or shoudler_ppd_angle <80 or hip_ppd_angle <80  or  hip_ppd_angle >100):
+                        start = False
+                        middle = False
+                        end = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,23],[12,24]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
 
                 #Standing Side Leg Raise 
                 elif (model==5):  
                     # hip, knee(left), ankle
                     l_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[28])
-                    angle_text = str(round(l_knee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[26].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[26].y * img.shape[0])
-                    
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     # hip, knee(left), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    angle_text = str(round(r_knee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
-                    
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
-
                     hip_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[24])
-                    angle_text = str(round(hip_ppd_angle, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                
                     #shoulder, hip, knee(right)
                     r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-                    angle_text = str(round(r_hip_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
-
                     shoudler_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[12])
-                    angle_text = str(round(shoudler_ppd_angle, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+90, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)  # for angle in angles:
-                   
                     # Start position
                     if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start==False: 
                         start = True
-                        print("Start flag done")  
-                    
                     # Middle position
                     if r_hip_angles < 135  and start==True and middle==False: 
                         middle = True
-                        print("middle flag done")  
-
-
                     # End position
                     if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start == True and middle == True and end == False:
                         end = True
-                        print("End flag done")
                         count = count + 1
                         start = False
                         middle = False
                         end = False
                         print(count)
-
-
-
                     if l_knee_angles < 140 and isTimerStart == False:
-                        start = False
-                        middle = False
-                        end  = False
-                        print("Left Knee NOT STRAIGHT ")
                         errorMessages = "left knee not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    if r_knee_angles < 140 and isTimerStart == False:
+                    if l_knee_angles < 140:
                         start = False
                         middle = False
                         end  = False
-                        print("Right Knee NOT STRAIGHT ")  
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[24,26]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+
+                    if r_knee_angles < 140 and isTimerStart == False:
                         errorMessages = "right knee not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-                    
-                    if ( shoudler_ppd_angle >105 or shoudler_ppd_angle <75 ) and isTimerStart == False: 
+                    if r_knee_angles < 140:
                         start = False
                         middle = False
                         end  = False
-                        print("Torsor NOT STRAIGHT ")  
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[23,25]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if ( shoudler_ppd_angle >105 or shoudler_ppd_angle <75 ) and isTimerStart == False: 
                         errorMessages = "torso not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
+                    if ( shoudler_ppd_angle >105 or shoudler_ppd_angle <75 ):
+                        start = False
+                        middle = False
+                        end  = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,23],[12,24]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
                 # lying leg raise
                 elif (model==6):  
-
                     # hip, knee(left), ankle
                     r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    angle_text = str(round(r_knee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     #shoulder, hip, knee(right)
                     r_hip_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-                    angle_text = str(round(r_hip_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
-
                     imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
-                    angle_text = str(round(imaginary_hip_angle, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+60, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     neck_angles =  calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[7])
                     neck_angles=imaginary_hip_angle-neck_angles
-                    angle_text = str(round(neck_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
                     # Start position
                     if r_hip_angles > 165  and start==False: 
                         start = True
-                        print("Start flag done")  
-                    
                     # Middle position
                     if r_hip_angles < 100  and start==True and middle==False: 
                         middle = True
-                        print("middle flag done")  
-
-
                     # End position
                     if r_hip_angles > 165 and start == True and middle == True and end == False:
                         end = True
-                        print("End flag done")
                         count = count + 1
                         start = False
                         middle = False
                         end = False
-                        print(count)
+
 
                     if r_knee_angles < 130 and isTimerStart == False :
-                        start = False
-                        middle = False
-                        end  = False
-                        print("Resetting flags")
                         errorMessages = "knee not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    if neck_angles > 8 and isTimerStart == False :
+                    if r_knee_angles < 130:
                         start = False
                         middle = False
                         end  = False
-                        print("Resetting flags")
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[23,25]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if neck_angles > 8 and isTimerStart == False :
                         errorMessages = "neck not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
+                    if neck_angles > 8 :
+                        start = False
+                        middle = False
+                        end  = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[7,11],[8,12]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
                     
                 # Squad front view
                 elif (model==7):  
@@ -924,89 +814,73 @@ def gen(model):
                 # Deadlift
                 elif (model==8):     
                     r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-                    angle_text = str(round(r_hip_angles, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
-                   
                     # hip, knee(left), ankle
                     r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    angle_text = str(round(r_knee_angles, 1))
-                    x = int(result.pose_landmarks.landmark[25].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[25].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
-
                     imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
-                    angle_text = str(round(imaginary_hip_angle, 1))
-                    x = int(result.pose_landmarks.landmark[23].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[23].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x+60, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                    
                     neck_angles =  calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[7])
                     neck_angles=imaginary_hip_angle-neck_angles
-                    angle_text = str(round(neck_angles, 1))
-                    x = int(result.pose_landmarks.landmark[11].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[11].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-
                     # wrist,elbow, shoulder(right)
                     r_elbow_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[13],result.pose_world_landmarks.landmark[15])
-                    angle_text = str(round(r_elbow_angles, 1))
-                    x = int(result.pose_landmarks.landmark[13].x * img.shape[1])
-                    y = int(result.pose_landmarks.landmark[13].y * img.shape[0])
-                    cv2.putText(img, angle_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)  # for angle in angles:
-                   
-                    
                     # Start position
                     if r_hip_angles > 160 and r_knee_angles > 150 and start==False: 
                         start = True
-                        print("Start flag done")  
-                    
                     # # Middle position
                     if  r_knee_angles < 120 and r_hip_angles < 70  and start==True and middle==False: 
                         middle = True
-                        print("middle flag done")  
-
-
                     # # End position
                     if  r_knee_angles > 150 and r_hip_angles >160 and start==True and middle==True and end ==False:
                         end = True
-                        print("End flag done")
                         count = count + 1
                         start = False
                         middle = False
                         end = False
-                        print(count)  
-
+                    
                     if imaginary_hip_angle >75 and isTimerStart == False :
-                        start = False
-                        middle = False
-                        end  = False
-                        print("Resetting flags")
                         errorMessages = "lean too forward"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-
-                    
-                    if neck_angles <-8 and isTimerStart == False :
+                    if imaginary_hip_angle >75:
                         start = False
                         middle = False
                         end  = False
-                        print("Resetting flags")
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,23]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if neck_angles <-8 and isTimerStart == False :
                         errorMessages = "neck not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
-                    if r_elbow_angles <145 and isTimerStart == False :
+
+                    if neck_angles <-8 :
                         start = False
                         middle = False
                         end  = False
-                        print("Resetting flags")
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[7,11],[8,12]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
+                    if r_elbow_angles <145 and isTimerStart == False :
                         errorMessages = "Arm not straight"
                         countdown_Thread=threading.Thread(target=countdown, args=(4,))
                         countdown_Thread.start()
+                    if r_elbow_angles <145:
+                        start = False
+                        middle = False
+                        end  = False
+                        mpDraw.draw_landmarks(
+                            image=img,
+                            landmark_list=result.pose_landmarks,
+                            connections=[[11,13]],
+                            landmark_drawing_spec=mpDraw.DrawingSpec(color=(0, 255, 0)),
+                            connection_drawing_spec=mpDraw.DrawingSpec(color=(0, 0, 255), thickness=30)
+                        )
 
         
                     
