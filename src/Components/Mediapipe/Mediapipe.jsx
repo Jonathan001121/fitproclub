@@ -45,7 +45,7 @@ const Mediapipe = () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/data');
         const { count, start, middle, end, errorMessages} = response.data;
-        console.log(response.data)
+        // console.log(response.data)
         setCount(count);
         setStart(start);
         setMiddle(middle);
@@ -113,11 +113,13 @@ const renderTime = ({ remainingTime }) => {
   const exerciseName = location.state?.exerciseName;
   const startIllustration = location.state?.startIllustration;
   const middleIllustration = location.state?.middleIllustration;
+  const cid = location.state?.cid;
+
 
   const [path, setPath] = useState('');
   const [zAxis, setZAxis] = useState(3);
   const num = location.state?.num;
-  console.log(num);
+  // console.log(num);
   useEffect(() => {
     // const path= exerciseName.toLowerCase().replace(/\s/g, '');
     setPath(exerciseName.toLowerCase().replace(/\s/g, ''));
@@ -167,7 +169,7 @@ const renderTime = ({ remainingTime }) => {
           </Alert>
         </div>
     {
-      console.log(isStart)
+      // console.log(isStart)
     }
         <div className="MainPartMMP">
           {showImage ? (
@@ -212,7 +214,7 @@ const renderTime = ({ remainingTime }) => {
    
         <div class="overlayContainer">
         <div class="textInfo">
-        <Step count={count} start={startf} middle={middle} end={end} startIllustration={startIllustration} middleIllustration={middleIllustration}  />
+        <Step cid={cid} exerciseName={exerciseName}count={count} start={startf} middle={middle} end={end} startIllustration={startIllustration} middleIllustration={middleIllustration}  />
     
         </div>
         </div>

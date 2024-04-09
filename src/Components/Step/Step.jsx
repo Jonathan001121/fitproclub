@@ -21,6 +21,10 @@ import axios from 'axios';
 const Step= (props) => {
   const  startIllustration  = props.startIllustration;
   const  middleIllustration  = props.middleIllustration;
+  const exerciseName = props.exerciseName;
+  const exerciseNameFix = exerciseName.replace(/\s+/g, '_').toLowerCase();
+  console.log(exerciseNameFix)
+  const cid = props.cid ;
   
 
   const [startColor, setStartColor] = useState('');
@@ -32,6 +36,42 @@ const Step= (props) => {
   const [setValue, setSetValue] = useState(0);
 
 
+  const postSet = async () => {
+    const username = sessionStorage.getItem('username');
+    setSetValue(setValue + 1)
+    let program;
+
+    switch (cid) {
+      case 1:
+        program = "Fitness_101";
+        break;
+      case 2:
+        program = "Best_Program_for_Elderly";
+        break;
+      default:
+        program = "";
+        break;
+    }
+    try{
+    if (username) {
+      const requestBody = {
+        username: username,
+        program: program,
+        [exerciseNameFix]: setValue
+      };
+      console.log(requestBody)
+      const response = await axios.post('http://127.0.0.1:9000/update_progress', requestBody);
+   
+      // console.log('Response:', response.data);
+    }
+    else {
+      console.log('Please Login');
+    }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
   useEffect(()=>{
     setRepValue(props.count % 12);
   },[props.count])
@@ -39,7 +79,7 @@ const Step= (props) => {
 
   useEffect(() => {
     if (props.count % 12 === 0 && props.count !== 0) {
-      setSetValue((prevSetValue) => prevSetValue + 1);
+      // setSetValue((prevSetValue) => prevSetValue + 1);
     }
   }, [props.count]);
 
@@ -183,6 +223,7 @@ return (
         style={{ fontSize: "12px", width: "80%" , backgroundColor: props.count < 12 ? 'gray' : 'orange',
         cursor: props.count < 12 ? 'not-allowed' : 'pointer',}}
         disabled={props.count <12} // Disable the button if count is not equal to 12
+        onClick={postSet}
       >
            <span>Next Set </span> </button>
      

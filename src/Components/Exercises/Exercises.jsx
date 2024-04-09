@@ -43,7 +43,7 @@ const Exercises= () => {
                         exercise={exercise.exersise}
                         category={exercise.category}
                         Instruction={exercise.Instruction}
-                      
+                        cid={parseInt(exercise.cid)}    
                         fbx={exercise.fbx}
                         image={exercise.image}
                         startIllustration={exercise.startIllustration}
