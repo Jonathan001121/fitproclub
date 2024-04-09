@@ -21,6 +21,7 @@ const Mediapipe = () => {
   const [end, setEnd] = useState(false);
   const [errorMessages, setErrorMessages] = useState("");
   const speechButtonRef = useRef(null);
+
   const {
     Text, // Component that returns the modified text property
     speechStatus, // String that stores current speech status
@@ -160,7 +161,7 @@ const renderTime = ({ remainingTime }) => {
       <div className="MppPageMiddle">
         <div className="alertPanel">
           <Alert severity='error'>
-              <AlertTitle > Alert</AlertTitle>
+              <AlertTitle>Alert</AlertTitle>
               <div style={{"display":"flex", "flex-direction":"row","justify-content":"space-between","width":"100%", "margin-left": "0"}}  > 
               <p>  {errorMessages}</p>
               <button ref={speechButtonRef} onClick={start}/>
@@ -211,13 +212,13 @@ const renderTime = ({ remainingTime }) => {
         
 
    
-   
+
         <div class="overlayContainer">
         <div class="textInfo">
         <Step cid={cid} exerciseName={exerciseName}count={count} start={startf} middle={middle} end={end} startIllustration={startIllustration} middleIllustration={middleIllustration}  />
-    
         </div>
         </div>
+
        
    
 
