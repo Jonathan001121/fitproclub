@@ -273,11 +273,12 @@ return (
         </TimelineContent>
       </TimelineItem>
       {exerciseName !== "Plank"?(
-      <Typography variant="h6" component="span">
-    Rep Count: 
-      <div className="rep-count-container">       
+     
+     <Typography variant="h6" component="span">
+    <p style={{'font-weight': 'bolder', 'font-style':'italic'}}>Rep Count:</p> 
+      <div className="rep-count-container"style={{"margin-top": "0px"}}>       
 
-       <p id="repValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>  {repValue}     </p> 
+       <p id="repValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"35px"}}>  {repValue}     </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
@@ -304,11 +305,11 @@ return (
 
 
 
-      <Typography variant="h6" component="span">
-      Set: 
-      <div className="rep-count-container">       
+      <Typography variant="h6" component="span"      >
+      <p style={{'font-weight': 'bolder', 'font-style':'italic'}}>Set: </p>
+      <div className="rep-count-container" style={{"margin-top": "0px"}}>       
 
-       <p id="setValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"51px"}}>     {setValue}    </p> 
+       <p id="setValue"style={{"font-size": "50px" ,"text-align": "center" ,"padding": "0px" ,"margin": "0px","color":"rgb(64, 240, 74)","height":"35px"}}>     {setValue}    </p> 
 
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>

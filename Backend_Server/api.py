@@ -232,14 +232,21 @@ def updateInventoryAttr():
     
     # Update the attribute with the new value
     for key, value in data.items():
-  
         if key != 'username':
-            if key not in db["User_Inventory"].find_one({"username": username}):
-                 return jsonify({'message': f'Inventory {key} is not in the {username} User Inventory '}), 500
+            if key not in user:
+                return jsonify({'message': f'Inventory {key} is not in the {username} User Inventory'}), 500
+            # Convert number attributes to int or float
+            if key in ['age', 'weight', 'height', 'muscle_mass', 'body_fat_mass', 'calories', 'heart_rate']:
+                try:
+                    value = int(value)  # Convert to int
+                except ValueError:
+                    try:
+                        value = float(value)  # Convert to float
+                    except ValueError:
+                        return jsonify({'message': f'Invalid value for {key}'})
             db["User_Inventory"].update_one({"username": username}, {"$set": {key: value}})
     
-    return jsonify({'message': f'Inventory {key} updated successfully for user {username}'}), 200
-
+    return jsonify({'message': f'Inventory attributes updated successfully for user {username}'}), 200
 
 @app.route('/collectionRename', methods=['POST'])
 def rename_collection():
@@ -310,6 +317,8 @@ def get_registered_courses():
         registered_courses = record.get('registered_course', {})
         return registered_courses
 
+
+
 @app.route('/update_progress', methods=['POST'])
 def update_progress():
     data = request.get_json(force=True)
@@ -335,7 +344,8 @@ def update_progress():
         registered_courses[program]["sub_progress"].update(exercise_progress)
 
         # Calculate the overall progress based on the updated sub-progress
-        overall_progress = sum(registered_courses[program]["sub_progress"].values()) / len(registered_courses[program]["sub_progress"])
+        overall_progress = sum(registered_courses[program]["sub_progress"].values()) / (len(registered_courses[program]["sub_progress"]) * 4)
+        print (overall_progress)
         registered_courses[program]["overall"] = overall_progress
 
         # Save the updated record back to the collection

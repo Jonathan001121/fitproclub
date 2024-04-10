@@ -63,7 +63,7 @@ const CustomAvatar = () => {
   function downloadFile(url) {
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'avatar.glb';
+    link.download = '~/fitproclub/public/models/avatar.glb';
     link.click();
   
     // Save the file in the specified directory

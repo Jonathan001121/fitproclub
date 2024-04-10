@@ -757,7 +757,7 @@ const Dashboard = () => {
 
           </div>
           <div className="container medium">
-            <h3>Learning Progress</h3>
+            <h3>Training Progress</h3>
 
             <div className='program-progress'>
               <div className='its-program'>  Fitness 101 </div>
@@ -813,13 +813,13 @@ const Dashboard = () => {
               </table>
 
               <table className="charts-css line">
-                <caption> Body Weight Trend Line </caption>
+                <caption> Exercise Duration Trend Line </caption>
 
                 <tbody>
-                  <tr><td style={{ "--start": 0.2, "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--start": 0.6, "--size": 0.8 }}></td></tr>
-                  <tr><td style={{ "--start": 0.8, "--size": 0.5 }}></td></tr>
-                  <tr><td style={{ "--start": 0.5, "--size": 0.8 }}></td></tr>
+                  <tr><td style={{ "--start": 0.2, "--size": 0.4 }}></td></tr>
+                  <tr><td style={{ "--start": 0.4, "--size": 0.27 }}></td></tr>
+                  <tr><td style={{ "--start": 0.27, "--size": 0.46 }}></td></tr>
+                  <tr><td style={{ "--start": 0.46, "--size": 0.3 }}></td></tr>
                 </tbody>
 
               </table>
@@ -828,57 +828,8 @@ const Dashboard = () => {
               <table className="charts-css column data-spacing-2">
                 <caption> Progress </caption>
                 <tbody>
-                {/* <Tooltip title={'1st : 80kcal'} >
-                  <tr><td style={{ "--size": 0.084 }}></td></tr>
-                  </Tooltip>
-                
-                  <Tooltip title={'2nd : 80kcal'} >
-                  <tr><td style={{ "--size": 0.084 }}></td></tr>
-                  </Tooltip>
-                 */}
-               {/* <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
+            
 
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.9 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>
-                  <tr><td style={{ "--size": 0.6 }}></td></tr>  */}
-
-                  {/* The 31st day */}
-                 {/* <tr><td style={{ "--size": 0.9 }}></td></tr>  */}
-
-
-
-                    {/* {[...Array(30)].map((_, index) => (
-                  <Tooltip key={index} title={`Tooltip ${index + 2}`} followCursor>
-                    <tr>
-                      <td style={{ "--size": 0.6 }}></td>
-                    </tr>
-                  </Tooltip>
-                     ))} */}
             
             {caloriesArchive && Object.entries(caloriesArchive)
             .sort(([dayA], [dayB]) => {
@@ -897,7 +848,7 @@ const Dashboard = () => {
               </table>
               <div className="primary-axis">Calories Burnt (Daily) </div>
               <div className="data-1-axis">Exercises Time Duration  </div>
-              <div className="data-2-axis"> Distances  </div>
+              <div className="data-2-axis"> Muscle Mass  </div>
             </div>
           </div>
         </div>

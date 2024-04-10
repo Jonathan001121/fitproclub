@@ -156,9 +156,25 @@
   
  
   .rep-count-container{
-    background-color: gray;
+    /* background-color: gray; */
+    background-color: rgba(1, 1, 1, 0.8);
     border-radius: 10px;
+    animation: glowing-border 2s infinite;
   }
+  @keyframes glowing-border {
+    0% {
+        border-color: var(--lightblue);
+        box-shadow: 0 0 5px var(--lightblue), 0 0 10px var(--lightblue), 0 0 15px var(--lightblue), 0 0 20px var(--lightblue);
+    }
+    50% {
+        border-color: #76ffdb; /* A lighter shade of orange for the glow effect */
+        box-shadow: 0 0 20px #76ffdb, 0 0 20px #76ffdb, 0 0 20px #76ffdb, 0 0 20px #76ffdb;
+    }
+    100% {
+        border-color: var(--lightblue);
+        box-shadow: 0 0 5px var(--lightblue), 0 0 10px var(--lightblue), 0 0 15px var(--lightblue), 0 0 20px var(--lightblue);
+    }
+}
   
   .button-wrapper {
     text-align: center;
