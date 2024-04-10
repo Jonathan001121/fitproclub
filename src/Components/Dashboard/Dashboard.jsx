@@ -782,11 +782,12 @@ const Dashboard = () => {
               {/* <div className='its-progress'>  <ProgressBar width={userRegisterCourses ? userRegisterCourses.Fitness_101.overall : 0.0} /> </div> */}
             </div>
 
-            <div className='program-progress'>
+            {/* <div className='program-progress'>
               <p> 2. </p>
               <div className='its-program'>  Best Program for Elderly </div>
               {/* <div className='its-progress'> <ProgressBar width={userRegisterCourses ? userRegisterCourses.Best_Program_for_Elderly.overall : 0.0} /> </div> */}
-            </div>
+            {/* </div>  */}
+            
 
 
 
@@ -894,8 +895,8 @@ const Dashboard = () => {
             ))}
                 </tbody>
               </table>
-              <div className="primary-axis">Exercises Time Duration </div>
-              <div className="data-1-axis"> Calories Burnt (Daily)</div>
+              <div className="primary-axis">Calories Burnt (Daily) </div>
+              <div className="data-1-axis">Exercises Time Duration  </div>
               <div className="data-2-axis"> Distances  </div>
             </div>
           </div>

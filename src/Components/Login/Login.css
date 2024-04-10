@@ -261,6 +261,12 @@
     color: #0041e6;
     text-decoration: none;
   }
+  .openRiskFormButton{
+    color: white;
+    background-color: rgba(0, 0, 155, 0.4);
+    border-radius: 10px;
+    font-weight: lighter;
+  }
 
   .questionnaireContainer {
     position: fixed;
@@ -268,7 +274,7 @@
     left: 0%;
 
     transform: translate(-20%, -6%);
-    padding: 0px;
+    padding: 50px;
     width: 150%;
     height: 120%;
     background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black background */

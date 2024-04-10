@@ -24,7 +24,6 @@ const Login = () => {
   };
   const [questionmArray, setQuestionmArray] = useState([]);
 
-
   const handleQuestionForm = (e) => {
     e.preventDefault();
     const formValues = [
@@ -43,6 +42,21 @@ const Login = () => {
     ];
   
     setQuestionmArray(formValues);
+  
+    // Check if any of the first 7 values are true
+    const shouldSeeDoctor = formValues.slice(0, 7).some((value) => value);
+    if (shouldSeeDoctor) {
+      const seeDoctorMessage = 
+      `Based on your responses, it is recommended that, before increasing your physical activity or undergoing a fitness assessment, it is important to consult with your doctor in person. 
+      \nInform them about this questionnaire and the first 7 questions you answered "yes" to.\n\nPlease consider the following:\n\n- Start slowly and gradually increase the amount of activity.
+      \n\n- Alternatively, focus on engaging in safe activities.\n\n- Discuss your desired activities with your doctor and carefully listen to their advice.`;
+      // Convert \n to <br />
+      const formattedMessage = seeDoctorMessage.replace(/\n/g, '<br />');
+      setDialogOpen(true);
+      setResponseMessage(formattedMessage );
+    }
+  
+    setIsQuestionOpen(false);
     console.log(formValues);
   };
 
@@ -339,7 +353,7 @@ const Login = () => {
                       onChange={handleChange}
                     /> */}
 
-                    <label htmlFor="level">Level  *</label>
+                    <label htmlFor="level"> Activity Level  *</label>
 
                     <select
                       id="level"
@@ -350,11 +364,11 @@ const Login = () => {
                       required
                     >
                       <option value="">Select Training Level</option>
-                      <option value="beginner">Beginner</option>
-                      <option value="amateur">Amateur</option>
-                      <option value="amateur">Experienced</option>
+                      <option value="beginner">Sedentary</option>
+                      <option value="amateur">Moderately Active</option>
+                      <option value="amateur">Very Active</option>
                     </select>
-
+{/* 
                     <label htmlFor="desired_body_part">Desired / Focus Training Body Part </label>
                     <input
                       type="text"
@@ -364,8 +378,8 @@ const Login = () => {
                       className="login-input"
                       value={formData.desired_body_part}
                       onChange={handleChange}
-                    />
-                    <button onClick={handleOpenQuestion} onChange={handleChange}>Answer Risk Evaluation Form</button>
+                    /> */}
+                    <button className="openRiskFormButton "  onClick={handleOpenQuestion} onChange={handleChange} required>Answer Risk Evaluation Form</button>
 
                     {isQuestionOpen && (
                       <form className="questionnaireContainer"onSubmit={(e) => e.preventDefault()} >
@@ -516,7 +530,7 @@ const Login = () => {
                         </div>
                         <div  >
 
-                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 12:Do you have any concerns or limitations with regards to walking, specifically related to your knees or ankles? Please answer with a simple 'yes' or 'no' </label>
+                          <label htmlFor="" style={{ "font-weight": "lighter", "font-size": "12px", "margin": "0px" }}>Question 12: Do you have any concerns or limitations with regards to walking, specifically related to your knees or ankles? Please answer with a simple 'yes' or 'no' </label>
                           <Checkbox
                             id="q1Checkbox"
                             name="q1Checkbox"
@@ -525,14 +539,15 @@ const Login = () => {
                             className="questionCheckbox"
                             style={{ color: "white" }}
                           />
+                          <br></br>
                           <Button
                             type="submit"
                             onClick={handleQuestionForm}
                             variant="contained"
                             color="primary"
-                            sx={{ background: 'none', color: '#42cffe' }}
+                            sx={{ background: 'none', color: '#42cffe', marginLeft: '85%' }}
                           >
-                            Save form
+                          Submit
                           </Button>
                         </div>
                       </form>
@@ -562,13 +577,13 @@ const Login = () => {
                   },
                 }}
               >
-                <DialogTitle sx={{ fontWeight: 'bolder' }}>Response Message</DialogTitle>
+                <DialogTitle sx={{ fontWeight: 'bolder' }}>Message</DialogTitle>
                 <DialogContent>
-                  {typeof responseMessage === 'string' ? (
-                    <p>{responseMessage}</p>
-                  ) : (
+                {typeof responseMessage === 'string' ? (
+                    <div dangerouslySetInnerHTML={{ __html: responseMessage }} />
+                ) : (
                     <p>An error occurred. Please try again.</p>
-                  )}
+                )}
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleDialogConfirm} variant="contained" color="primary" sx={{ background: 'none', color: '#42cffe' }}>
