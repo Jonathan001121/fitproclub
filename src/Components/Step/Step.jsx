@@ -11,6 +11,7 @@ import TimelineOppositeContent , {timelineOppositeContentClasses,} from '@mui/la
 import TimelineDot from '@mui/lab/TimelineDot';
 import FlagIcon from '@mui/icons-material/Flag';
 import Typography from '@mui/material/Typography';
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import CircleIcon from '@mui/icons-material/Circle';
 import "../Mediapipe/Mediapipe.css"
 
@@ -19,13 +20,39 @@ import axios from 'axios';
 
 
 const Step= (props) => {
+  const [select, setSelect] = useState(30);
+  const [isStart,setisStart]=useState(false);
+  const [isTimerEnd, setIsTimerEnd] = useState(false);
+  const handleStart = () => {
+    setisStart(true);
+
+  }
+  const handleStop = () => {
+    setisStart(false);
+
+  }
+
   const  startIllustration  = props.startIllustration;
   const  middleIllustration  = props.middleIllustration;
   const exerciseName = props.exerciseName;
   const exerciseNameFix = exerciseName.replace(/\s+/g, '_').toLowerCase();
   console.log(exerciseNameFix)
   const cid = props.cid ;
+  const renderTime = ({ remainingTime }) => {
+
+    if (remainingTime === 0) {
+      setIsTimerEnd(true);
+    }
   
+    return (
+  
+      <div className="timer-info">
+        <div className="timer-text">Remaining</div>
+        <div className="timer-value">{remainingTime}</div>
+        <div className="timer-text">seconds</div>
+      </div>
+    );
+  };
 
   const [startColor, setStartColor] = useState('');
   const [middleColor, setMiddleColor] = useState('');
@@ -107,9 +134,11 @@ const Step= (props) => {
 useEffect(() => {
   if (props.start == true){
     setStartColor('success')
+    handleStart();
   }
   else{
     setStartColor('')
+    handleStop();
   }
 
   if (props.middle == true){
@@ -171,6 +200,12 @@ return (
           <Typography><img src={startIllustration} style={{"width":"50%", "height":"50%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
+
+
+
+
+
+      { exerciseName !== "Plank"?
       <TimelineItem>
         <TimelineOppositeContent
           sx={{ m: 'auto 0' }}
@@ -194,7 +229,17 @@ return (
           <Typography><img src={middleIllustration} style={{"width":"30%", "height":"30%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
+      : null}
+
+
+
+
+
+
+
+
       <TimelineItem>
+        {exerciseName !== "Plank"?(
         <TimelineOppositeContent
           sx={{ m: 'auto 0' }}
           align="right"
@@ -203,6 +248,16 @@ return (
         >
           Step3
         </TimelineOppositeContent>
+        ):(
+          <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="text.secondary"
+        >
+          Step2
+        </TimelineOppositeContent>
+        )}
         <TimelineSeparator>
           <TimelineConnector />
           <TimelineDot>
@@ -217,6 +272,7 @@ return (
           <Typography><img src={startIllustration} style={{"width":"50%", "height":"80%"}}/></Typography>
         </TimelineContent>
       </TimelineItem>
+      {exerciseName !== "Plank"?(
       <Typography variant="h6" component="span">
     Rep Count: 
       <div className="rep-count-container">       
@@ -226,6 +282,27 @@ return (
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /12</p>
       </div>
       </Typography>
+      ):(   
+        <div className='countdownplace' style={{ 'font-size': '8px'}}> 
+        <CountdownCircleTimer
+        // key={timer}
+        isPlaying={isStart}
+        duration={select}
+        trailColor={[["#dbdbdb"]]}
+        colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+        colorsTime={[7, 5, 2, 0]}
+        onComplete={() => [false, 1000]}
+        size={200}
+        strokeWidth = {50}
+        trailStrokeWidth={50}
+        className="countdownTimer"
+        sx={{"color": "white"}}
+      >
+        {renderTime}
+      </CountdownCircleTimer>
+      </div>  )}
+
+
 
       <Typography variant="h6" component="span">
       Set: 
@@ -236,7 +313,9 @@ return (
        <p style={{"width":"80%","text-align": "right" ,"margin-right": "30px" ,"color":"white"}}> /4</p>
       </div>
       </Typography>
+      
 
+      {exerciseName !== "Plank"?(
       <button
         className="startButton"
         style={{ fontSize: "12px", width: "80%" , backgroundColor: props.count < 12 ? 'gray' : 'orange',
@@ -244,7 +323,17 @@ return (
         disabled={props.count <12} // Disable the button if count is not equal to 12
         onClick={postSet}
       >
-           <span>Next Set </span> </button>
+           <span>Next Set </span> </button>)
+           :
+           <button
+           className="startButton"
+           style={{ fontSize: "12px", width: "80%" , backgroundColor: isTimerEnd==false ? 'gray' : 'orange',
+           cursor: isTimerEnd==false ? 'not-allowed' : 'pointer',}}
+           disabled={isTimerEnd==false} // Disable the button if count is not equal to 12
+           onClick={postSet}
+         >
+              <span>Next Set </span> </button>
+      }
      
  
  
