@@ -22,29 +22,26 @@ def calculate_joint_angle_mediapipe(a, b, c):
     az=round(a.z,8)
     bz=round(b.z,8)
     cz=round(c.z,8)
+    a_coords = np.array([a.x, a.y, az])  
+    b_coords = np.array([b.x, b.y, bz])  
+    c_coords = np.array([c.x, c.y, cz])  
 
    
-    a_coords = np.array([a.x, a.y, az])  # First
-    b_coords = np.array([b.x, b.y, bz])  # Mid
-    c_coords = np.array([c.x, c.y, cz])  # End
-    
-
-    # Calculate the vectors AB and BC
     AB = b_coords - a_coords
     BC = b_coords - c_coords
 
-    # Calculate the dot product of AB and BC
+ 
     dot_product = np.dot(AB, BC)
 
-    # Calculate the magnitudes of AB and BC
+ 
     magnitude_AB = np.linalg.norm(AB)
     magnitude_BC = np.linalg.norm(BC)
 
-    # Calculate the angle in radians using the dot product
+  
     theta = dot_product / (magnitude_AB * magnitude_BC)
     angle = np.arccos(theta)
 
-    # Convert the angle to degrees
+
     angle_degrees = np.degrees(angle)
 
 
@@ -62,22 +59,22 @@ def calculate_imaginary_joint_angle_mediapipe(a, b, c):
     c_coords = np.array([c.x, c.y, cz])  # End
     
 
-    # Calculate the vectors AB and BC
+
     AB = b_coords - a_coords
     BC = b_coords - c_coords
 
-    # Calculate the dot product of AB and BC
+ 
     dot_product = np.dot(AB, BC)
 
-    # Calculate the magnitudes of AB and BC
+   
     magnitude_AB = np.linalg.norm(AB)
     magnitude_BC = np.linalg.norm(BC)
 
-    # Calculate the angle in radians using the dot product
+  
     theta = dot_product / (magnitude_AB * magnitude_BC)
     angle = np.arccos(theta)
 
-    # Convert the angle to degrees
+  
     angle_degrees = np.degrees(angle)
 
 
@@ -369,14 +366,8 @@ def gen(model):
 
                 # plank
                 elif(model==3):
-                    #hip, hip, knee(right)
                     r_hiptoknee_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
-
-                    # r_shoulderhipknee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[2])
-                    
-                    #hip, hip, shoulder(right)
                     r_hiptoshoulder_angles = calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
-                    # hip, knee(right), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
                     if  r_hiptoknee_angles >95 and  r_knee_angles > 155 and start==False:
                         start = True 
@@ -489,21 +480,15 @@ def gen(model):
 
                 #Standing Side Leg Raise 
                 elif (model==5):  
-                    # hip, knee(left), ankle
                     l_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[24],result.pose_world_landmarks.landmark[26],result.pose_world_landmarks.landmark[28])
-                    # hip, knee(left), ankle
                     r_knee_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
                     hip_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[24])
-                    #shoulder, hip, knee(right)
                     r_hip_angles = calculate_joint_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
                     shoudler_ppd_angle= calculate_torsor_angle_mediapipe(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[12])
-                    # Start position
                     if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start==False: 
                         start = True
-                    # Middle position
                     if r_hip_angles < 135  and start==True and middle==False: 
                         middle = True
-                    # End position
                     if r_hip_angles > 150 and r_knee_angles > 140 and l_knee_angles > 140  and start == True and middle == True and end == False:
                         end = True
                         count = count + 1
@@ -559,20 +544,15 @@ def gen(model):
                         )
                 # lying leg raise
                 elif (model==6):  
-                    # hip, knee(left), ankle
                     r_knee_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25],result.pose_world_landmarks.landmark[27])
-                    #shoulder, hip, knee(right)
                     r_hip_angles = calculate_2d_angle(result.pose_world_landmarks.landmark[11],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[25])
                     imaginary_hip_angle = calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[11])
                     neck_angles =  calculate_imaginary_2d_angle(result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[23],result.pose_world_landmarks.landmark[7])
                     neck_angles=imaginary_hip_angle-neck_angles
-                    # Start position
                     if r_hip_angles > 165  and start==False: 
                         start = True
-                    # Middle position
                     if r_hip_angles < 100  and start==True and middle==False: 
                         middle = True
-                    # End position
                     if r_hip_angles > 165 and start == True and middle == True and end == False:
                         end = True
                         count = count + 1

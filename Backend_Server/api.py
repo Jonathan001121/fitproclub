@@ -32,7 +32,7 @@ def pingFlask():
         return jsonify(response), 200
 
     except Exception as e:
-        # Handle the error and return an error message
+        
         error_message = {"error": str(e)}
         return jsonify(error_message), 500
 
@@ -64,19 +64,19 @@ def login():
         print(list(db["User_Credentials"].find()))
         hashed_password = str(common.simple_hash(password, 7))
         
-        # Empty Input
+     
         if username == "" or hashed_password == "":
             return jsonify({"message": "Empty Username and/or Password Received"}), 400
         
-        # User not exist
+    
         if (username == '') or (db["User_Credentials"].find_one({"username": username}) is None):
             return jsonify({"message": "User doesn't not exist"}), 400
         
-        # Password Wrong
+
         if (hashed_password != "") and (hashed_password != str(db["User_Credentials"].find_one({"username": username})["password"])):
             return jsonify({"message":"Wrong Password for " + username}), 400
         
-       # Successful Case
+ 
         if (hashed_password != "") and (hashed_password == db["User_Credentials"].find_one({"username": username})["password"]):
             return jsonify({"message": username + " has successfully logged in"}), 200
     else: 
@@ -97,12 +97,12 @@ def register():
     country= data['country']
     email= data['email']
 
-    # Course Preference
+
     level = data["level"]
     desired_body_part =  data["desired_body_part"]
 
 
-    # Metrics
+   
     weight = float(data['weight'])
     height = float(data['height'])
     heart_rate = 120
@@ -214,9 +214,9 @@ def register():
         }
     )
     userObjectsList.append(UserInventoryIOModel(username, name, age, weight, height, muscle_mass, body_fat_mass, calories, gender, heart_rate, city, country,email, level, desired_body_part))
-    # print(userObjectsList[len(userObjectsList)-1].username)
+   
 
-    # display the person object as a dictionary
+
     return jsonify({'message': f'Successfully registered with {username}'}), 200
 
 @app.route('/updateInventoryAttr', methods=['POST'])
@@ -337,18 +337,18 @@ def update_progress():
     if registered_courses is None:
         return jsonify({"error": "Username does not exist in the course directories"}), 400
 
-    # Update the exercise progress for the specified program and user
+  
     if program in registered_courses:
         print(program)
         print(exercise_progress)
         registered_courses[program]["sub_progress"].update(exercise_progress)
 
-        # Calculate the overall progress based on the updated sub-progress
+    
         overall_progress = sum(registered_courses[program]["sub_progress"].values()) / (len(registered_courses[program]["sub_progress"]) * 4)
         print (overall_progress)
         registered_courses[program]["overall"] = overall_progress
 
-        # Save the updated record back to the collection
+
         db['User_Program_Data'].update_one({'username': username}, {'$set': {'registered_course': registered_courses}})
         record = db['User_Program_Data'].find_one({'username': username})
         print(record)
@@ -377,7 +377,7 @@ def get_daily_calories_burnt():
     calories_burnt_today = metric.calculate_calories_burned_weight(weight,minutes_total,gender)
     
    
-     # Update calories_burnt_today in db['User_Inventory']
+    
     db['User_Inventory'].update_one({'username': username}, {'$set': {'calories': calories_burnt_today}})
 
 

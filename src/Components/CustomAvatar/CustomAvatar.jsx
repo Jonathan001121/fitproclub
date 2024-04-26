@@ -1,7 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 import './CustomAvatar.css';
 import {InputLabel,  TextField}from '@mui/material';
 const CustomAvatar = () => {
+
+  const [imageSrc, setImageSrc] = useState(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+ 
+
+  const startCamera = async () => {
+    const video = videoRef.current;
+    video.style.display = "block";
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
+    } catch (err) {
+      console.error("Error accessing camera: ", err);
+    }
+  };
+  
+  const capture = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+  
+    // Set canvas dimensions to match the video feed
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+  
+    // Pause the video
+    video.pause();
+  
+    // Draw the current video frame onto the canvas
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+    // Get the image data from the canvas
+    const imageData = canvas.toDataURL("image/png");
+  
+    // Display the captured image on the canvas
+    const img = new Image();
+    img.onload = function () {
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = imageData;
+  };
+  
+
+
+
+
+// ----------------
+
+
   useEffect(() => {
     const subdomain = 'silverfit'; // Replace with your custom subdomain
     const frame = document.getElementById('frame');
@@ -56,7 +107,7 @@ const CustomAvatar = () => {
     document.getElementById('frame').hidden = false;
   }
 
-  function displayUploadContainer() {
+  function renderOnHomePage () {
     document.getElementById('uploadContainer').hidden = false;
   }
 
@@ -109,9 +160,21 @@ const CustomAvatar = () => {
           </div>
         </div>
         <div className="customAvatarWorkField">
+
+        <div>
+        <video ref={videoRef} autoPlay muted style={{ display: "block" }}></video>
+        <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+        <button onClick={startCamera}>Start Camera</button>
+        <button onClick={capture}>Take Photo</button>
+      {/* <button onClick={uploadPhoto}>Upload Photo</button> */}
+      {imageSrc && <img src={imageSrc} alt="Avatar" />}
+    </div>
+
+
+
         <div className="customAvatarButtons">
           <button type="button" className="createIFrameButton" onClick={displayIframe}>CREATE NOW</button>
-          <button type="button" className="uploadPhotoButton" onClick={displayUploadContainer}>Upload Photo</button>
+          <button type="button" className="uploadPhotoButton" >Upload Photo</button>
           {/* <input >Avatar URL:</input> */}
           </div>
 
